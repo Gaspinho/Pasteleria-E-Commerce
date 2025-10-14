@@ -2,10 +2,34 @@
 python manage.py makemigrations
 python manage.py migrate
 
-backend
-env\scripts\activate
+backend provisional
+ir a env\scripts\activate y modificar VIRTUAL_ENV con su direccion hacia la carpeta env (NO VERIFICADO)
+
+Para activarlo usar en la carpeta donde esta el venv
+Mac/Linux: source nombre_del_entorno\scripts\activate
+Windows:
+    cmd: nombre_del_entorno\Scripts\activate.bat
+    PowerShell: nombre_del_entorno\Scripts\Activate.ps1
+
+Para ejecutar el servidor provisional
 cd backend
 python manage.py runserver
+
+backend
+Para crear el Virtual Enviroment usen python -m venv nombre_del_entorno o bien usar la extencion de vscode
+
+para activarlo usar en la carpeta donde esta el venv
+Mac/Linux: source nombre_del_entorno\scripts\activate
+Windows:
+    cmd: nombre_del_entorno\Scripts\activate.bat
+    PowerShell: nombre_del_entorno\Scripts\Activate.ps1
+
+Librerias Puedes instalarse usando pip install -r requirements.txt en \Pasteleria-E-Commerce
+o bien 
+pip install fastapi[all] 
+pip install supabase
+
+luego para ejecutar el usar cd backend y python server.py
 
 admin-frontend
 npm start
