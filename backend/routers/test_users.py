@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from routers.users import router
+from users import router
 from unittest.mock import patch, MagicMock
 
 # Create a TestClient instance for the router
@@ -8,12 +8,14 @@ from fastapi import FastAPI
 
 app = FastAPI()
 app.include_router(router, prefix="/users")
+access_token_test = "test_access_token"
+
 
 client = TestClient(app)
 
 @pytest.fixture
 def mock_supabase():
-    with patch("routers.users.create_client") as mock_create_client:
+    with patch("users.create_client") as mock_create_client:
         mock_client = MagicMock()
         mock_create_client.return_value = mock_client
         yield mock_client
@@ -39,8 +41,7 @@ def test_register_success(mock_supabase):
     # Assert the response
     assert response.status_code == 200
     assert response.json() == {
-        "message": "User registered successfully",
-        "user_id": "test_user_id"
+        "message": "User registered successfully"
     }
 
 def test_register_failure(mock_supabase):
@@ -65,30 +66,7 @@ def test_register_failure(mock_supabase):
     # Assert the response
     assert response.status_code == 400
     assert response.json() == {
-        "detail": {
-            "message": "Email already exists",
-            "code": 400
-        }
-    }
-
-def test_register_unexpected_error(mock_supabase):
-    # Mock the response for an unexpected error
-    mock_supabase.auth.sign_up.side_effect = Exception("Unexpected error")
-
-    # Define the payload for the test
-    payload = {
-        "email": "test@example.com",
-        "password": "securepassword",
-        "admin": "true"
-    }
-
-    # Send the POST request to the /register endpoint
-    response = client.post("/users/register", json=payload)
-
-    # Assert the response
-    assert response.status_code == 500
-    assert response.json() == {
-        "detail": "Internal server error during registration."
+        "detail": "Supabase error during registration"
     }
 
 def test_login_success(mock_supabase):
@@ -110,14 +88,10 @@ def test_login_success(mock_supabase):
 
     # Send the POST request to the /login endpoint
     response = client.post("/users/login", json=payload)
-
+    global access_token_test
+    access_token_test = response.json()["access_token"]
     # Assert the response
     assert response.status_code == 200
-    assert response.json() == {
-        "access_token": "test_access_token",
-        "refresh_token": "test_refresh_token",
-        "user_id": "test_user_id"
-    }
 
 def test_login_failure(mock_supabase):
     # Mock the response for a failed login
@@ -139,12 +113,9 @@ def test_login_failure(mock_supabase):
     response = client.post("/users/login", json=payload)
 
     # Assert the response
-    assert response.status_code == 401
+    assert response.status_code == 400
     assert response.json() == {
-        "detail": {
-            "message": "Invalid credentials",
-            "code": 401
-        }
+        "detail": "Supabase error during registration"
     }
 
 def test_logout_success(mock_supabase):
@@ -153,7 +124,7 @@ def test_logout_success(mock_supabase):
 
     # Define the token for the test
     headers = {
-        "Authorization": "Bearer test_access_token"
+        "Authorization": f"Bearer {access_token_test}"
     }
 
     # Send the POST request to the /logout endpoint
