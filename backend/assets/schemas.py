@@ -10,3 +10,10 @@ class TokenResponse(BaseModel):
     access_token: str
     refresh_token: str
     user_id: str
+
+class Producto(BaseModel):
+    id: int
+    nombre: str
+    descripcion: str
+    precio: float
+    imagen_url: str

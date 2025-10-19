@@ -3,14 +3,15 @@ from fastapi.security import OAuth2PasswordBearer
 from supabase import create_client, Client
 import os
 from assets.schemas import User, TokenResponse
+from dotenv import load_dotenv
 
-SUPABASE_URL = os.environ.get("SUPABASE_URL")
-SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+load_dotenv()
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login") 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 async def get_access_token(token: str = Depends(oauth2_scheme)):
     return token
