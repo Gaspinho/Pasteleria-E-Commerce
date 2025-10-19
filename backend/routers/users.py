@@ -1,22 +1,14 @@
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
-from pydantic import BaseModel, Field
 from supabase import create_client, Client
 import os
+from assets.schemas import User, TokenResponse
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-class User(BaseModel):
-    email: str = Field(min_length=1, description="email cannot be empty.")
-    password: str = Field(min_length=1, description="password cannot be empty.")
-    admin: str | None = None
 
-class TokenResponse(BaseModel):
-    access_token: str
-    refresh_token: str
-    user_id: str
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login") 
 
