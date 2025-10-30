@@ -24,21 +24,18 @@ export const Info = () => {
               />
             </div>
             <div className="info-blocks__item-text">
-              <span className="saint-text">Design With Us</span>
-              <h2>Customise Your Own Cake</h2>
-              <p>
-                Everything we have selected from the cake base to toppings are
-                all hand picked after much consideration into 2022 trends.
-                EVERYTHING from our signature designs to current trends in the
-                cake world are available for you to mix and match.
-              </p>
-              <p>
-                Go through each step and design a beautiful cake. We offer
-                standard, gluten free, vegan and sugar free as options to select
-                from
-              </p>
-              <Link href="/shop">
-                <a className="btn">Shop now</a>
+              <span className="saint-text">Diseña con nosotros</span>
+              <h2>Personaliza tu pastel</h2>
+                <p>
+                Cada ingrediente —desde la base hasta la última decoración— es cuidadosamente seleccionado para reflejar nuestra tradición y las tendencias más dulces de hoy.  
+                En <strong>Pastelería 1000 Sabores</strong> puedes combinar nuestros diseños clásicos con las últimas inspiraciones en repostería para crear algo verdaderamente único.
+                </p>
+                <p>
+                Paso a paso, diseña el pastel perfecto para tu celebración.  
+                Ofrecemos diversas opciones, todas elaboradas con la misma pasión y calidad que nos han acompañado por más de 50 años.
+                </p>
+              <Link href="/customisecake">
+                <a className="btn">Compra ya!</a>
               </Link>
             </div>
           </div>

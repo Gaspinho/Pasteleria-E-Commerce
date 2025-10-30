@@ -95,7 +95,7 @@ export const Header = () => {
       <header className="header">
         {promo && (
           <div className="header-top">
-            <span> Are you ready-to-eat slice of heaven</span>
+            <span>¡Celebra la dulzura de la vida con Pastelería 1000 Sabores!</span>
             <i
               onClick={() => setPromo(false)}
               className="header-top-close js-header-top-close icon-close"

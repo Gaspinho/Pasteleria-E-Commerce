@@ -1,22 +1,22 @@
 [
   {
-    "categoryId": "Aniversary",
-    "name": "Aniversary",
+    "categoryId": "Tortas Circulares",
+    "name": "Tortas Circulares",
     "image": "/assets/img/top-categories-img1.jpg"
   },
   {
-    "categoryId": "Birthday",
-    "name": "Birthday",
+    "categoryId": "Tortas Cuadradas",
+    "name": "Tortas Cuadradas",
     "image": "/assets/img/top-categories-img2.jpg"
   },
   {
-    "categoryId": "Cupcakes",
-    "name": "Cupcakes",
+    "categoryId": "Postres Individuales",
+    "name": "Postres Individuales",
     "image": "/assets/img/top-categories-img3.jpg"
   },
   {
-    "categoryId": "Chocolate",
-    "name": "Chocolate",
+    "categoryId": "Productos Sin Gluten",
+    "name": "Productos Sin Gluten",
     "image": "/assets/img/top-categories-img4.jpg"
   }
 ]

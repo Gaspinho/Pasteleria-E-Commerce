@@ -103,15 +103,15 @@ export const ProductDetails = () => {
 
               <span className="product-num">Product ID: {product.productNumber}</span>
               {product.oldPrice ? (
-                <span className="product-price">Price {product.price}</span>
+                <span className="product-price">Precio: {product.price}</span>
               ) : (
-                <span className="product-price">Rs.{product.price}</span>
+                <span className="product-price">${product.price}</span>
               )}
               <p>{product.content}</p>
 
               {/* <!-- Social Share Link --> */}
               <div className="contacts-info__social">
-                <span>Find us here:</span>
+                <span> Sigue nuestras redes:</span>
                 <ul>
                   {socialLinks.map((social, index) => (
                     <li key={index}>
@@ -142,7 +142,7 @@ export const ProductDetails = () => {
                 {/* <!-- Order Item counter --> */}
                 <div className="product-info__quantity">
                   <span className="product-info__quantity-title">
-                    Quantity:
+                    Cantidad:
                   </span>
                   <div className="counter-box">
                     <span
