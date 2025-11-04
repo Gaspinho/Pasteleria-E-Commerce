@@ -26,3 +26,5 @@ build/
 *.venv/
 *.pyc
 .env
+
+.next/
