@@ -8,14 +8,14 @@ export const Banner = () => {
         <div className="wrapper">
           <div className="main-block__content">
             {/* <span className='saint-text'>Professional</span> */}
-            <h1 className="main-text">Bake and Take</h1>
+            <h1 className="main-text">Pasteleria Mil Sabores</h1>
             <p>
-              We take the best ingredients and ideas to create a sweet
-              masterpiece you’ll remember for years to come.
+              Estamos emocionados de compartir nuestras delicias contigo. <br />
+              <strong>Descubre, saborea y crea momentos inolvidables con nosotros.</strong>
             </p>
 
             <Link href="/shop">
-              <a className="btn">Order now</a>
+              <a className="btn">Compra ya!</a>
             </Link>
           </div>
         </div>

@@ -24,22 +24,20 @@ export const Info = () => {
               />
             </div>
             <div className="info-blocks__item-text">
-              <span className="saint-text">Who are We</span>
-              <h2>We are best cake Providers</h2>
+              <span className="saint-text">¿Quienes somos?</span>
+              <h2>Pastelería 1000 Sabores</h2>
               <p>
-              At it’s core, it’s a tool you can use to visually design and price
-              cakes. Bake and take is built on the idea of itemisation so every
-              aspect of your cake design comes with specific costing and pricing
-              settings so you can focus on designing your cakes and let Bake and
-              take calculate costing and selling price automatically as you add
-              elements.
-                
+              En Pastelería 1000 Sabores no solo hacemos pasteles: creamos recuerdos dulces que perduran en el tiempo.
+              Desde hace más de 50 años endulzamos la vida de los chilenos, combinando tradición, innovación y una pasión inagotable por la repostería.
+
+              Cada torta, cada postre y cada detalle están hechos con los mejores ingredientes, pero sobre todo, con cariño, dedicación y un profundo respeto por nuestras raíces.
+              En 1000 Sabores, creemos que detrás de cada bocado hay una historia, y la tuya merece ser celebrada con el sabor perfecto.
               </p>
               <p>
-                Go through each step and design a beautiful cake and order it
+              Revisa nuestro catálogo y descubre la variedad de sabores y diseños que ofrecemos.
               </p>
               <Link href="/shop">
-                <a className="btn">Shop now</a>
+                <a className="btn">Compra ya!</a>
               </Link>
             </div>
           </div>

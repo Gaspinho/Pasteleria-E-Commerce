@@ -47,8 +47,8 @@ export const ReviewFrom = (props) => {
           <img src='/assets/img/subscribe-img.png' />
         </div>
         <form  onSubmit={handleSubmit}>
-          <h4>leave a review</h4>
-          <p>We Appreciate your Kindness.</p>
+          <h4> Escribe una reseña</h4>
+          <p>Muchas gracias!</p>
           <div className='rating' data-id='rating_1'>
             <Rating
               onClick={handleRating}
@@ -62,7 +62,7 @@ export const ReviewFrom = (props) => {
             <input
               type='text'
               className='form-control'
-              placeholder='Enter your name'
+              placeholder='Nombre'
               name='userName'
             />
             {server_error.name ? (
@@ -73,7 +73,7 @@ export const ReviewFrom = (props) => {
             <input
               type='email'
               className='form-control'
-              placeholder='Enter your email'
+              placeholder='Correo electrónico'
               name='email'
             />
             {server_error.non_user_errors ? (
@@ -83,15 +83,15 @@ export const ReviewFrom = (props) => {
           <div className='box-field box-field__textarea'>
             <textarea
               className='form-control'
-              placeholder='Enter your review'
+              placeholder='Reseña'
               name='content'
             ></textarea>
             {server_error.content ? (
               <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
                 {server_error.content[0]} </lable>) : ("")}
           </div>
-          <button type='submit' className='btn'>
-            send
+          <button type='send' className='btn'>
+            enviar
           </button>
         </form>
         <div style={{marginTop:"1.5rem"}}>  

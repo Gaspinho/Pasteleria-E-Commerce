@@ -18,7 +18,7 @@ export const Footer = () => {
         <div className="wrapper">
           <div className="footer-top">
             <div className="footer-top__social">
-              <span style={{ color: "#fff" }}>Find us here:</span>
+              <span style={{ color: "#fff" }}>Siguenos en redes:</span>
               <ul>
                 {footerSocial.map((social, index) => (
                   <li key={index}>
@@ -39,7 +39,7 @@ export const Footer = () => {
 
             {/* Payment method */}
             <div className="footer-top__payments">
-              <span style={{ color: "#fff" }}>Payment methods:</span>
+              <span style={{ color: "#fff" }}>Metodos de pago:</span>
               <h6>Cash On Delivery </h6>
               <ul>
                 {paymentMethods.map((payment, index) => (
@@ -52,7 +52,7 @@ export const Footer = () => {
           </div>
           <div className="footer-copy">
             <span style={{ color: "#fff" }}>
-              &copy; All rights reserved. Bake and Take 2022
+              &copy; Derechos reservados. Pastelería Mil Sabores 2025
             </span>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ProductsCarousel } from "components/Product/Products/ProductsCarousel";
 import { SectionTitle } from "components/shared/SectionTitle/SectionTitle";
 import { useEffect, useState } from "react";
@@ -17,19 +18,19 @@ export const Trending = () => {
 
   const filterList = [
     {
-      name: "Chocolate Cakes",
+      name: "Tortas Circulares",
       value: "Chocolate",
     },
     {
-      name: "Aniversary Cake",
+      name: "Tortas Cuadradas",
       value: "Aniversary",
     },
     {
-      name: "Cup Cakes",
+      name: "Postres Individuales",
       value: "Cupcakes",
     },
     {
-      name: "Birthday Cakes",
+      name: "Productos Sin Gluten",
       value: "Birthday",
     },
   ];
@@ -39,19 +40,25 @@ export const Trending = () => {
       <section className="trending">
         <div className="trending-content">
           <SectionTitle
-            subTitle="Delicious"
-            title="Experience Flavours"
-            body="If you are looking for something unique, order your desired Cake Design  and how many people you are wanting to serve. Let’s see if we can bring it to life."
+            subTitle="Deliciosos Sabores"
+            title="Revisa nuestras categorias"
+            body="Si estás buscando algo único, pide el diseño de pastel que desees o personaliza uno propio. Veamos si podemos hacerlo realidad."
           />
           <div className="tab-wrap trending-tabs">
             <ul className="nav-tab-list tabs">
               {filterList.map((item) => (
                 <li
                   key={item.value}
-                  onClick={() => setFilterItem(item.value)}
                   className={item.value === filterItem ? "active" : ""}
                 >
-                  {item.name}
+                  <Link
+                    href={{
+                      pathname: "/shop",
+                      query: { category: item.name },
+                    }}
+                  >
+                    <a onClick={() => setFilterItem(item.value)}>{item.name}</a>
+                  </Link>
                 </li>
               ))}
             </ul>
