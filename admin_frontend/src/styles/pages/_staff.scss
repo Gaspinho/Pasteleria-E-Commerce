@@ -1,0 +1,207 @@
+/* ============================================
+   STAFF PAGE - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.userTitleContainer {
+  @include flex-between;
+  margin-bottom: $spacing-lg;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  
+  @include respond-to('sm') {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.userAddButton {
+  @include button($secondary-color, $text-light, $spacing-md $spacing-lg);
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  border-radius: $radius-md;
+  white-space: nowrap;
+  
+  &:hover {
+    background-color: darken($secondary-color, 10%);
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+  
+  @include respond-to('md') {
+    font-size: $font-size-base;
+    padding: $spacing-sm $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    width: 100%;
+  }
+}
+
+.userList {
+  flex: 4;
+  width: 100%;
+  background-color: $bg-secondary;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+  
+  // DataGrid container with horizontal scroll for mobile
+  .MuiDataGrid-root {
+    border: none;
+    min-width: 600px;
+    
+    @include respond-to('lg') {
+      min-width: 500px;
+    }
+  }
+  
+  // Wrapper for horizontal scroll on mobile
+  &Wrapper {
+    width: 100%;
+    overflow-x: auto;
+    
+    @include respond-to('md') {
+      border-radius: $radius-lg;
+    }
+  }
+  
+  @include respond-to('md') {
+    height: auto;
+    min-height: 400px;
+  }
+}
+
+.column {
+  background-color: $secondary-color;
+  font-size: $font-size-lg;
+  color: $text-light;
+  font-weight: $font-weight-semibold;
+  
+  @include respond-to('md') {
+    font-size: $font-size-base;
+  }
+  
+  @include respond-to('sm') {
+    font-size: $font-size-sm;
+  }
+}
+
+.userListUser {
+  @include flex-center;
+  gap: $spacing-sm;
+  
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    object-fit: cover;
+    border: 2px solid $border-light;
+    flex-shrink: 0;
+    
+    @include respond-to('sm') {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  span {
+    @include text-truncate;
+    max-width: 200px;
+    
+    @include respond-to('lg') {
+      max-width: 150px;
+    }
+    
+    @include respond-to('md') {
+      max-width: 120px;
+    }
+  }
+}
+
+.userListEdit {
+  cursor: pointer;
+  font-size: 26px;
+  margin: $spacing-md;
+  color: $primary-color;
+  @include transition(all);
+  
+  &:hover {
+    color: $primary-dark;
+    transform: scale(1.2);
+  }
+  
+  @include respond-to('md') {
+    font-size: 22px;
+    margin: $spacing-sm;
+  }
+  
+  @include respond-to('sm') {
+    font-size: 20px;
+  }
+}
+
+.userListDelete {
+  margin: $spacing-md;
+  color: $danger-color;
+  cursor: pointer;
+  font-size: 26px;
+  @include transition(all);
+  
+  &:hover {
+    color: darken($danger-color, 10%);
+    transform: scale(1.2);
+  }
+  
+  @include respond-to('md') {
+    font-size: 22px;
+    margin: $spacing-sm;
+  }
+  
+  @include respond-to('sm') {
+    font-size: 20px;
+  }
+}
+
+// Staff actions container
+.staffActions {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+  
+  @include respond-to('sm') {
+    gap: $spacing-xs;
+  }
+}
+
+// Staff status badge
+.staffStatus {
+  display: inline-block;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  
+  &--active {
+    background-color: lighten($success-color, 40%);
+    color: darken($success-color, 10%);
+  }
+  
+  &--inactive {
+    background-color: lighten($text-muted, 40%);
+    color: darken($text-muted, 10%);
+  }
+  
+  &--on-leave {
+    background-color: lighten($warning-color, 30%);
+    color: darken($warning-color, 20%);
+  }
+  
+  @include respond-to('sm') {
+    font-size: 10px;
+    padding: 2px $spacing-xs;
+  }
+}

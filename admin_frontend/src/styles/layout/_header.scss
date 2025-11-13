@@ -1,0 +1,206 @@
+/* ============================================
+   HEADER COMPONENT - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.header {
+  display: flex;
+  flex-direction: column;
+  box-shadow: $shadow-md;
+  background-color: $bg-light;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-sticky;
+  @include transition(all);
+  
+  .content {
+    @include flex-between;
+    border-bottom: 1px solid $border-color;
+    height: $header-height;
+    padding: 0 2rem;
+    
+    a {
+      color: $primary-color;
+      font-size: 40px;
+      @include transition(color);
+      
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+    
+    // Responsive
+    @include respond-to('md') {
+      padding: 0 1.5rem;
+      height: 60px;
+      
+      a {
+        font-size: 32px;
+      }
+    }
+    
+    @include respond-to('sm') {
+      padding: 0 1rem;
+      height: 55px;
+      
+      a {
+        font-size: 28px;
+      }
+    }
+  }
+  
+  .headerSearch {
+    background-color: $bg-hover;
+    @include flex-start;
+    gap: 1rem;
+    padding: 1rem 5rem 1rem 1rem;
+    border-radius: $radius-lg;
+    font-size: 20px;
+    font-weight: $font-weight-bold;
+    color: $primary-color;
+    
+    input {
+      background-color: transparent;
+      border: none;
+      font-size: 100%;
+      width: 100%;
+      
+      &:focus {
+        outline: none;
+      }
+      
+      @include placeholder {
+        color: $text-secondary;
+      }
+    }
+    
+    // Responsive
+    @include respond-to('lg') {
+      padding: 0.8rem 3rem 0.8rem 0.8rem;
+      font-size: 18px;
+    }
+    
+    @include respond-to('md') {
+      padding: 0.6rem 2rem 0.6rem 0.6rem;
+      font-size: 16px;
+      border-radius: $radius-md;
+      display: none; // Hide on tablets
+    }
+  }
+  
+  .third-row {
+    padding: 1rem;
+    border-bottom: 1px solid $border-color;
+    color: $secondary-color;
+    
+    @include respond-to('sm') {
+      padding: 0.5rem;
+      font-size: $font-size-sm;
+    }
+  }
+  
+  .headerRight {
+    @include flex-center;
+    gap: 2rem;
+    
+    @include respond-to('md') {
+      gap: 1rem;
+    }
+    
+    @include respond-to('sm') {
+      gap: 0.5rem;
+    }
+  }
+  
+  .notification-item {
+    @include flex-center;
+    padding: 20px;
+    cursor: pointer;
+    @include transition(background-color);
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $bg-light;
+    }
+    
+    @include respond-to('sm') {
+      padding: 15px;
+    }
+  }
+  
+  .userMenue-item {
+    @include flex-center;
+    padding: 20px;
+    font-size: 25px;
+    cursor: pointer;
+    @include transition(background-color);
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $bg-light;
+    }
+    
+    @include respond-to('md') {
+      padding: 15px;
+      font-size: 20px;
+    }
+    
+    @include respond-to('sm') {
+      padding: 10px;
+      font-size: 18px;
+    }
+  }
+  
+  .topnav__right-user {
+    @include flex-center;
+    cursor: pointer;
+    
+    &__image {
+      width: 60px;
+      height: 60px;
+      border-radius: $radius-full;
+      overflow: hidden;
+      margin-right: 10px;
+      border: 2px solid $border-color;
+      @include transition(border-color);
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      &:hover {
+        border-color: $primary-color;
+      }
+      
+      @include respond-to('md') {
+        width: 50px;
+        height: 50px;
+        margin-right: 8px;
+      }
+      
+      @include respond-to('sm') {
+        width: 40px;
+        height: 40px;
+        margin-right: 5px;
+      }
+    }
+    
+    &__name {
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+      color: $text-primary;
+      
+      @include respond-to('md') {
+        font-size: $font-size-sm;
+      }
+      
+      @include respond-to('sm') {
+        display: none; // Hide username on mobile
+      }
+    }
+  }
+}

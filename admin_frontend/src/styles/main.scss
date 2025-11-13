@@ -1,0 +1,35 @@
+/* ============================================
+   MAIN STYLES - Admin Panel
+   Entry point for all SASS files
+   ============================================ */
+
+// Utils
+@import 'utils/variables';
+@import 'utils/mixins';
+
+// Base
+@import 'base/reset';
+@import 'base/css-variables-bridge';
+
+// Layout
+@import 'layout/header';
+@import 'layout/sidebar';
+@import 'layout/applayout';
+
+// Components
+@import 'components/dropdown';
+@import 'components/toolbar';
+@import 'components/cards';
+@import 'components/tables';
+@import 'components/forms';
+@import 'components/buttons';
+
+// Pages
+@import 'pages/dashboard';
+@import 'pages/customers';
+@import 'pages/products';
+@import 'pages/orders';
+@import 'pages/designtool';
+@import 'pages/staff';
+@import 'pages/profile';
+@import 'pages/feedbacks';

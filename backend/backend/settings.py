@@ -78,12 +78,121 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# ============================================
+# SQLite Configuration (Current - Development)
+# ============================================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# ============================================
+# PostgreSQL Configuration (Production Ready)
+# ============================================
+# Uncomment the following configuration to use PostgreSQL
+# Make sure to install psycopg2: pip install psycopg2-binary
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'pasteleria_db',              # Database name
+#         'USER': 'postgres',                    # Database user
+#         'PASSWORD': 'your_password',           # Database password
+#         'HOST': 'localhost',                   # Database host (use 'localhost' for local)
+#         'PORT': '5432',                        # Default PostgreSQL port
+#         # Optional: Connection options for performance
+#         'OPTIONS': {
+#             'connect_timeout': 10,
+#             'options': '-c statement_timeout=30000'  # 30 seconds timeout
+#         },
+#         # Connection pooling (optional but recommended for production)
+#         'CONN_MAX_AGE': 600,  # Keep connections alive for 10 minutes
+#     }
+# }
+
+# ============================================
+# PostgreSQL with Environment Variables (Recommended for Production)
+# ============================================
+# For production, use environment variables to store sensitive data
+# Install python-decouple: pip install python-decouple
+# Then create a .env file with:
+# DB_NAME=pasteleria_db
+# DB_USER=postgres
+# DB_PASSWORD=your_secure_password
+# DB_HOST=localhost
+# DB_PORT=5432
+#
+# from decouple import config
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': config('DB_HOST', default='localhost'),
+#         'PORT': config('DB_PORT', default='5432'),
+#         'CONN_MAX_AGE': 600,
+#     }
+# }
+
+# ============================================
+# PostgreSQL Cloud Services (Production Examples)
+# ============================================
+
+# --- AWS RDS PostgreSQL ---
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'pasteleria_db',
+#         'USER': 'admin',
+#         'PASSWORD': config('RDS_PASSWORD'),
+#         'HOST': 'your-rds-instance.xxxxxxxxx.us-east-1.rds.amazonaws.com',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'require',  # AWS RDS requires SSL
+#         },
+#         'CONN_MAX_AGE': 600,
+#     }
+# }
+
+# --- Heroku PostgreSQL ---
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         conn_max_age=600,
+#         ssl_require=True
+#     )
+# }
+
+# --- DigitalOcean Managed PostgreSQL ---
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'defaultdb',
+#         'USER': 'doadmin',
+#         'PASSWORD': config('DO_DB_PASSWORD'),
+#         'HOST': 'your-db-cluster.db.ondigitalocean.com',
+#         'PORT': '25060',
+#         'OPTIONS': {
+#             'sslmode': 'require',
+#         },
+#         'CONN_MAX_AGE': 600,
+#     }
+# }
+
+# ============================================
+# Migration Commands for PostgreSQL
+# ============================================
+# After switching to PostgreSQL, run these commands:
+# 1. Install PostgreSQL adapter: pip install psycopg2-binary
+# 2. Create database in PostgreSQL: createdb pasteleria_db
+# 3. Run migrations: python manage.py makemigrations
+# 4. Apply migrations: python manage.py migrate
+# 5. Create superuser: python manage.py createsuperuser
+# 6. (Optional) Load existing data: python manage.py loaddata backup.json
 
 
 # Password validation

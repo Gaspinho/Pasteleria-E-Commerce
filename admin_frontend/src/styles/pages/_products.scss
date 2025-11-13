@@ -1,0 +1,477 @@
+/* ============================================
+   PRODUCTS PAGE - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.titlediv {
+  @include flex-between;
+  margin-bottom: $spacing-xl;
+  padding: 0 $spacing-lg;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  
+  @include respond-to('md') {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: 0 $spacing-sm;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-lg;
+  padding: 0 $spacing-lg;
+  margin-bottom: $spacing-xl;
+  
+  @include respond-to('xxl') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-xl;
+  }
+  
+  @include respond-to('xl') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+  }
+  
+  @include respond-to('lg') {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+    padding: 0 $spacing-md;
+  }
+  
+  @include respond-to('md') {
+    grid-template-columns: 1fr;
+    padding: 0 $spacing-md;
+    gap: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    grid-template-columns: 1fr;
+    padding: 0 $spacing-sm;
+    gap: $spacing-sm;
+  }
+}
+
+/* ----- Product Card Section ----- */
+.product {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  padding: $spacing-md;
+  padding-left: $spacing-sm;
+  max-width: 100%;
+  border-radius: $radius-lg;
+  background-image: url('../../images/login-form__bg.png');
+  background-size: cover;
+  background-position: center;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+  @include transition(all);
+  position: relative;
+  min-height: 380px;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-xl;
+  }
+  
+  @include respond-to('lg') {
+    grid-template-columns: 200px 1fr;
+    padding: $spacing-sm;
+    min-height: 350px;
+  }
+  
+  @include respond-to('md') {
+    grid-template-columns: 1fr;
+    padding: $spacing-md;
+    gap: $spacing-md;
+    min-height: auto;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+    gap: $spacing-sm;
+    border-radius: $radius-md;
+  }
+}
+
+/* ----- Photo Section ----- */
+.product__photo {
+  position: relative;
+  min-height: 360px;
+  display: flex;
+  align-items: flex-start;
+  
+  @include respond-to('lg') {
+    min-height: 320px;
+  }
+  
+  @include respond-to('md') {
+    min-height: 300px;
+    justify-content: center;
+  }
+  
+  @include respond-to('sm') {
+    min-height: 250px;
+  }
+}
+
+.photo-container {
+  position: relative;
+  left: 0;
+  display: grid;
+  grid-template-rows: auto min-content;
+  width: 100%;
+  max-width: 240px;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  overflow: hidden;
+  
+  @include respond-to('lg') {
+    max-width: 200px;
+  }
+  
+  @include respond-to('md') {
+    position: relative;
+    left: 0;
+    width: 100%;
+    max-width: 260px;
+  }
+  
+  @include respond-to('sm') {
+    max-width: 220px;
+  }
+}
+
+.photo-main {
+  border-radius: $radius-md $radius-md 0 0;
+  background: radial-gradient(circle, #fff0f1, #DA627D);
+  position: relative;
+  min-height: 280px;
+  @include flex-center;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    max-height: 240px;
+    object-fit: contain;
+    padding: $spacing-sm;
+    
+    @include respond-to('lg') {
+      max-width: 200px;
+      max-height: 200px;
+    }
+    
+    @include respond-to('sm') {
+      max-width: 180px;
+      max-height: 180px;
+      padding: $spacing-xs;
+    }
+  }
+  
+  @include respond-to('lg') {
+    min-height: 240px;
+  }
+  
+  @include respond-to('sm') {
+    min-height: 200px;
+  }
+}
+
+.photo-album {
+  padding: $spacing-sm;
+  background-color: $bg-light;
+  border-radius: 0 0 $radius-md $radius-md;
+  
+  ul {
+    display: flex;
+    justify-content: space-around;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+  }
+  
+  li {
+    width: 65px;
+    height: 65px;
+    border: 2px solid $primary-color;
+    border-radius: $radius-sm;
+    overflow: hidden;
+    cursor: pointer;
+    @include transition(all);
+    
+    &:hover {
+      border-color: $secondary-color;
+      transform: scale(1.05);
+    }
+    
+    @include respond-to('sm') {
+      width: 55px;
+      height: 55px;
+    }
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ----- Information Section ----- */
+.product__info {
+  padding: $spacing-sm $spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  min-width: 0;
+  
+  @include respond-to('lg') {
+    padding: $spacing-xs $spacing-sm;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-xs;
+    gap: $spacing-xs;
+  }
+}
+
+.title {
+  h1 {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin: 0 0 $spacing-xs 0;
+    @include line-clamp(2);
+    word-break: break-word;
+    
+    @include respond-to('lg') {
+      font-size: $font-size-lg;
+    }
+    
+    @include respond-to('sm') {
+      font-size: $font-size-base;
+    }
+  }
+  
+  span {
+    font-size: $font-size-sm;
+    color: $primary-color;
+    font-weight: $font-weight-medium;
+    display: block;
+    margin-top: $spacing-xs;
+    @include text-truncate;
+    
+    @include respond-to('sm') {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+// Data Product Info Fields
+.dataProduct {
+  display: flex;
+  gap: 50px;
+  
+  h3 {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin: 0;
+    margin-bottom: 2px;
+    
+    @include respond-to('lg') {
+      font-size: $font-size-xs;
+    }
+    
+    @include respond-to('sm') {
+      font-size: 11px;
+    }
+  }
+  
+  span {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    font-weight: $font-weight-medium;
+    word-break: break-word;
+    
+    @include respond-to('lg') {
+      font-size: $font-size-xs;
+    }
+    
+    @include respond-to('sm') {
+      font-size: 11px;
+    }
+  }
+}
+
+.description {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  line-height: 1.5;
+  margin-top: $spacing-sm;
+  
+  h3 {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin: 0 0 $spacing-xs 0;
+    
+    @include respond-to('lg') {
+      font-size: $font-size-xs;
+    }
+    
+    @include respond-to('sm') {
+      font-size: 11px;
+    }
+  }
+  
+  p {
+    @include line-clamp(2);
+    word-break: break-word;
+    margin: 0;
+    
+    @include respond-to('lg') {
+      font-size: $font-size-xs;
+      @include line-clamp(2);
+    }
+    
+    @include respond-to('sm') {
+      font-size: 11px;
+      @include line-clamp(2);
+    }
+  }
+}
+
+.price {
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $secondary-color;
+  margin: $spacing-sm 0;
+  word-break: break-word;
+  
+  @include respond-to('lg') {
+    font-size: $font-size-xl;
+  }
+  
+  @include respond-to('sm') {
+    font-size: $font-size-lg;
+    margin: $spacing-xs 0;
+  }
+}
+
+.product__actions {
+  @include flex-start;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+  margin-top: auto;
+  
+  button {
+    @include button($primary-color, $text-light, $spacing-xs $spacing-md);
+    font-size: $font-size-xs;
+    
+    &:hover {
+      background-color: $primary-dark;
+    }
+    
+    &.delete {
+      background-color: $danger-color;
+      
+      &:hover {
+        background-color: darken($danger-color, 10%);
+      }
+    }
+    
+    &.edit {
+      background-color: $info-color;
+      
+      &:hover {
+        background-color: darken($info-color, 10%);
+      }
+    }
+    
+    @include respond-to('lg') {
+      padding: $spacing-xs $spacing-sm;
+      font-size: 11px;
+    }
+    
+    @include respond-to('sm') {
+      flex: 1;
+      min-width: fit-content;
+      padding: $spacing-xs $spacing-sm;
+      font-size: 10px;
+    }
+  }
+  
+  @include respond-to('sm') {
+    gap: $spacing-sm;
+  }
+}
+
+.product__details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: $radius-md;
+  
+  &-item {
+    @include flex-between;
+    padding: $spacing-xs 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    strong {
+      color: $text-primary;
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-sm;
+      min-width: 100px;
+      
+      @include respond-to('sm') {
+        font-size: $font-size-xs;
+        min-width: 80px;
+      }
+    }
+    
+    span {
+      color: $text-secondary;
+      font-size: $font-size-sm;
+      text-align: right;
+      @include text-truncate;
+      max-width: 200px;
+      
+      @include respond-to('sm') {
+        font-size: $font-size-xs;
+        max-width: 150px;
+      }
+    }
+    
+    @include respond-to('sm') {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-xs;
+      
+      span {
+        text-align: left;
+        max-width: 100%;
+      }
+    }
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+    gap: $spacing-xs;
+  }
+}

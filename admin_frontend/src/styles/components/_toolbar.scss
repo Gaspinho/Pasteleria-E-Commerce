@@ -1,0 +1,123 @@
+/* ============================================
+   TOOLBAR COMPONENT - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.toolbar {
+  @include flex-between;
+  padding: $spacing-md;
+  background-color: $bg-light;
+  border-radius: $radius-md;
+  margin-bottom: $spacing-xl;
+  box-shadow: $shadow-sm;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  
+  &__left,
+  &__right {
+    @include flex-start;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+  
+  &__search {
+    @include flex-start;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background-color: $bg-hover;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    min-width: 250px;
+    
+    input {
+      border: none;
+      background: transparent;
+      flex: 1;
+      min-width: 0;
+      
+      &:focus {
+        outline: none;
+      }
+    }
+    
+    i, svg {
+      color: $text-secondary;
+    }
+  }
+  
+  &__button {
+    @include button($primary-color, $text-light, $spacing-sm $spacing-md);
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    
+    &--secondary {
+      @include button($bg-hover, $text-primary, $spacing-sm $spacing-md);
+      border: 1px solid $border-color;
+    }
+  }
+  
+  &__filter {
+    @include flex-start;
+    gap: $spacing-sm;
+    
+    select {
+      padding: $spacing-sm $spacing-md;
+      border: 1px solid $border-color;
+      border-radius: $radius-md;
+      background-color: $bg-light;
+      cursor: pointer;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+  
+  // Responsive
+  @include respond-to('lg') {
+    padding: $spacing-md;
+    
+    &__search {
+      min-width: 200px;
+    }
+  }
+  
+  @include respond-to('md') {
+    padding: $spacing-sm;
+    gap: $spacing-sm;
+    
+    &__left,
+    &__right {
+      gap: $spacing-sm;
+    }
+    
+    &__search {
+      min-width: 150px;
+      padding: $spacing-xs $spacing-sm;
+    }
+  }
+  
+  @include respond-to('sm') {
+    flex-direction: column;
+    align-items: stretch;
+    
+    &__left,
+    &__right {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    &__search {
+      width: 100%;
+      min-width: 100%;
+    }
+    
+    &__button {
+      flex: 1;
+      text-align: center;
+    }
+  }
+}

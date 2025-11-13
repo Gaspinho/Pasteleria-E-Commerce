@@ -1,0 +1,216 @@
+/* ============================================
+   FEEDBACKS PAGE - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.reviewsGrid {
+  padding: $spacing-xl 0;
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $spacing-lg $spacing-md;
+  justify-content: center;
+  
+  @include respond-to('xl') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @include respond-to('lg') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+  }
+  
+  @include respond-to('md') {
+    grid-template-columns: 1fr;
+    padding: $spacing-lg 0;
+    gap: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-md 0;
+    gap: $spacing-sm;
+  }
+}
+
+.col {
+  width: 100%;
+  max-width: 380px;
+  height: 420px;
+  box-sizing: border-box;
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-lg;
+  border: 3px solid #A53860;
+  border-top-left-radius: 30%;
+  border-bottom-right-radius: 30%;
+  background-image: url('../../images/login-form__bg.png');
+  background-size: cover;
+  background-position: center;
+  box-shadow: $shadow-lg;
+  @include transition(all);
+  margin: 0 auto;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $shadow-xl;
+  }
+  
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: $radius-full;
+    object-fit: cover;
+    border: 4px solid $bg-light;
+    box-shadow: $shadow-md;
+    flex-shrink: 0;
+  }
+  
+  p {
+    margin: $spacing-md 0;
+    font-size: $font-size-base;
+    line-height: 1.6;
+    @include line-clamp(4);
+    word-break: break-word;
+    color: $text-primary;
+  }
+  
+  h5 {
+    margin: $spacing-md 0;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+  }
+  
+  @include respond-to('md') {
+    max-width: 100%;
+    height: 400px;
+    padding: $spacing-md;
+    
+    img {
+      width: 90px;
+      height: 90px;
+    }
+  }
+  
+  @include respond-to('sm') {
+    height: 380px;
+    padding: $spacing-sm;
+    border-width: 2px;
+    
+    img {
+      width: 80px;
+      height: 80px;
+      border: 3px solid $bg-light;
+    }
+    
+    p {
+      font-size: $font-size-sm;
+      @include line-clamp(3);
+    }
+    
+    h5 {
+      font-size: $font-size-base;
+    }
+  }
+}
+
+.name {
+  font-size: $font-size-xl;
+  text-transform: uppercase;
+  margin: $spacing-lg 0;
+  font-weight: $font-weight-bold;
+  @include text-truncate;
+  color: $text-primary;
+  
+  @include respond-to('md') {
+    font-size: $font-size-lg;
+    margin: $spacing-md 0;
+  }
+  
+  @include respond-to('sm') {
+    font-size: $font-size-base;
+    margin: $spacing-sm 0;
+  }
+}
+
+.stars {
+  @include flex-center;
+  gap: $spacing-xs;
+  color: #eef163;
+  margin-bottom: $spacing-lg;
+  font-size: $font-size-xl;
+  
+  i, svg {
+    flex-shrink: 0;
+  }
+  
+  @include respond-to('md') {
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    font-size: $font-size-base;
+    margin-bottom: $spacing-sm;
+    gap: 2px;
+  }
+}
+
+// Feedback metadata
+.feedbackMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1px solid rgba($border-light, 0.3);
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  
+  @include respond-to('sm') {
+    font-size: $font-size-xs;
+    flex-direction: column;
+    gap: $spacing-xs;
+    text-align: center;
+  }
+}
+
+// Empty state
+.emptyFeedback {
+  text-align: center;
+  padding: $spacing-xxl;
+  color: $text-muted;
+  
+  i, svg {
+    font-size: 64px;
+    margin-bottom: $spacing-lg;
+  }
+  
+  h3 {
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-md;
+    color: $text-secondary;
+  }
+  
+  p {
+    font-size: $font-size-base;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-xl;
+    
+    i, svg {
+      font-size: 48px;
+    }
+    
+    h3 {
+      font-size: $font-size-lg;
+    }
+    
+    p {
+      font-size: $font-size-sm;
+    }
+  }
+}

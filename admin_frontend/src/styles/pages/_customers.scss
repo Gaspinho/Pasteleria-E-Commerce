@@ -1,0 +1,208 @@
+/* ============================================
+   CUSTOMERS PAGE - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.userTitle {
+  margin-bottom: $spacing-xl;
+  padding: 0 $spacing-lg;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  @include text-truncate;
+  
+  @include respond-to('md') {
+    padding: 0 $spacing-md;
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-lg;
+  }
+  
+  @include respond-to('sm') {
+    padding: 0 $spacing-sm;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.userList {
+  flex: 4;
+  width: 100%;
+  background-color: $bg-light;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  padding: $spacing-lg;
+  
+  @include respond-to('md') {
+    padding: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+    border-radius: $radius-md;
+  }
+}
+
+.column {
+  background-color: $secondary-color;
+  color: $text-light;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  padding: $spacing-md;
+  @include text-truncate;
+  
+  @include respond-to('md') {
+    font-size: $font-size-base;
+    padding: $spacing-sm;
+  }
+  
+  @include respond-to('sm') {
+    font-size: $font-size-sm;
+    padding: $spacing-xs;
+  }
+}
+
+.userListUser {
+  @include flex-start;
+  gap: $spacing-md;
+  padding: $spacing-sm;
+  min-width: 0;
+  
+  &Avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid $border-color;
+    
+    @include respond-to('sm') {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  &Info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
+  
+  &Name {
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    font-size: $font-size-base;
+    @include text-truncate;
+    
+    @include respond-to('sm') {
+      font-size: $font-size-sm;
+    }
+  }
+  
+  &Email {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    @include text-truncate;
+    
+    @include respond-to('sm') {
+      font-size: $font-size-xs;
+    }
+  }
+  
+  @include respond-to('sm') {
+    gap: $spacing-sm;
+  }
+}
+
+.userListEdit,
+.userListDelete {
+  cursor: pointer;
+  font-size: 26px;
+  padding: $spacing-sm;
+  @include transition(all);
+  border-radius: $radius-sm;
+  
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  @include respond-to('md') {
+    font-size: 22px;
+    padding: $spacing-xs;
+  }
+  
+  @include respond-to('sm') {
+    font-size: 20px;
+  }
+}
+
+.userListEdit {
+  color: $info-color;
+  
+  &:hover {
+    color: darken($info-color, 10%);
+  }
+}
+
+.userListDelete {
+  color: $danger-color;
+  margin-left: $spacing-xs;
+  
+  &:hover {
+    color: darken($danger-color, 10%);
+  }
+}
+
+// DataGrid responsive wrapper
+.userListContainer {
+  overflow-x: auto;
+  width: 100%;
+  @include custom-scrollbar(6px);
+  
+  // Make DataGrid responsive
+  .MuiDataGrid-root {
+    min-width: 600px;
+    border: none;
+    
+    .MuiDataGrid-cell {
+      padding: $spacing-sm $spacing-md;
+      
+      @include respond-to('sm') {
+        padding: $spacing-xs $spacing-sm;
+        font-size: $font-size-xs;
+      }
+    }
+    
+    .MuiDataGrid-columnHeader {
+      background-color: $bg-hover;
+      font-weight: $font-weight-semibold;
+      
+      @include respond-to('sm') {
+        font-size: $font-size-xs;
+      }
+    }
+    
+    @include respond-to('md') {
+      min-width: 500px;
+    }
+    
+    @include respond-to('sm') {
+      min-width: 400px;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+// Actions container
+.userListActions {
+  @include flex-center;
+  gap: $spacing-sm;
+  
+  @include respond-to('sm') {
+    gap: $spacing-xs;
+  }
+}

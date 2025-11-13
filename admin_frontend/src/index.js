@@ -4,7 +4,8 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import { store } from './app/store'
 import { createRoot } from 'react-dom/client';
-import "./index.css";
+// Import SASS styles instead of CSS
+import "./styles/main.scss";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
