@@ -15,7 +15,7 @@
 	  <link rel="stylesheet" type="text/css" href="./css/header.css" />
 <link rel="shortcut icon"  href="bundles/design/site_data/images/footer-logo.png" />
 
- <title> Design Your Cake</title>
+ <title>Diseña tu pastel</title>
 
 <script src="bundles/design/site_data/js/jquery.min.js"></script>
 <script src="bundles/design/site_data/js/bootstrap.min.js"></script>
@@ -139,18 +139,18 @@
 function validate1()
 {
 // alert("test1");
-    if($("#first_name").val()=='' || $("#last_name").val()=='' || $("#email1").val()=='' || $("#mobile_no").val()=='' || $("#password1").val()=='' || $("#password2").val()=='')
+	 if($("#first_name").val()=='' || $("#last_name").val()=='' || $("#email1").val()=='' || $("#mobile_no").val()=='' || $("#password1").val()=='' || $("#password2").val()=='')
  {
-    $("#errormsg2").html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><div style="direction:ltr;"><strong>Error!</strong>&nbsp;&nbsp;&nbsp;Please fill up all required fields.</div></div>');
+	 $("#errormsg2").html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><div style="direction:ltr;"><strong>Error!</strong>&nbsp;&nbsp;&nbsp;Por favor completa todos los campos obligatorios.</div></div>');
 
  }
   else if($('#password1').val() == $('#password2').val())
   {
 //  alert("test2");
-       if($("#mobile_no").val().length<8)
-       {
-            $("#errormsg2").html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><div style="direction:ltr;"><strong>Error!</strong>&nbsp;&nbsp;&nbsp;Mobile Number Must be 8 or More digit.</div></div>');
-       }else{
+	  if($("#mobile_no").val().length<8)
+	  {
+		  $("#errormsg2").html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><div style="direction:ltr;"><strong>Error!</strong>&nbsp;&nbsp;&nbsp;El número móvil debe tener 8 o más dígitos.</div></div>');
+	  }else{
       $.ajax
       ({
           type: 'POST',
@@ -162,7 +162,7 @@ function validate1()
               {
                    $("#loginModal").modal('hide');
                    $('#myModal').modal('show');
-                   $(".msg").html("Registration done successfully.");
+				   $(".msg").html("Registro completado con éxito.");
                    location.reload();
               }else{
 
@@ -176,11 +176,11 @@ function validate1()
   }
 
   }
-  else{
-    $("#errormsg2").html("<div class='alert alert-danger'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><div style='direction:ltr;'><strong>Error!</strong>&nbsp;&nbsp;&nbsp;Password and Confirm password doesn\'t match.</div></div>");
+	else{
+		$("#errormsg2").html("<div class='alert alert-danger'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><div style='direction:ltr;'><strong>Error!</strong>&nbsp;&nbsp;&nbsp;La contraseña y su confirmación no coinciden.</div></div>");
 
-    return false;
-  }
+		return false;
+	}
 
   //event.preventDefault();
   //alert("Password and Confirm password doesn't match.");
@@ -203,7 +203,7 @@ function validate1()
               <div class="modal-body">
                   <div class="row" id="to_hide1">
                       <div class="col-xs-12 col-sm-6 left-block">
-                          <h3>Sign In</h3>
+						  <h3>Iniciar sesión</h3>
                           <form>
                               <div class="form-group">
                                    <div id="errormsg"></div>
@@ -214,9 +214,9 @@ function validate1()
                                   <label for="pwd">Password</label>
                                   <input type="password" placeholder="Password" name="pwd" class="form-control" id="pwd">
                               </div>
-                              <a href="#" class="theme-color" data-toggle="modal" data-target="#forgotpassModal" data-dismiss="modal">FORGOT PASSWORD</a>
+							  <a href="#" class="theme-color" data-toggle="modal" data-target="#forgotpassModal" data-dismiss="modal">¿Olvidaste tu contraseña?</a>
 
-                               <a href="javascript:void(0);" onclick="login();" class="btn signin-act-btn">Sign In</a>
+							   <a href="javascript:void(0);" onclick="login();" class="btn signin-act-btn">Iniciar sesión</a>
                                <div class="clearfix"></div>
 							                                  
                           </form>
@@ -224,14 +224,14 @@ function validate1()
                       </div>
                       <div class="col-xs-12 col-sm-6">
                           <h3> New to the Cake Shop?</h3>
-                          <a href="#" onClick="show_hide1()" class="btn create-act-btn">Create an account</a>
+						  <a href="#" onClick="show_hide1()" class="btn create-act-btn">Crear una cuenta</a>
                       </div>
                   </div>
                   <div class="row" id="to_hide2" style="display:none;">
                     <form  onsubmit=" validate1();" method="POST" name="create_new" id="create_new">
                       <div class="col-xs-12 col-sm-12 left-block">
 
-                          <h3>Create an account</h3>
+						  <h3>Crear una cuenta</h3>
                            <div id="errormsg2"></div>
                            <div class="col-sm-6">
                               <div class="form-group">
@@ -270,11 +270,11 @@ function validate1()
                             </div>
                         </div>
                             <div class="col-xs-6">
-                                                            <a href="javascript:void(0);" onclick=" validate1();" name="create_user" id="create_user"  class="form-control btn signin-act-btn" >Create</a>
+															<a href="javascript:void(0);" onclick=" validate1();" name="create_user" id="create_user"  class="form-control btn signin-act-btn" >Crear</a>
                             </div>
                             <div class="col-xs-6">
 
-                            <input type="button" class="form-control btn signin-act-btn" id="btn_back2" onClick="btn_back3()" value="Back" text="Back"/>
+							<input type="button" class="form-control btn signin-act-btn" id="btn_back2" onClick="btn_back3()" value="Volver" text="Volver"/>
 
                             </div>
                           </div>
@@ -373,6 +373,33 @@ display: none;
 	height: 109px !important;
 	width: 167px !important;
 	}
+
+/* Highlight selected options */
+.shape.active, .layer.active, .printimage.active {
+	border: 3px solid #da627d;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+	transform: translateY(-6px);
+}
+.shape, .layer, .printimage { transition: all 180ms ease; cursor: pointer; }
+
+/* Ensure print-image thumbnails scale nicely */
+.printimage img { width: 100%; height: auto; max-height: 110px; object-fit: contain; }
+
+/* Make the top image overlay behave and not get cropped */
+.middel-bag { overflow: visible !important; }
+.cake-top-img-real, .cake-toping-img-real {
+	position: absolute !important;
+	display: block !important;
+	max-width: 100% !important;
+	height: auto !important;
+	object-fit: contain !important;
+	pointer-events: none !important;
+	z-index: 999 !important;
+}
+
+/* Small visual tweak for active thumbnail */
+.img-custom-pre { display:block; max-width:100%; }
+.layer.active .img-custom-pre, .printimage.active img { transform: scale(1.03); }
 	.centertxt img
 	{
 	width: 270px;
@@ -388,10 +415,10 @@ display: none;
 <script src="../code.createjs.com/easeljs-0.8.2.min.js"></script>
 <div class="container main design-your-cake" style="background-color: #fff ;">
 	
-	<div class="textdata">
-		<h2>Design Cake</h2>
-		<p>Design your perfect Cake using this easy step-by-step process.</p>
-	</div>
+ 	<div class="textdata">
+ 		<h2>Diseña tu pastel</h2>
+ 		<p>Diseña tu pastel perfecto usando este sencillo proceso paso a paso.</p>
+ 	</div>
 	<div class="container steps">
 				<div class="row">
 			<section>
@@ -444,39 +471,39 @@ display: none;
 				
 				<div class="tab-pane ck-tab1 active " role="tabpanel" id="step1">
 					<div class="col-xs-12 col-sm-8 left-part">
-						<h3>Choose your cake Shape & Layers</h3>
-						<h4>Choose Cake Shape</h4>
+				 		<h3>Elige la forma y las capas de tu pastel</h3>
+				 		<h4>Elige la forma</h4>
 						<div class="row cate-block">
 					<div class="col-xs-6 col-sm-3 shape" id="shape1" onclick="getlayers(1,'Round Shape Cake');">
-								<img src="bundles/design/shapeimage/1517673754_ck_13.png" alt="" >
-								<h6>Round Shape Cake</h6>
+							<img src="bundles/design/shapeimage/1517673754_ck_13.png" alt="" >
+							<h6>Pastel redondo</h6>
 							</div>
-						<div class="col-xs-6 col-sm-3 shape" id="shape3" onclick="getlayers(3,'Rectangular Cake');">
-								<img src="bundles/design/shapeimage/1517673707_ck_9.png" alt="" >
-								<h6>Rectangular Cake</h6>
+					<div class="col-xs-6 col-sm-3 shape" id="shape3" onclick="getlayers(3,'Rectangular Cake');">
+							<img src="bundles/design/shapeimage/1517673707_ck_9.png" alt="" >
+							<h6>Pastel rectangular</h6>
 							</div>
 																				</div>
-						<h4>Choose Number of Layers</h4>
+				 		<h4>Elige el número de capas</h4>
 					
 							<div class="row cate-block cake-preview-block vih"  id="layers1">
 								<div class="col-xs-6 col-sm-3 layer active" onclick="selectlayer(5,'https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234358_1_14.png',1)" id="la5">
                                 <img class="img-custom-pre" data-src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234358_1_14.png" src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234358_1_14.png" alt="">
-                                <input type="hidden" value="1500.000" id="la_price_5" data-id="5" data-no="1">
-                                <h6>4 inch for 2 person</h6>
+								<input type="hidden" value="15000" id="la_price_5" data-id="5" data-no="1">
+								<h6>4 pulgadas para 2 personas</h6>
                             </div>
 							<div class="col-xs-6 col-sm-3 layer" onclick="selectlayer(14,'https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234481_1_9.png',2)" id="la14">
                                 <img class="img-custom-pre" data-src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234481_1_9.png" src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234481_1_9.png" alt="">
-                                <input type="hidden" value="2500.000" id="la_price_14" data-id="14" data-no="2">
-                                <h6>6 Inch Round (1st Tier) 
-									4 InchRound (2nd Tier)
-									For 11 Person</h6>
+								<input type="hidden" value="25000" id="la_price_14" data-id="14" data-no="2">
+								<h6>6 pulgadas (1.º piso)
+									4 pulgadas (2.º piso)
+									Para 11 personas</h6>
                             </div><div class="col-xs-6 col-sm-3 layer" onclick="selectlayer(16,'https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234736_1_12.png',3)" id="la16">
                                 <img class="img-custom-pre" data-src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234736_1_12.png" src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517234736_1_12.png" alt="">
-                                <input type="hidden" value="3500.000" id="la_price_16" data-id="16" data-no="3">
-                                <h6>9 Inch Round( 1st Tier)
-								6 Inch Round( 2nd Tier)
-								4 Inch Round( 3rd Tier)
-								For 21 Person</h6>
+								<input type="hidden" value="35000" id="la_price_16" data-id="16" data-no="3">
+								<h6>9 pulgadas (1.º piso)
+								6 pulgadas (2.º piso)
+								4 pulgadas (3.º piso)
+								Para 21 personas</h6>
                             </div>
 						</div>
 
@@ -485,30 +512,30 @@ display: none;
 					<div class="row cate-block cake-preview-block vih"  id="layers2">
 							<div class="col-xs-6 col-sm-3 layer active" onclick="selectlayer(18,'https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672096_3_18.png',1)" id="la18">
 							<img class="img-custom-pre" data-src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672096_3_18.png" src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672096_3_18.png" alt="">
-							<input type="hidden" value="1500.000" id="la_price_18" data-id="18" data-no="1">
-							<h6>21 x 29.7 cm for 20 person</h6>
+							<input type="hidden" value="15000" id="la_price_18" data-id="18" data-no="1">
+							<h6>21 x 29.7 cm para 20 personas</h6>
 						</div><div class="col-xs-6 col-sm-3 layer" onclick="selectlayer(19,'https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672142_3_19.png',2)" id="la19">
 							<img class="img-custom-pre" data-src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672142_3_19.png" src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672142_3_19.png" alt="">
-							<input type="hidden" value="2500.000" id="la_price_19" data-id="19" data-no="2">
-							<h6>30 x 40 cm( 1 st Tier )
-						21 x 29.7 cm( 2 nd Tier) for 55 Person </h6>
+							<input type="hidden" value="25000" id="la_price_19" data-id="19" data-no="2">
+							<h6>30 x 40 cm (1.º piso)
+						21 x 29.7 cm (2.º piso) para 55 personas</h6>
 						</div><div class="col-xs-6 col-sm-3 layer" onclick="selectlayer(20,'https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672190_3_20.png',3)" id="la20">
 							<img class="img-custom-pre" data-src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672190_3_20.png" src="https://www.thecakeshop.com.kw/bundles/design/layerimage/1517672190_3_20.png" alt="">
-							<input type="hidden" value="3500.000" id="la_price_20" data-id="20" data-no="3">
-							<h6>40 x 60 Cm( 1st Tier) 30 x 40 Cm( 2nd Tier) 21 x 29.7 Cm( 3rd Tier) For 105 person</h6>
+							<input type="hidden" value="35000" id="la_price_20" data-id="20" data-no="3">
+							<h6>40 x 60 cm (1.º piso) 30 x 40 cm (2.º piso) 21 x 29.7 cm (3.º piso) para 105 personas</h6>
 						</div></div> 
 
 						<ul class="list-inline pull-right">
 							<li>
-								<button type="button" class="btn btn-primary next-step first" style="background-color: #da627d;"  >Next <i class="fa fa-angle-right"></i></button>
+								<button type="button" class="btn btn-primary next-step first" style="background-color: #da627d;"  >Siguiente <i class="fa fa-angle-right"></i></button>
 							</li>
 						</ul>
 					</div>
 					<div class="col-xs-12 col-sm-4 right-part first-part">
 						<ul>
 							<!-- <li>Collection Date & Time: <b class="datetime datecss"></b></li> -->
-							<li>Categories of Cake: <b class="cake_name">Customized Cake</b></li>
-							<!--<li>Number of Peoples required: <b class="no_of_people datecss">6</b></li>-->
+							<li>Categoría del pastel: <b class="cake_name">Pastel personalizado</b></li>
+							<!-- <li>Número de personas requerido: <b class="no_of_people datecss">6</b></li>-->
 						</ul>
 						<div class="middel-bag my-cak">
 							<div class="layer_right_div">
@@ -521,82 +548,82 @@ display: none;
 						</div>
 						<div class="footer-bag">
 							<div class="row">
-								<div class="col-xs-6">Total Amount</div>
-								<div class="col-xs-6"><b id="first_part_amt" class="amt">00.000 PKR</b></div>
+								<div class="col-xs-6">Importe total</div>
+								<div class="col-xs-6"><b id="first_part_amt" class="amt">0 CLP</b></div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="tab-pane ck-tab2 " role="tabpanel" id="step2">
 					<div class="col-xs-12 col-sm-8 left-part">
-						<h3>Choose Sponge Flavor & Icing</h3>
-												<h4>Choose Sponge Flavor</h4>
+						<h3>Elige el sabor del bizcocho y el glaseado</h3>
+												<h4>Elige el sabor del bizcocho</h4>
 	 <div class="row cate-block ck-tab-3-sld-1 pos-relative">
 	<div class="swiper-container">
 	 <div class="swiper-wrapper">	
-	<div class="swiper-slide flavor validate-sponge" id="flavor2"  style="margin-left: 50px ;" onclick="select_falvor(2, 'Chocolate Sponge Cake')">
+	<div class="swiper-slide flavor validate-sponge" id="flavor2"  style="margin-left: 50px ;" onclick="select_falvor(2, 'Bizcocho de chocolate')">
 		<a href="javascript:void(0);">
-		<img src="bundles/design/spongeflavorimage/1508932827_3-2.png" alt=""><span>Chocolate Sponge Cake</span></a>
-	<input type='hidden' value="0.000" id="fa_price_2">
+		<img src="bundles/design/spongeflavorimage/1508932827_3-2.png" alt=""><span>Bizcocho de chocolate</span></a>
+	<input type='hidden' value="0" id="fa_price_2">
 	</div>
-	<div class="swiper-slide flavor validate-sponge" id="flavor3"  onclick="select_falvor(3, 'Vanilla  Sponge cake')">
+	<div class="swiper-slide flavor validate-sponge" id="flavor3"  onclick="select_falvor(3, 'Bizcocho de vainilla')">
 		<a href="javascript:void(0);">
-		<img src="bundles/design/spongeflavorimage/1525353265_vanilla.png" alt=""><span>Vanilla  Sponge cake</span></a>
-	<input type='hidden' value="0.000" id="fa_price_3">
+		<img src="bundles/design/spongeflavorimage/1525353265_vanilla.png" alt=""><span>Bizcocho de vainilla</span></a>
+	<input type='hidden' value="0" id="fa_price_3">
 	</div>
-	<div class="swiper-slide flavor validate-sponge" id="flavor4"  onclick="select_falvor(4, 'Red Velvet Sponge cake')">
+	<div class="swiper-slide flavor validate-sponge" id="flavor4"  onclick="select_falvor(4, 'Bizcocho Red Velvet')">
 		<a href="javascript:void(0);">
-		<img src="bundles/design/spongeflavorimage/1512551030_3-3.png" alt=""><span>Red Velvet Sponge cake</span></a>
-	<input type='hidden' value="0.000" id="fa_price_4">
+		<img src="bundles/design/spongeflavorimage/1512551030_3-3.png" alt=""><span>Bizcocho Red Velvet</span></a>
+	<input type='hidden' value="0" id="fa_price_4">
 	</div>
 																																			</div>
 							</div>
 				
 						</div>
-						<h4>Choose Icing </h4>
+						<h4>Elige el glaseado</h4>
 						<div class="row cate-block ck-tab-3-sld-2 pos-relative">
 							<div class="swiper-container">
 								<div class="swiper-wrapper">
 
-								<div class="swiper-slide topfilling" style="margin-left: 50px;" onclick="select_topfilling(1, 'Cream cheese frosting   green')" id="topfilling1"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1526374212_T1.jpg" alt=""><span>Cream cheese frosting   green</span></a>
-										<input type='hidden' value="0.000" id="fi_price_1">
+								<div class="swiper-slide topfilling" style="margin-left: 50px;" onclick="select_topfilling(1, 'Cream cheese frosting   green')" id="topfilling1"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1526374212_T1.jpg" alt=""><span>Glaseado de queso crema (verde)</span></a>
+										<input type='hidden' value="0" id="fi_price_1">
 									</div>
 
-																		<div class="swiper-slide topfilling" onclick="select_topfilling(3, 'Cream cheese frosting bright green')" id="topfilling3"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1526374585_T7.jpg" alt=""><span>Cream cheese frosting bright green</span></a>
-										<input type='hidden' value="0.000" id="fi_price_3">
+																		<div class="swiper-slide topfilling" onclick="select_topfilling(3, 'Cream cheese frosting bright green')" id="topfilling3"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1526374585_T7.jpg" alt=""><span>Glaseado de queso crema (verde brillante)</span></a>
+										<input type='hidden' value="0" id="fi_price_3">
 									</div>
-																		<div class="swiper-slide topfilling" onclick="select_topfilling(4, 'Cream cheese frosting Royal Blue')" id="topfilling4"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1526374785_T3.jpg" alt=""><span>Cream cheese frosting Royal Blue</span></a>
-										<input type='hidden' value="0.000" id="fi_price_4">
+																		<div class="swiper-slide topfilling" onclick="select_topfilling(4, 'Cream cheese frosting Royal Blue')" id="topfilling4"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1526374785_T3.jpg" alt=""><span>Glaseado de queso crema (azul real)</span></a>
+										<input type='hidden' value="0" id="fi_price_4">
 									</div>
 
-																		<div class="swiper-slide topfilling" onclick="select_topfilling(6, 'Cream cheese frosting  pink')" id="topfilling6"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1526375573_T9.jpg" alt=""><span>Cream cheese frosting  pink</span></a>
-										<input type='hidden' value="0.000" id="fi_price_6">
+																		<div class="swiper-slide topfilling" onclick="select_topfilling(6, 'Cream cheese frosting  pink')" id="topfilling6"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1526375573_T9.jpg" alt=""><span>Glaseado de queso crema (rosa)</span></a>
+										<input type='hidden' value="0" id="fi_price_6">
 									</div>
-																		<div class="swiper-slide topfilling" onclick="select_topfilling(7, 'Cream cheese frosting Torquoise Blue')" id="topfilling7"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1591944203_18.jpg" alt=""><span>Cream cheese frosting Torquoise Blue</span></a>
-										<input type='hidden' value="0.000" id="fi_price_7">
+																		<div class="swiper-slide topfilling" onclick="select_topfilling(7, 'Cream cheese frosting Torquoise Blue')" id="topfilling7"><a href="javascript:void(0);"><img src="bundles/design/fillingtopdecor/1591944203_18.jpg" alt=""><span>Glaseado de queso crema (turquesa)</span></a>
+										<input type='hidden' value="0" id="fi_price_7">
 									</div>
 									
 																																			</div>
 							</div>
 						
 						</div>
-												<h4>Choose Print Image</h4>
+												<h4>Elige la imagen impresa</h4>
 						<div class="row cate-block ck-tab-3-sld-3 pos-relative cake-top-img">
 							<div class="swiper-container" style="margin-left: 10px;">
 								<div class="swiper-wrapper appendimage">
 									<div class="swiper-slide" id="printimage0">
-										<a href="javascript:void(0);" id="a_printimage0" onclick="unsetImage_top_image('No Image');"><img src="bundles/design/site_data/images/create/default-no-image_small.png" alt="" style="max-height: 115px;"><span>No Image</span></a>
+										<a href="javascript:void(0);" id="a_printimage0" onclick="unsetImage_top_image('No Image');"><img src="bundles/design/site_data/images/create/default-no-image_small.png" alt="" style="max-height: 115px;"><span>Sin imagen</span></a>
 									</div>
 
 									<div id="div_appendimage"></div>
-									<div class="swiper-slide  printimage" onclick="select_printimage(4, 'Minion',333.000,'bundles/design/imagetopdecorationimage/1512552617_3-18.png')" id="printimage4"><a href="javascript:void(0);" class="cake-top-img-pre"><img src="bundles/design/imagetopdecorationimage/1512552617_3-18.png" alt=""><span>Minion</span></a>
-										<input type='hidden' value="333.000" id="td_price_4">
+									<div class="swiper-slide  printimage" onclick="select_printimage(4, 'Minion',333,'bundles/design/imagetopdecorationimage/1512552617_3-18.png')" id="printimage4"><a href="javascript:void(0);" class="cake-top-img-pre"><img src="bundles/design/imagetopdecorationimage/1512552617_3-18.png" alt=""><span>Minion</span></a>
+										<input type='hidden' value="5000" id="td_price_4">
 									</div>
-																		<div class="swiper-slide  printimage" onclick="select_printimage(5, 'Spider Man',333.000,'bundles/design/imagetopdecorationimage/1512552648_3-17.png')" id="printimage5"><a href="javascript:void(0);" class="cake-top-img-pre"><img src="bundles/design/imagetopdecorationimage/1512552648_3-17.png" alt=""><span>Spider Man</span></a>
-										<input type='hidden' value="333.000" id="td_price_5">
+																		<div class="swiper-slide  printimage" onclick="select_printimage(5, 'Spider Man',333,'bundles/design/imagetopdecorationimage/1512552648_3-17.png')" id="printimage5"><a href="javascript:void(0);" class="cake-top-img-pre"><img src="bundles/design/imagetopdecorationimage/1512552648_3-17.png" alt=""><span>Spider-Man</span></a>
+										<input type='hidden' value="5000" id="td_price_5">
 									</div>
-																		<div class="swiper-slide  printimage" onclick="select_printimage(8, 'Princesses Disney',333.000,'bundles/design/imagetopdecorationimage/1512552712_3-16.png')" id="printimage8"><a href="javascript:void(0);" class="cake-top-img-pre"><img src="bundles/design/imagetopdecorationimage/1512552712_3-16.png" alt=""><span>Princesses Disney</span></a>
-										<input type='hidden' value="333.000" id="td_price_8">
+																		<div class="swiper-slide  printimage" onclick="select_printimage(8, 'Princesses Disney',333,'bundles/design/imagetopdecorationimage/1512552712_3-16.png')" id="printimage8"><a href="javascript:void(0);" class="cake-top-img-pre"><img src="bundles/design/imagetopdecorationimage/1512552712_3-16.png" alt=""><span>Princesses Disney</span></a>
+										<input type='hidden' value="5000" id="td_price_8">
 									</div>
 																																			</div>
 							</div>
@@ -604,19 +631,19 @@ display: none;
 						</div>
 						<ul class="list-inline pull-right">
 							<li>
-								<button type="button" class="btn btn-primary next-step second" onclick="tot_amount();" style="background-color:#da627d">Next <i class="fa fa-angle-right"></i></button>
+								<button type="button" class="btn btn-primary next-step second" onclick="tot_amount();" style="background-color:#da627d">Siguiente <i class="fa fa-angle-right"></i></button>
 							</li>
 						</ul>
 					</div>
 					<div class="col-xs-12 col-sm-4 right-part second-part">
 						<ul>
 							<!-- <li>Collection Date & Time: <b class="datetime datecss"></b></li> -->
-							<li>Categories of Cake: <b class="cake_name">Customized Cake</b></li>
-							<!-- <li>Number of Peoples required: <b class="no_of_people datecss">6</b></li> -->
-							<li>Sponge Flavor: <b class="flavor_name"></b></li>
-							<li>Icing: <b class="topfilling_name"></b></li>
-							<li>Top Decoration: <b class="printimage_name"> </b></li>
-							<li>delivery Charges: <b > 200 </b></li>
+							<li>Categoría del pastel: <b class="cake_name">Pastel personalizado</b></li>
+							<!-- <li>Número de personas requerido: <b class="no_of_people datecss">6</b></li> -->
+							<li>Sabor del bizcocho: <b class="flavor_name"></b></li>
+							<li>Glaseado: <b class="topfilling_name"></b></li>
+							<li>Decoración superior: <b class="printimage_name"> </b></li>
+							<li>Gastos de entrega: <b>200</b></li>
 						</ul>
 						<div class="middel-bag">
 							<div class="layer_right_div" >
@@ -627,18 +654,18 @@ display: none;
 						</div>
 						<div class="footer-bag">
 							<div class="row">
-								<div class="col-xs-6">Total Amount</div>
-								<div class="col-xs-6"><b id="second_part_amt" class="amt">00.000 PKR</b></div>
+								<div class="col-xs-6">Importe total</div>
+								<div class="col-xs-6"><b id="second_part_amt" class="amt">0 CLP</b></div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="tab-pane ck-tab3" role="tabpanel" id="step3">
 					<div class="col-xs-12 col-sm-8 left-part">
-						<h3>Message on Cake & Finishing Touches</h3>
-						<h4>Message on cake (Max 35 Chars) </h4>
+						<h3>Mensaje en el pastel y toques finales</h3>
+						<h4>Mensaje en el pastel (Máx. 35 caracteres)</h4>
 						<textarea name="msg_on_cake" onkeyup="getmessage(this);" class="message"  rows="5" id="msg_on_cake"></textarea>
-						<h4>Select Message Color</h4>
+						<h4>Selecciona el color del mensaje</h4>
 						<div class="select-color">
 							<div class="row">
 																								<div class="col-xs-6 col-sm-3">
@@ -648,7 +675,7 @@ display: none;
 											</div>
 										</div>
 										<div class="media-body">
-											<p>Purple</p>
+											<p>Púrpura</p>
 										</div>
 									</div>
 								</div>
@@ -659,7 +686,7 @@ display: none;
 											</div>
 										</div>
 										<div class="media-body">
-											<p>Solid-Black</p>
+											<p>Negro</p>
 										</div>
 									</div>
 								</div>
@@ -670,7 +697,7 @@ display: none;
 											</div>
 										</div>
 										<div class="media-body">
-											<p>Red</p>
+											<p>Rojo</p>
 										</div>
 									</div>
 								</div>
@@ -681,7 +708,7 @@ display: none;
 											</div>
 										</div>
 										<div class="media-body">
-											<p>Pink</p>
+											<p>Rosa</p>
 										</div>
 									</div>
 								</div>
@@ -692,7 +719,7 @@ display: none;
 											</div>
 										</div>
 										<div class="media-body">
-											<p>Blue</p>
+											<p>Azul</p>
 										</div>
 									</div>
 								</div>
@@ -703,7 +730,7 @@ display: none;
 											</div>
 										</div>
 										<div class="media-body">
-											<p>Green</p>
+											<p>Verde</p>
 										</div>
 									</div>
 								</div>
@@ -714,35 +741,35 @@ display: none;
 											</div>
 										</div>
 										<div class="media-body">
-											<p>Off White</p>
+											<p>Blanco roto</p>
 										</div>
 									</div>
 								</div>
 																								<input type="checkbox" class="hide" name="colorcheck" id="colorcheck" value="0" >
 							</div>
 						</div>
-						<h4>Special Notes:</h4>
+						<h4>Notas especiales:</h4>
 						<textarea name="spec_note" class="message"  rows="5" id="spec_note" onkeyup="getnote(this);"></textarea>
 						<ul class="list-inline pull-right">
 							<li>
-								<button type="button" class="btn btn-primary next-step third" onclick="tot_amount();"style="background-color:#da627d">Next <i class="fa fa-angle-right"></i></button>
+								<button type="button" class="btn btn-primary next-step third" onclick="tot_amount();"style="background-color:#da627d">Siguiente <i class="fa fa-angle-right"></i></button>
 							</li>
 						</ul>
 					</div>
 					<div class="col-xs-12 col-sm-4 right-part">
 						<ul>
 							<!-- <li>Collection Date & Time: <b class="datetime datecss"></b></li> -->
-							<li>Categories of Cake: <b class="cake_name">Customized Cake</b></li>
-							<!-- <li>Number of Peoples required: <b class="no_of_people datecss">6</b></li> -->
-							<li>Sponge Flavor: <b class="flavor_name">Vanilla </b></li>
-							<li>Icing: <b class="topfilling_name">Chocolate Vanilla Cream</b></li>
-							<li>Top Decoration: <b class="printimage_name"> </b></li>
-							<li>Delivaary Charges: <b> 200 </b></li>
+							<li>Categoría del pastel: <b class="cake_name">Pastel personalizado</b></li>
+							<!-- <li>Número de personas requerido: <b class="no_of_people datecss">6</b></li> -->
+							<li>Sabor del bizcocho: <b class="flavor_name">Vainilla</b></li>
+							<li>Glaseado: <b class="topfilling_name">Chocolate Vainilla</b></li>
+							<li>Decoración superior: <b class="printimage_name"> </b></li>
+							<li>Gastos de entrega: <b>200</b></li>
 							<!--        <li>Sprinkles: <b class="sidedecoration_name">Colored Sprinkles </b></li>
 								-->
-							<li>Message: <b class="message_display"> </b></li>
-							<li>Special Notes: <b class="spec_note_display"> </b></li>
-							<li>Message Color: <b class="color_name_text"> </b></li>
+							<li>Mensaje: <b class="message_display"> </b></li>
+							<li>Notas especiales: <b class="spec_note_display"> </b></li>
+							<li>Color del mensaje: <b class="color_name_text"> </b></li>
 						</ul>
 						
 						<div class="middel-bag">
@@ -755,14 +782,14 @@ display: none;
 
 						<div class="footer-bag">
 							<div class="row">
-								<div class="col-xs-6">Total Amount</div>
-								<div class="col-xs-6"><b class="amt">00.000 PKR</b></div>
+								<div class="col-xs-6">Importe total</div>
+								<div class="col-xs-6"><b class="amt">0 CLP</b></div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="tab-pane " role="tabpanel" id="complete">
-										<h3 class="text-success text-center" style="color: #b30059"> Thank you, Your Custom Cake Creation Completed Successfully.</h3>
+										<h3 class="text-success text-center" style="color: #b30059">Gracias, la creación de tu pastel personalizado se completó con éxito.</h3>
 					<div class="col-xs-12 col-sm-6 col-sm-offset-3 centertxt">
 												<img src="#" alt="" class="final_product" style="display:none" >
 						<div class="middel-bag" style="margin-left: auto;
@@ -786,45 +813,45 @@ display: none;
 									<input type="hidden" id="datetime_hidden">
 								</tr> -->
 								<tr>
-									<td class="text-right">Categories of Cake: </td>
-									<td class="text-left"><b class="cake_name" >Customized Cake</b></td>
+									<td class="text-right">Categoría del pastel:</td>
+									<td class="text-left"><b class="cake_name">Pastel personalizado</b></td>
 								</tr>
 								<!-- <tr>
 									<td class="text-right">Number of Peoples required:</td>
 									<td class="text-left"><b class="no_of_people datecss">6</b></td>
 								</tr> -->
-								<tr>
-									<td class="text-right">Sponge Flavor:</td>
-									<td class="text-left"><b class="flavor_name">Vanilla</b></td>
-								</tr>
-								<tr>
-									<td class="text-right">Icing:</td>
-									<td class="text-left"><b class="topfilling_name">Chocolate Vanilla Cream</b></td>
-								</tr>
-								<tr>
-									<td class="text-right">Top Decoration:</td>
-									<td class="text-left"><b class="printimage_name"></b></td>
-								</tr>
 						
 								<!--                                <tr>
 									<td class="text-right">Sprinkles:</td>
 									<td class="text-left"><b class="sidedecoration_name">Colored Sprinkles</b></td>
 									</tr> -->
 								<tr>
-									<td class="text-right">Message:</td>
+									<td class="text-right">Mensaje:</td>
 									<td class="text-left"><b class="message_display"> </b></td>
 								</tr>
 								<tr>
-									<td class="text-right">Special Notes:</td>
+									<td class="text-right">Notas especiales:</td>
 									<td class="text-left"><b class="spec_note_display"> </b></td>
 								</tr>
 								<tr>
-									<td class="text-right">Message Color:</td>
+									<td class="text-right">Color del mensaje:</td>
 									<td class="text-left"><b class="color_name_text"> </b></td>
 								</tr>
 								<tr>
-									<td class="text-right">Delivary Charges</td>
-									<td class="text-left"><b> 200 PKR (Included) </b></td>
+									<td class="text-right">Sabor del bizcocho:</td>
+									<td class="text-left"><b class="flavor_name">Vainilla</b></td>
+								</tr>
+								<tr>
+									<td class="text-right">Glaseado:</td>
+									<td class="text-left"><b class="topfilling_name">Chocolate Vainilla</b></td>
+								</tr>
+								<tr>
+									<td class="text-right">Decoración superior:</td>
+									<td class="text-left"><b class="printimage_name"></b></td>
+								</tr>
+								<tr>
+									<td class="text-right">Gastos de entrega:</td>
+									<td class="text-left"><b> 2.500 CLP (incluido) </b></td>
 								</tr>
 							</table>
 						</div>
@@ -843,10 +870,10 @@ display: none;
 						<input type="hidden" nmae="val1" id="val1" value="" />
 						<input type="hidden" nmae="val2" id="val2" value="" />
 
-						<h2>Total Amount <b class="amt">1036.000 PKR</b></h2>
+						<h2>Importe total <b class="amt">0 CLP</b></h2>
 						<div class="step-action">
 		
-							<a href="localhost:3000" class="addcart-pink hvr-push" id="add_to_cart"style="background-color:#da627d" >  Checkout</a>
+							<a href="localhost:3000" class="addcart-pink hvr-push" id="add_to_cart"style="background-color:#da627d" >  Finalizar compra</a>
 							<br>
 							<br>
 							<br>
@@ -872,7 +899,7 @@ display: none;
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 left-block">
-						<h3>Upload Your Image</h3>
+						<h3>Sube tu imagen</h3>
 						<form id="uploadimageform">
 							<div class="form-group">
 								<div class="uploadimagemsg"></div>
@@ -883,7 +910,7 @@ display: none;
 							<div class="form-group">
 																<input type="hidden" name="image_name"  id="image_name" class="form-control">
 							</div>
-							<a href="javascript:void(0);" onclick="add_topimage();" class="btn signin-act-btn"  style="color:white;">SUBMIT</a>
+								<a href="javascript:void(0);" onclick="add_topimage();" class="btn signin-act-btn"  style="color:white;">ENVIAR</a>
 						</form>
 					</div>
 				</div>
@@ -914,19 +941,19 @@ display: none;
                <div class="modal-body">
                    <div class="row">
                        <div class="col-xs-12 col-sm-6 left-block">
-                           <h3>Reset Your Password</h3>
+						   <h3>Restablecer contraseña</h3>
                            <div id="errormsg2"></div>
                           <form  onsubmit=" forgot();" method="POST" name="forgotpass" id="forgotpass">
                                <div class="form-group">
                                    <label for="email">Email</label>
                                    <input type="email" id="forgotemail" name="email" placeholder="Email" class="form-control" id="email4">
                                </div>
-                               <div class="form-group">
-                                <p>We'll email you a link to make a new password. RIP old password. You had a good run.</p>
-                               </div>
+								<div class="form-group">
+								<p>Te enviaremos un enlace para crear una nueva contraseña.</p>
+							   </div>
 
 
-                                <a href="javascript:void(0);" class="btn signin-act-btn" onclick=" forgot();" name="forgotpass" id="forgotpass">SUBMIT</a>
+									<a href="javascript:void(0);" class="btn signin-act-btn" onclick=" forgot();" name="forgotpass" id="forgotpass">ENVIAR</a>
                                 <div class="clearfix"></div>
 
                           </form>
@@ -934,7 +961,7 @@ display: none;
                        </div>
                        <div class="col-xs-12 col-sm-6">
                            <h3>New to the Cake Shop?</h3>
-                           <a href="#" class="btn create-act-btn">Create an account</a>
+						   <a href="#" class="btn create-act-btn">Crear una cuenta</a>
                        </div>
                    </div>
                </div>
@@ -966,8 +993,8 @@ display: none;
        
                                                             if($("#forgotemail").val()=='')
       {
-           alert('Please fill your email address.');
-         $("#errormsg2").html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><div style="direction:ltr;"><strong>Error!</strong>&nbsp;&nbsp;&nbsp;Please fill up all required fields.</div></div>');
+					 alert('Por favor, escribe tu dirección de correo.');
+				 $("#errormsg2").html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><div style="direction:ltr;"><strong>Error!</strong>&nbsp;&nbsp;&nbsp;Por favor completa todos los campos obligatorios.</div></div>');
         return false;
       }
       else{
@@ -1146,7 +1173,7 @@ function login()
                 {
                      $("#loginModal").modal('hide');
                      $('#myModal').modal('show');
-                     $(".msg").html("Login Successfully");
+					 $(".msg").html("Inicio de sesión correcto");
                      location.reload();
                 }else{
                                                                                     $("#errormsg").html('<div class="alert alert-danger"> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><div style="direction:ltr;"><strong>Error!</strong>&nbsp;&nbsp;&nbsp;'+msg+'</div></div>');
@@ -1282,7 +1309,7 @@ function login()
 					alert("select cake first");
 				}
 
-				$("#second_part_amt").html((Number(amount)).toFixed(3) + ' PKR');
+				$("#second_part_amt").html(formatCLP(Number(amount)));
 			});
 			// End: First step
 
@@ -1296,7 +1323,7 @@ function login()
 					if(ingradiance['spongeflavor_id'] == 0 || ingradiance['spongeflavor_id'] == null)
 					{
 			
-						select_falvor(2, 'Chocolate Sponge Cake', '0.000');
+						select_falvor(2, 'Bizcocho de chocolate', '0');
 						ingradiance['spongeflavor_id'] = '2';
 						item ['spongeflavor_id'] = ingradiance['spongeflavor_id'];
 					}
@@ -1304,7 +1331,7 @@ function login()
 					
 					if(ingradiance['fillingtopdecoration_id'] == 0 || ingradiance['fillingtopdecoration_id'] == null)
 					{
-						select_topfilling(1, 'Cream cheese frosting   green', '0.000');
+						select_topfilling(1, 'Cream cheese frosting   green', '0');
 						ingradiance['fillingtopdecoration_id'] = '1';
 						icing = 0;
 					
@@ -1342,7 +1369,7 @@ function login()
 	           	
 	           if(ingradiance['spongeflavor_id'] == 0 || ingradiance['spongeflavor_id'] == null)
 	           {
-	             select_falvor(2, 'Chocolate Sponge Cake', '0.000');
+				 select_falvor(2, 'Bizcocho de chocolate', '0');
 	             ingradiance['spongeflavor_id'] = '2';
 	             item ['spongeflavor_id'] = ingradiance['spongeflavor_id'];
 				 icing = 0;
@@ -1351,7 +1378,7 @@ function login()
 	
 	           	           if(ingradiance['fillingtopdecoration_id'] == 0 || ingradiance['fillingtopdecoration_id'] == null)
 	           {
-	             	                 select_topfilling(1, 'Cream cheese frosting   green', '0.000');
+                 	                 select_topfilling(1, 'Cream cheese frosting   green', '0');
 	                 ingradiance['fillingtopdecoration_id'] = '1';
 	             	             item ['fillingtopdecoration_id'] = ingradiance['fillingtopdecoration_id'];
 	           }
@@ -1386,17 +1413,17 @@ function login()
 	           // console.log(img_path);
 	
 	         //  $(".final_product").attr('src',img_path);
-	         if(item['fillingtopdecoration_id']==1 || item['fillingtopdecoration_id']==2)
-	        {
+			   if(item['fillingtopdecoration_id']==1 || item['fillingtopdecoration_id']==2)
+		{
 			src3 = 'bundles/design/master_data/shape/layers/Sponge_Flavor/Icing/index.html';
-	           src3 = src3 + item['shape_id']+'_'+ item['layer_id'] + '_Y_' + item['fillingtopdecoration_id'] +'.png';
-	
-	       }else{
-	           src3 = 'bundles/design/master_data/shape/layers/Sponge_Flavor/index.html';
-	           src3 = src3 + item['shape_id']+'_'+ item['layer_id'] + '_' + item['spongeflavor_id'] +'.png';
-			  
-	       }
-	                $('.final_product').attr('src',src3);
+			   src3 = src3 + item['shape_id']+'_'+ item['layer_id'] + '_Y_' + item['fillingtopdecoration_id'] +'.png';
+
+	   }else{
+		   src3 = 'bundles/design/master_data/shape/layers/Sponge_Flavor/index.html';
+		   src3 = src3 + item['shape_id']+'_'+ item['layer_id'] + '_' + item['spongeflavor_id'] +'.png';
+          
+	   }
+				$('.final_product').attr('src',src3);
 				    //last_step_topimage();
 					  //$('.cake-top-img-real').show();
 	
@@ -1690,17 +1717,22 @@ function login()
 		$('.range-slider__range').change(function(){
 			//var no_items = $('.range-slider__range').val();
 			var no_items = 1;
-			var amt = $('.amt').text();
-			var amount= amt.substr(0, amt.indexOf(' P'));
-			var single_cake_price= $('#single_cake_price').val();
+					var amt = $('.amt').text();
+					var amount= amt.substr(0, amt.indexOf(' P'));
+					var single_cake_price= $('#single_cake_price').val();
 			quantity = Number(no_items);
-			if(Number(single_cake_price) > 0){
-				//$(".amt").html((Number(no_items) * Number(single_cake_price)).toFixed(3) + ' KWD');
-				$("#first_step_amt").val((Number(no_items) * Number(single_cake_price)).toFixed(3));
-			}
+					if(Number(single_cake_price) > 0){
+						//$(".amt").html((Number(no_items) * Number(single_cake_price)).toFixed(3) + ' KWD');
+						$("#first_step_amt").val(Math.round(Number(no_items) * Number(single_cake_price)));
+					}
 		});
-				
-	       function selectlayer(layer_id, image, la_number)
+			 
+		       function formatCLP(amount){
+				var n = Math.round(Number(amount) || 0);
+				return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' CLP';
+		       }
+
+		       function selectlayer(layer_id, image, la_number)
 	       {
 
 				$(".layer").removeClass('active');
@@ -1717,12 +1749,12 @@ function login()
 				$('#single_cake_price').val(parseFloat(la_price));
 				$('#first_step_amt').val(quantity * parseFloat(la_price));
 				//$('#first_part_amt').val(quantity * parseFloat(la_price));
-	           
-			   $(".amt").html(((parseFloat(amt) + tot[0]) * quantity).toFixed(3) + ' PKR');
-			  
-			   if(page_load != 1){
-				$(".amt").html(((parseFloat(amt) + tot[0]) * quantity).toFixed(3) + ' PKR');
-			   }
+		   
+			   	$(".amt").html(formatCLP(((parseFloat(amt) + tot[0]) * quantity)));
+		  
+				   if(page_load != 1){
+					$(".amt").html(formatCLP(((parseFloat(amt) + tot[0]) * quantity)));
+				   }
 			   page_load = page_load + 1; 
 	           
 			   
@@ -1803,10 +1835,10 @@ function login()
 	         $(".cakes").removeClass('active');
 	         $("#cake" + cakeid).addClass('active');
 	         ingradiance['cake_id'] = cakeid;
-	         $(".cake_name").html(cake_name);
-	         $(".amt").html(parseFloat(price).toFixed(3));
-			 
-	         amt = price;
+		        $(".cake_name").html(cake_name);
+		        $(".amt").html(formatCLP(price));
+	 
+		         amt = price;
 	         item['amount'] = amt;
 	         item['cake_id'] = cakeid;
 	         item1 ['cake_name'] = cake_name;
@@ -2367,9 +2399,9 @@ console.log('select_topfilling func...');
 				}
 			});
 			if(validate_sponge == false){
-				//alert('Please Choose Spong Flavor');
+				//alert('Por favor elige un sabor de bizcocho');
 				$('#myModal').modal('show');
-	               $(".msg").html("Please Choose Spong Flavor");
+				   $(".msg").html("Por favor selecciona un sabor de bizcocho");
 				return false;
 			}
 	          // alert("image id " + printimage_name);
@@ -2378,7 +2410,8 @@ console.log('select_topfilling func...');
 	           $(".printimage_name").html(printimage_name);
 	           ingradiance['imagetopdecoration_id'] = printimage_id;
 	           var td_price = $("#td_price_" + printimage_id).val();
-	            td_price = td_price + 200;
+				// añadir cargo de entrega (CLP)
+				td_price = Number(td_price) + 2500;
 			//var quantity = $(".range-slider__range").val();
 			var quantity = 1;
 			if(Number(quantity) > 0){
@@ -2420,13 +2453,13 @@ console.log('select_topfilling func...');
 				
 				var amount_1 = second_part_retain_price + printimage_price;
 				console.log("beforedelivery charges"+amount_1);
-				var amount_1 = amount_1 + 200 ;
+				var amount_1 = amount_1 + 2500 ;
 
 				console.log("after delivery charges"+amount_1);
 
 
 				
-				$("#third_part_amt").html(parseFloat(amount_1).toFixed(3) + ' PKR');
+						$("#third_part_amt").html(formatCLP(amount_1));
 				tot[3] = 0;
 				tot_amount();
 			}
@@ -2464,22 +2497,22 @@ console.log('select_topfilling func...');
 				var first_step_amt = $('#first_step_amt').val();
 
 				
-				if(Number(first_step_amt) > 0){
-					$(".amt").html((parseFloat(first_step_amt) + total).toFixed(3) + ' PKR');
-				
-					main_total = parseFloat(first_step_amt) + total ;
+					if(Number(first_step_amt) > 0){
+						$(".amt").html(formatCLP((parseFloat(first_step_amt) + total)));
+						
+						main_total = parseFloat(first_step_amt) + total ;
 
-					main_total = main_total + 200;
+						main_total = main_total + 2500;
 
-				} else {
-					$(".amt").html((parseFloat(amt) + total).toFixed(3) + ' PKR');
-					main_total = parseFloat(amt) + total;
-				}
+					} else {
+						$(".amt").html(formatCLP((parseFloat(amt) + total)));
+						main_total = parseFloat(amt) + total;
+					}
 
-				var fprice =  main_total;
+					var fprice =  main_total;
 
-				//arooba
-				$(".amt").html(parseFloat(fprice).toFixed(3) + ' PKR');
+					//arooba
+					$(".amt").html(formatCLP(fprice));
 				console.log("yes"+item ['amount']);
 			}
 	
@@ -2882,7 +2915,19 @@ console.log('select_topfilling func...');
 	             $('.cake-top-img-real').attr('src',src);
 	             $('.cake-top-img-real').show();
 	
-	             $('.cake-top-img-real').css({"top":img_dim1['top'], "width":img_dim1['width'],"height":img_dim1['height'], "left":img_dim1['left'],"transform":img_dim1['transform'],"border-radius":img_dim1['border-radius'],"z-index":img_dim1['z-index'],"clip-path":img_dim1['clip-path'],"-webkit-clip-path":img_dim1['-webkit-clip-path']});
+				 $('.cake-top-img-real').css({
+					 "top":img_dim1['top'],
+					 "width":img_dim1['width'],
+					 "height":img_dim1['height'],
+					 "left":img_dim1['left'],
+					 "transform":img_dim1['transform'],
+					 "z-index":img_dim1['z-index'],
+					 "clip-path":img_dim1['clip-path'],
+					 "-webkit-clip-path":img_dim1['-webkit-clip-path'],
+					 /* enforce no cropping on the top image itself */
+					 "border-radius":"0",
+					 "object-fit":"contain"
+				 });
 	
 	         }
 	         else{
@@ -3152,7 +3197,7 @@ function login()
                 {
                      $("#loginModal").modal('hide');
                      $('#myModal').modal('show');
-                     $(".msg").html("Login Successfully");
+					 $(".msg").html("Inicio de sesión correcto");
                      location.reload();
                 }else{
 

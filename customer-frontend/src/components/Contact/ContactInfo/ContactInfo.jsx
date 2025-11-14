@@ -9,17 +9,13 @@ export const ContactInfo = () => {
         <div className="wrapper">
           <div className="contacts-info__content">
             <div className="contacts-info__text">
-              <h4>We take care of you</h4>
+              <h4>Nos preocupamos por ti</h4>
               <p>
-                Email us if you have any questions, we will be sure to contact
-                you and find a solution. Also, our managers will help you choose
-                the product that suits you best, at the best price. From year to
-                year, the Bake and Takenetwork develops and improves, taking
-                into account all consumer needs and market trends. But for us,
-                the concern remains that when coming to the Bake and Takestore,
-                customers do not have questions about the convenience and
-                comfort of shopping, product quality and the level of
-                professionalism of sales consultants.
+                Si tienes cualquier duda, escríbenos por correo y nos pondremos en contacto contigo para encontrar una solución.
+                 Además, nuestro equipo te ayudará a elegir el producto que más te acomode, al mejor precio. 
+                 Año a año, la red de Pasteleria Mil Sabores crece y mejora, considerando las necesidades de nuestros clientes.
+                 Pero para nosotros, lo más importante es que cuando vengas a la tienda Bake and Take, no tengas dudas sobre la comodidad de la compra, 
+                 la calidad de los productos ni el profesionalismo de nuestros vendedores.
               </p>
             </div>
             <div className="contacts-info__social">

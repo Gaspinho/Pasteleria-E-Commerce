@@ -37,10 +37,9 @@ export const ContactFrom = () => {
       >
         <div className="wrapper">
           <div className="discount-info">
-            <span className="main-text">leave a message</span>
+            <span className="main-text">Envianos tus consultas</span>
             <p>
-              Write to us if you have any questions, we will definitely contact
-              you and find a solution.
+              Escribenos cualquier duda que tengas y te responderemos a la brevedad.
             </p>
             <form onSubmit={handleSubmit}>
               <div className="box-field">
@@ -77,11 +76,11 @@ export const ContactFrom = () => {
                 {server_error.message[0]} </lable>) : ("")}
               </div>
               <button type="submit" className="btn">
-                send
+                enviar
               </button>
             </form>
             <div style={{marginTop:"1.5rem"}}>  
-              {success? <label style={{fontSize: 16, color:'#450920'}}> Thank You for your Message We will get back to you soon</label > : ''} 
+              {success? <label style={{fontSize: 16, color:'#450920'}}> Muchas gracias, te contactaremos a la brevedad</label > : ''} 
             </div>
            
           </div>
