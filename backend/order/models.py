@@ -10,9 +10,9 @@ from django.conf import settings
 class Address(models.Model):
     address_Id=models.AutoField(primary_key=True)
     city= models.CharField(max_length= 50)
-    area= models.CharField(max_length= 50)
-    street_Number= models.PositiveIntegerField()
-    house_Number= models.PositiveIntegerField()
+    area= models.CharField(max_length= 50, blank=True, null=True)
+    street_Number= models.CharField(max_length= 50, blank=True, null=True)
+    house_Number= models.CharField(max_length= 80, blank=True, null=True)
 
 class Payment(models.Model):
     options =(
@@ -46,7 +46,7 @@ class Order(models.Model):  #this is class
     delivery_Charges=models.FloatField(max_length=5,default='50')
     total_Amount=models.FloatField()
     products = models.ManyToManyField(Product, related_name='products',through='Ordered_Product')
-    note= models.CharField(max_length=1000 , default='')
+    note= models.CharField(max_length=1000 , default='', blank=True)
     
   
 class Ordered_Product(models.Model):

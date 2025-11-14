@@ -48,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email=models.EmailField(max_length=200,unique=True)
     data_Joind =models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now= True, null= False)
-    phoneNumberRegex = RegexValidator(regex = "^((\\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$")
+    phoneNumberRegex = RegexValidator(regex = '\+569\d{8}$', message="El formato debe ser +56912345678")
     phone_Number= models.CharField(validators = [phoneNumberRegex], max_length = 12,blank= True)
     address = models.ForeignKey(Address ,null=True,on_delete=models.SET_NULL,blank=True)
 

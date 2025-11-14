@@ -13,19 +13,19 @@ export const CheckoutOrders = () => {
   return (
     <>
       <div className="checkout-order">
-        <h5>Your Order</h5>
+        <h5>Tu orden</h5>
         {cart.map((order) => (
           <Card key={order.id} order={order} />
         ))}
       </div>
       <div className="cart-bottom__total">
         <div className="cart-bottom__total-goods">
-          Goods on
+          Valor de productos
           <span>Rs. {total.toFixed(2)}</span>
         </div>
 
         <div className="cart-bottom__total-delivery">
-          Delivery{" "}
+          Costo envío{" "}
           {/* <span className="cart-bottom__total-delivery-date">
             (May 16,2022 at 11:30)
           </span> */}

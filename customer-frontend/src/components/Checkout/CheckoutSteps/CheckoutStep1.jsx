@@ -8,8 +8,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import {usePlaceOrderMutation} from '../../../services/orderApi'
 import { setOrder } from '../../../features/orderSlice';
 const countries = [
-  { label: "Islamabad", value: "Islamabad" },
-  { label: "Rawalpindi", value: "Rawalpindi" },
+  { label: "Concepción", value: "Concepción" },
+  { label: "Chiguayente", value: "Chiguayante" },
+  { label: "Coronel", value: "Coronel" },
+  { label: "Florida", value: "Florida" },
+  { label: "Hualpén", value: "Hualpén" },
+  { label: "Hualqui", value: "Hualqui" },
+  { label: "Lota", value: "Lota" },
+  { label: "Penco", value: "Penco" },
+  { label: "San Pedro de La Paz", value: "San Pedro de La Paz" },
+  { label: "Santa Juana", value: "Santa Juana" },
+  { label: "Talcahuano", value: "Talcahuano" },
+  { label: "Tomé", value: "Tomé" },
 ];
 const timezone = [
   { label: "10AM - 12PM", value: "10AM - 12PM" },
@@ -19,9 +29,6 @@ const timezone = [
   { label: "6PM - 8PM", value: "6PM - 8PM" },
   { label: "8PM - 10PM", value: "8PM - 10PM" },
 ];
-
-
-
 export const CheckoutStep1 = ({ onNext }) => {
   const dispatch = useDispatch()
   const { cart } = useContext(CartContext);
@@ -29,7 +36,18 @@ export const CheckoutStep1 = ({ onNext }) => {
     (total, item) => total + Number(item.price) * Number(item.quantity),
     0
   );
-  const [userData , setUserData]= useState({}) 
+  const [userData, setUserData] = useState({
+    id: "",
+    phone_Number: "",
+    first_Name: "",
+    last_Name: "",
+    street_Number: "",
+    house_Number: "",
+    city: "",
+    area: "",
+    note: ""
+  });
+ 
   const data = useSelector(state => state.user)
   const [PlaceOrder] = usePlaceOrderMutation()
   const  [city, setCity]= useState({}) 
@@ -39,18 +57,17 @@ export const CheckoutStep1 = ({ onNext }) => {
 
 
   useEffect(() => {
-      setUserData({
-        id:data.id,
-        phone_Number: data.phone_Number,
-        first_Name: data.first_Name,
-        last_Name: data.last_Name,
-        street_Number: "",
-        house_Number:"",
-        city: "",
-        area: "",
-        note:" "
-      })
-  }, [])
+    if (data?.id) {
+      setUserData(prev => ({
+        ...prev,
+        id: data.id,
+        phone_Number: data.phone_Number || "",
+        first_Name: data.first_Name || "",
+        last_Name: data.last_Name || ""
+      }));
+    }
+  }, [data]);
+
 
   const handleChange = event => {
     const name = event.target.name;
@@ -60,14 +77,32 @@ export const CheckoutStep1 = ({ onNext }) => {
 
   const handelSubmit = async (e) =>{ 
     e.preventDefault();
+    const phoneRegex = /^\+569\d{8}$/;
+    if (!phoneRegex.test(userData.phone_Number)) {
+      setServerError({ phone_Number: ["El número debe cumplir el formato, ej +56912436578"] });
+      return;
+    }
+    if (!userData.house_Number) {
+        setServerError({ house_Number: ["Debes ingresar una dirección"] });
+        return;
+    }
+    if (!city) {
+      setServerError({ city: ["Debes seleccionar una ciudad"] });
+      return;
+    }
+    if (!time) {
+      setServerError({ time: ["Debes seleccionar una hora de entrega"] });
+      return;
+    }
+    setServerError({});
     const actualData = {
       customer: userData.id,
       phone_Number:userData.phone_Number,
       address:{
-        street_Number: userData.street_Number,
+        street_Number: userData.street_Number || "",
         house_Number: userData.house_Number,
         city: city,
-        area: userData.area,
+        area: userData.area || "",
       },
       payment:{
         payment_Status: 'Pending',
@@ -100,6 +135,15 @@ export const CheckoutStep1 = ({ onNext }) => {
             order_Delivery_Date: res.data.order_Delivery_Date,
             order_Delivery_Time: res.data.order_Delivery_Time,
             total_Amount: res.data.total_Amount,
+            customer_name: `${userData.first_Name} ${userData.last_Name}`,
+            phone_Number: userData.phone_Number,
+            address: {
+              house_Number: userData.house_Number,
+              street_Number: userData.street_Number,
+              area: userData.area,
+              city: city,
+            },
+            note: userData.note,
           })
         );
       onNext();
@@ -112,11 +156,11 @@ export const CheckoutStep1 = ({ onNext }) => {
       <div className="checkout-form">
         <form onSubmit={handelSubmit}>
           <div className="checkout-form__item">
-            <h4>Info about you</h4>
+            <h4>Tu info</h4>
             <div style={{display:'grid' , gridTemplateColumns:'repeat(2, 1fr)' , marginBottom:'1rem'}}>
               <div> 
-                <h6>Name:</h6>
-                <h6>Phone Number:</h6>
+                <h6>Nombre:</h6>
+                <h6>Número telefónico:</h6>
               </div>
               <div> 
                 <h6>{userData.first_Name} {" "} {userData.last_Name}</h6>
@@ -127,14 +171,15 @@ export const CheckoutStep1 = ({ onNext }) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter your Phone Number"
+                placeholder="Ingresa tu número telefónico, (Ej +56912345678)"
                 name="phone_Number"
+                value={userData.phone_Number}
                 onChange={handleChange}
               />
             </div>
-           {server_error.phone_Number ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.phone_Number[0]} </lable>) : ("")} 
+           {server_error.phone_Number && (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.phone_Number[0]} </label>)} 
           </div>
           <div className="checkout-form__item">
             <h4>Delivery Info</h4>
@@ -143,84 +188,91 @@ export const CheckoutStep1 = ({ onNext }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the House Number"
+                  placeholder="Dirección (Calle,número)"
                   name="house_Number"
+                  value={userData.house_Number}
                   onChange={handleChange}
                   required
                 />
                 {server_error.house_Number ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.house_Number[0]} </lable>) : ("")}
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.house_Number[0]} </label>) : ("")}
               </div>
               
               <div className="box-field">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the Street Number"
+                  placeholder="Apartamento,piso (opcional)"
                   name="street_Number"
+                  value={userData.street_Number}
                   onChange={handleChange}
-                  required
-                />
-                {server_error.street_Number ? (
-              <lable style={{ fontSize: 16, color: "red"}}>
-                {server_error.street_Number[0]} </lable>) : ("")} 
+                /> 
               </div> 
-    
             </div>
             <div className="box-field__row">
               <div className="box-field">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the Area (phase or Lane)"
+                  placeholder="Barrio/Vecindario (opcional)"
                   name="area"
+                  value={userData.area}
                   onChange={handleChange}
-                  required
-                />
-                {server_error.area ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.area[0]} </lable>) : ("")}
+                />            
               </div>
               <div className="box-field">
               <Dropdown 
                options={countries}
                className="react-dropdown"
                onChange={(option)=> setCity(option.value)}
-               placeholder="Select a City"
+               placeholder="Seleciona tu ciudad"
                required
                />
+               {server_error.city && (
+                <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                  {server_error.city[0]}
+                  </lable>)}
               </div>  
             </div>
-            <h4>Delivery Date / Time </h4>
+            <h4>Hora/Fecha Delivery</h4>
             <div className="box-field__row" style={{marginTop: "20px"}}>
-              <div className="box-field">
-              <span style={{paddingBottom: "20px"}}> Select Date</span>    
-              <DatePicker className="box-field" selected={startDate} onChange={(date) => setStartDate(date)} />
-              </div>
+              <div className="box-field">    
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                className="form-control" 
+                placeholderText="Selecciona fecha"
+                required
+              />
+            </div>
             <div className="box-field">
               <Dropdown 
               options={timezone}
               className="react-dropdown"
               onChange={(option)=> setTime(option.value)}
-              placeholder="Delivery Time" 
+              placeholder="Hora delivery" 
               required 
             />
+            {server_error.time && (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.time[0]}
+                </label>)}
             </div>
             </div>
           </div>
           <div className="checkout-form__item">
-            <h4>Note</h4>
+            <h4>Notas</h4>
             <div className="box-field box-field__textarea">
               <textarea
                 className="form-control"
-                placeholder="Order note"
+                placeholder="Escribe tu nota aqui..."
                 name='note'
                 onChange={handleChange}
               ></textarea>
               {server_error.note ? (
-              <lable style={{ fontSize: 16, color: "red"}}>
-                {server_error.note[0]} </lable>) : ("")}
+              <label style={{ fontSize: 16, color: "red"}}>
+                {server_error.note[0]} </label>) : ("")}
             </div>
             {/* <label className="checkbox-box checkbox-box__sm">
               <input type="checkbox" />
@@ -234,7 +286,7 @@ export const CheckoutStep1 = ({ onNext }) => {
               <i className='icon-arrow'></i> back
             </button> */}
             <button type="submit" className="btn btn-icon btn-next">
-              next <i className="icon-arrow"></i>
+              Siguiente <i className="icon-arrow"></i>
             </button>
           </div>
         </form>

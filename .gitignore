@@ -10,6 +10,8 @@ coverage/
 
 # production
 build/
+.next/
+env/
 
 # misc
 .DS_Store

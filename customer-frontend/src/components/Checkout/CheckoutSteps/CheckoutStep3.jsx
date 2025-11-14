@@ -7,51 +7,55 @@ export const CheckoutStep3 = () => {
   const order = useSelector(state => state.order)
   const [updateOrder] = useUpdateOrderMutation();
   
-  useEffect( async() => {
-    const data ={
-      id: order.id,
-      order_Status: "Order Placed",
-    }
-    const res= await updateOrder(data)
-      if(res.isError){
-        console.log(res.error.error)
+  useEffect(() => {
+    const update = async () => {
+      if (!order.id) return;
+      const data = { id: order.id, order_Status: "Order Placed" };
+      const res = await updateOrder(data);
+      if (res.error) {
+        console.error(res.error.error);
+      } else if (res.data) {
+        console.log(res.data);
       }
-      if(res.data){
-         console.log(res.data)
-      }  
-  
-    },[] )
-  console.log('order form stor', order)
+    };
+    update();
+  }, [order.id, updateOrder]);
   return (
     <>
       {/* <!-- BEING CHECKOUT STEP Three -->  */}
       <div className="checkout-purchase checkout-form">
         <h4>
-          Bake & Take Thanks
+          Bake & Take Le agradece
           <br />
-          you for your Order!
+          su compra!
         </h4>
         <p>
-          We at Bake & Take truly appreciate your business, and we’re so
-          grateful for the trust you’ve placed in us. We sincerely hope you are
-          satisfied with your purchase. and we’ll do our best to continue to
-          give you the kind of service you deserve.
+          En Bake & Take apreciamos mucho su compra y estamos
+          muy agradecidos por la confianza que ha depositado en
+          nosotros. Esperamos sinceramente que esté satisfecho 
+          con su compra y haremos todo lo posible para seguir 
+          brindándole el servicio que usted se merece.
         </p>
         <ul className="checkout-purchase__list">
           <li>
-            <span>Order number</span>{order.id}
+            <span>Número de orden</span>{order.id}
           </li>
           <li>
-            <span>Order status</span> Order Placed
+            <span>Estado de pedido</span> Pedido realizado
           </li>
           <li>
-            <span>Payment Statues</span>Awaiting Payment
+            <span>Estado de Pago</span>Pago realizado
           </li>
           <li>
-            <span>Delivery Date</span> {order.order_Delivery_Date}
+            <span>Fecha entrega</span> {" "}
+            {new Date(order.order_Delivery_Date).toLocaleDateString("es-CL", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+            })}
           </li>
           <li>
-            <span>Delivery Time</span> {order.order_Delivery_Time}
+            <span>Hora de entrega</span> {order.order_Delivery_Time}
           </li>
         </ul>
         
