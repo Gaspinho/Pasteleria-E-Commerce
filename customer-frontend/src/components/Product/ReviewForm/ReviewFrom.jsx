@@ -14,24 +14,43 @@ export const ReviewFrom = (props) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const actualData = {
-      email: data.get('email'),
-      userName: data.get('userName'),
+      product_id: Number(props.data), // Backend espera product_id como número
+      author_email: data.get('email'),
+      author_name: data.get('userName'),
       content: data.get('content'),
-      rating: rating,
-      product:props.data,
+      rating: Math.round(rating / 20), // Convertir de 0-100 a 1-5
     }
     console.log("data " , actualData)
     const res = await postReview(actualData)
 
     if (res.error) {
-      console.log(typeof (res.error.data.errors))
-      console.log(res.error.data.errors)
-      setServerError(res.error.data.errors)
+      console.log(typeof (res.error.data))
+      console.log(res.error.data)
+      // Manejar errores del backend FastAPI
+      if (res.error.data?.detail) {
+        if (typeof res.error.data.detail === 'string') {
+          setServerError({ general: res.error.data.detail })
+        } else if (Array.isArray(res.error.data.detail)) {
+          // Errores de validación de Pydantic
+          const errors = {}
+          res.error.data.detail.forEach(err => {
+            const field = err.loc[err.loc.length - 1]
+            errors[field] = err.msg
+          })
+          setServerError(errors)
+        }
+      }
     }
     if (res.data) {
       console.log(typeof (res.data))
       console.log(res.data)
       setSuccess(true)
+      // Resetear el formulario después de 2 segundos
+      setTimeout(() => {
+        setSuccess(false)
+        setRating(0)
+        e.target.reset()
+      }, 3000)
     }
   }
   // Catch Rating value
@@ -65,9 +84,9 @@ export const ReviewFrom = (props) => {
               placeholder='Nombre'
               name='userName'
             />
-            {server_error.name ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.name[0]} </lable>) : ("")}
+            {server_error.author_name ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.author_name} </label>) : ("")}
           </div>
           <div className='box-field'>
             <input
@@ -75,10 +94,14 @@ export const ReviewFrom = (props) => {
               className='form-control'
               placeholder='Correo electrónico'
               name='email'
+              required
             />
-            {server_error.non_user_errors ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.non_user_errors[0]} </lable>) : ("")}
+            {server_error.author_email ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.author_email} </label>) : ("")}
+            {server_error.general ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.general} </label>) : ("")}
           </div> 
           <div className='box-field box-field__textarea'>
             <textarea
@@ -87,8 +110,8 @@ export const ReviewFrom = (props) => {
               name='content'
             ></textarea>
             {server_error.content ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.content[0]} </lable>) : ("")}
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.content} </label>) : ("")}
           </div>
           <button type='send' className='btn'>
             enviar

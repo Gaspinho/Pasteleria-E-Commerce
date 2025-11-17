@@ -8,5 +8,6 @@ urlpatterns = [
     path('postReview/', ReviewView.as_view(), name='postReview'), 
     path('postQusetion/', QusetionView.as_view(), name='postQusetion'),  
     path('deleteQusetion/', QusetionView.as_view(), name='postQusetion'), 
-    path('deleteReview/', ReviewView.as_view(), name='postReview'), 
+    path('deleteReview/', ReviewView.as_view(), name='postReview'),
+    path('product/<int:pk>/reviews/', ProductReviewView.as_view(), name='productReviews'), 
 ]

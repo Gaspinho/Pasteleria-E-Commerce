@@ -1,4 +1,3 @@
-import productData from "data/product/product";
 import { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import socialData from "data/social";
@@ -7,23 +6,53 @@ import { ReviewFrom } from "../ReviewForm/ReviewFrom";
 import { useRouter } from "next/router";
 import { CartContext } from "pages/_app";
 import { getToken } from '../../../services/LocalStorageService';
+import { useDetailedProductQuery } from '../../../services/productApi';
 
 export const ProductDetails = () => {
   const router = useRouter();
   const { access_token } = getToken();
   const { cart, setCart } = useContext(CartContext);
+  
+  // Obtener producto de la API
+  const productId = router.query.id;
+  const { data: apiProduct, isLoading, error } = useDetailedProductQuery(productId, {
+    skip: !productId // No hacer la query si no hay ID
+  });
 
   const socialLinks = [...socialData];
-  const products = [...productData];
   const [product, setProduct] = useState(null);
   const [addedInCart, setAddedInCart] = useState(false);
 
   useEffect(() => {
-    if (router.query.id) {
-      const data = products.find((pd) => pd.id === router.query.id);
-      setProduct(data);
+    if (apiProduct) {
+      // Adaptar producto de la API al formato esperado
+      const adapted = {
+        id: apiProduct.product_id?.toString(),
+        name: apiProduct.product_name,
+        price: apiProduct.product_price,
+        oldPrice: apiProduct.product_price * 1.1,
+        category: apiProduct.category_name,
+        isSale: apiProduct.product_is_sale === "Yes",
+        isNew: false,
+        isStocked: apiProduct.product_stock > 0,
+        productNumber: apiProduct.product_sku || apiProduct.product_id?.toString(),
+        imageGallery: [
+          apiProduct.image1,
+          apiProduct.image2,
+          apiProduct.image3,
+          apiProduct.image4
+        ].filter(Boolean),
+        content: apiProduct.product_description,
+        description: apiProduct.product_description,
+        reviews: [], // Se cargarán por separado
+        review_count: apiProduct.review_count || 0,
+        avg_rating: apiProduct.avg_rating || 0,
+        colors: ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+        stock: apiProduct.product_stock
+      };
+      setProduct(adapted);
     }
-  }, [router.query.id]);
+  }, [apiProduct]);
 
   useEffect(() => {
     if (product) {
@@ -41,6 +70,34 @@ export const ProductDetails = () => {
     const newProduct = { ...product, quantity: quantity };
     setCart([...cart, newProduct]);
   };
+
+  // Estados de carga y error
+  if (isLoading) {
+    return (
+      <div className="product">
+        <div className="wrapper">
+          <div style={{ textAlign: 'center', padding: '100px 20px' }}>
+            <h2>Cargando producto...</h2>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="product">
+        <div className="wrapper">
+          <div style={{ textAlign: 'center', padding: '100px 20px' }}>
+            <h2>Error al cargar el producto</h2>
+            <p style={{ color: 'red', marginTop: '20px' }}>
+              {error.message || 'No se pudo cargar el producto'}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!product) return <></>;
   return (

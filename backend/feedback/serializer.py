@@ -25,7 +25,7 @@ class GetReviewSerilizer(serializers.ModelSerializer):
 class PostReviewSerilizer(serializers.ModelSerializer):
   class Meta:
     model = Review
-    fields = ['content', 'rating']
+    fields = ['content', 'rating', 'author_name', 'author_email']
 
 class QuestionSerilizer(serializers.ModelSerializer):
   class Meta:

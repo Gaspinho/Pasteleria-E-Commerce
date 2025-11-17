@@ -26,7 +26,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductAddingSerializer(serializers.ModelSerializer):
   class Meta:
     model = Product
-    fields =  ['product_Name','product_Description','product_Price','product_Stock','product_isSale']
+    fields =  ['product_Name','product_SKU','product_Description','product_Price','product_Stock','product_isSale']
     
   # Validating FIRST NAME 
   def validated(self, data):

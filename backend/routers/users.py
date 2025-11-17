@@ -1,10 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends, Request
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
 from supabase import create_client, Client
 from datetime import datetime
 import os
 import json
+
+load_dotenv()
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")

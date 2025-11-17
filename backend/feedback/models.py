@@ -7,9 +7,11 @@ from product.models import Product
 class Review(models.Model):
    rating=models.IntegerField()
    content=models.CharField(max_length=520)
+   author_name=models.CharField(max_length=100, null=True, blank=True)
+   author_email=models.EmailField(null=True, blank=True)
    reviewDate=models.DateField(auto_now_add=True)
    productReviewed = models.ForeignKey(Product ,on_delete=models.CASCADE )
-   customer= models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
+   customer= models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE, null=True, blank=True)
 
 class Question(models.Model):
    userName=models.CharField(max_length=520)

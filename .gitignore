@@ -21,3 +21,24 @@ build/
 *npm-debug.log
 *yarn-debug.log
 *yarn-error.log
+*.pyc
+
+# Next.js
+.next/
+*/.next/
+customer-frontend/.next/
+
+# Python
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Database
+*.sqlite3
+db.sqlite3

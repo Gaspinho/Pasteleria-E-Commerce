@@ -23,6 +23,7 @@ class Image_Gallery(models.Model):
 class Product(models.Model):
     product_Id=models.AutoField(primary_key=True)
     product_Name=models.CharField(max_length=50)
+    product_SKU=models.CharField(max_length=50, unique=True, null=True, blank=True)
     product_Description=models.TextField(max_length=700)
     product_category=models.ForeignKey(Category , on_delete=models.SET_DEFAULT,default='')
     product_Price=models.FloatField()

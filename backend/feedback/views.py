@@ -13,20 +13,29 @@ class ReviewView(APIView):
     renderer_classes = [UserRenderer]
  
     def post(self, request, format=None):
-      try:
-        user = User.objects.get(email = request.data.get('email'))
-      except User.DoesNotExist:
-        user = None
+      # Intentar obtener el usuario por email si está registrado
+      user = None
+      email = request.data.get('email')
       
-      if user is None:
-        return Response({'errors':{'non_user_errors':['Please Craete an accont to send Review']}}, status=status.HTTP_404_NOT_FOUND)
+      if email:
+        try:
+          user = User.objects.get(email=email)
+        except User.DoesNotExist:
+          user = None
       
-      product = Product.objects.get(pk =request.data.get('product') )
+      product = Product.objects.get(pk=request.data.get('product'))
 
       serializer = PostReviewSerilizer(data=request.data)
       if serializer.is_valid(raise_exception=ValueError):
-        review = Review.objects.create(**serializer.data , customer= user ,productReviewed =product)
-        serilzer =GetReviewSerilizer(review)
+        review = Review.objects.create(
+          rating=serializer.validated_data['rating'],
+          content=serializer.validated_data['content'],
+          author_name=serializer.validated_data.get('author_name'),
+          author_email=serializer.validated_data.get('author_email'),
+          customer=user,
+          productReviewed=product
+        )
+        serilzer = GetReviewSerilizer(review)
         return Response(serilzer.data, status=status.HTTP_201_CREATED)
       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
         
@@ -39,6 +48,16 @@ class ReviewView(APIView):
        review = Review.objects.get(id=pk)
        review.delete()
        return Response(status=status.HTTP_202_ACCEPTED)
+
+
+class ProductReviewView(APIView):
+    renderer_classes = [UserRenderer]
+    
+    def get(self, request, pk, format=None):
+        """Get all reviews for a specific product"""
+        reviews = Review.objects.filter(productReviewed=pk)
+        serializer = GetReviewSerilizer(reviews, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class QusetionView(APIView):

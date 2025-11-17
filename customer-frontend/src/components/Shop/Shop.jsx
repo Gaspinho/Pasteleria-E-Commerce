@@ -8,7 +8,7 @@ import { Products } from "components/Product/Products/Products";
 import { PagingList } from "components/shared/PagingList/PagingList";
 import { usePagination } from "components/utils/Pagination/Pagination";
 import { AsideItem } from "../shared/AsideItem/AsideItem";
-import productData from "data/product/product";
+import { useGetAllProductQuery } from "services/productApi";
 
 // React Range
 const Range = Slider.Range;
@@ -18,19 +18,54 @@ const sortOptions = [
   { value: "minToHigh", label: "De más barato a más caro" },
 ];
 
+// Función para adaptar productos de la API al formato esperado por el frontend
+const adaptProduct = (product) => ({
+  id: product.product_id?.toString() || product.product_id,
+  name: product.product_name || "",
+  price: product.product_price || 0,
+  oldPrice: product.product_price * 1.1, // Si no hay precio viejo, calculamos un 10% más
+  category: product.category_name || "Otros",
+  isSale: product.product_is_sale === "Yes",
+  isNew: false, // Por defecto false, puedes calcular basado en created_at
+  isStocked: product.product_stock > 0,
+  productNumber: product.product_sku || product.product_id?.toString(),
+  image: product.image1 || "/assets/img/products/default.jpg",
+  imageGallery: [
+    product.image1,
+    product.image2,
+    product.image3,
+    product.image4
+  ].filter(Boolean),
+  content: product.product_description || "",
+  description: product.product_description || "",
+  reviews: [], // Las reviews se cargan por separado
+  review_count: product.review_count || 0,
+  avg_rating: product.avg_rating || 0,
+  colors: ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"], // Colores por defecto
+  filterItems: [product.category_name, "cakes"],
+  stock: product.product_stock || 0
+});
+
 export const Shop = () => {
-  // Normalizamos datos: precio numérico seguro
   const router = useRouter();
-  const allProducts = useMemo(
-    () =>
-      [...productData].map((p) => ({
-        ...p,
+  
+  // Obtener productos de la API
+  const { data: apiProducts, isLoading, error } = useGetAllProductQuery();
+  
+  // Normalizar datos: precio numérico seguro
+  const allProducts = useMemo(() => {
+    if (!apiProducts || !Array.isArray(apiProducts)) return [];
+    
+    return apiProducts.map((p) => {
+      const adapted = adaptProduct(p);
+      return {
+        ...adapted,
         // asegúrate de que price/oldPrice sean números para ordenar/filtrar
-        _priceNum: Number(p.price) || 0,
-        _oldPriceNum: Number(p.oldPrice) || Number(p.price) || 0,
-      })),
-    []
-  );
+        _priceNum: Number(adapted.price) || 0,
+        _oldPriceNum: Number(adapted.oldPrice) || Number(adapted.price) || 0,
+      };
+    });
+  }, [apiProducts]);
 
   // ---- Aux: categorías dinámicas (por "category")
   const categories = useMemo(() => {
@@ -156,6 +191,67 @@ export const Shop = () => {
     // opcional: desplazar a la lista de productos
     // document.querySelector('.shop-main')?.scrollIntoView({ behavior: 'smooth' });
   }, [router.query.category]);
+
+  // Mostrar loading
+  if (isLoading) {
+    return (
+      <div className="shop">
+        <div className="wrapper">
+          <div style={{ textAlign: 'center', padding: '100px 20px' }}>
+            <h2>Cargando productos...</h2>
+            <div className="loader" style={{ 
+              border: '4px solid #f3f3f3', 
+              borderTop: '4px solid #3498db',
+              borderRadius: '50%',
+              width: '50px',
+              height: '50px',
+              animation: 'spin 1s linear infinite',
+              margin: '20px auto'
+            }}></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar error
+  if (error) {
+    return (
+      <div className="shop">
+        <div className="wrapper">
+          <div style={{ textAlign: 'center', padding: '100px 20px' }}>
+            <h2>Error al cargar productos</h2>
+            <p style={{ color: 'red', marginTop: '20px' }}>
+              {error.message || 'No se pudieron cargar los productos. Por favor, verifica que el servidor esté funcionando.'}
+            </p>
+            <button 
+              className="btn" 
+              style={{ marginTop: '20px' }}
+              onClick={() => window.location.reload()}
+            >
+              Reintentar
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Si no hay productos
+  if (!allProducts || allProducts.length === 0) {
+    return (
+      <div className="shop">
+        <div className="wrapper">
+          <div style={{ textAlign: 'center', padding: '100px 20px' }}>
+            <h2>No hay productos disponibles</h2>
+            <p style={{ marginTop: '20px' }}>
+              Vuelve pronto para ver nuestros productos.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
