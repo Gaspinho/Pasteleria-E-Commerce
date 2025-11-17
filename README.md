@@ -1,6 +1,7 @@
 # 🍰 Pastelería Mil Sabores - Plataforma E-Commerce de Pastelería
 
-[![Django](https://img.shields.io/badge/Django-4.0.4-green.svg)](https://www.djangoproject.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-009688.svg)](https://fastapi.tiangolo.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-2.9.0-3ECF8E.svg)](https://supabase.com/)
 [![React](https://img.shields.io/badge/React-18.1.0-blue.svg)](https://reactjs.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-12.1.6-black.svg)](https://nextjs.org/)
 [![Python](https://img.shields.io/badge/Python-3.8+-yellow.svg)](https://www.python.org/)
@@ -33,13 +34,12 @@
 ### 🛠️ Stack Tecnológico
 
 #### **Backend**
-- **Framework**: Django 4.0.4 con Django REST Framework
-- **Autenticación**: JWT (JSON Web Tokens)
-- **Base de Datos**: SQLite (fácilmente configurable a PostgreSQL/MySQL)
-- **API**: Arquitectura API RESTful
-- **Subida de Archivos**: Django Pillow para manejo de imágenes
-
-> 🚧 **Nota Importante**: La implementación actual del backend con Django es temporal. Próximamente será migrada a **Firebase** con nuevas funcionalidades y un diseño mejorado para ofrecer mejor rendimiento y escalabilidad.
+- **Framework**: FastAPI 0.115.0
+- **Base de Datos**: Supabase (PostgreSQL)
+- **Autenticación**: Supabase Auth (JWT-based)
+- **API**: Arquitectura API RESTful moderna
+- **Validación**: Pydantic v2
+- **CORS**: FastAPI Middleware
 
 #### **Frontend - Portal del Cliente**
 - **Framework**: Next.js 12.1.6
@@ -82,29 +82,30 @@ Asegúrate de tener lo siguiente instalado:
    cd pasteleria-mil-sabores
    ```
 
-2. **Configuración del Backend (Django)**
+2. **Configuración del Backend (FastAPI + Supabase)**
    ```bash
-   # Navegar a la raíz del proyecto
+   # Navegar al directorio del backend
    cd backend
    
-   # Activar entorno virtual (Windows)
-   env\Scripts\activate
+   # Crear entorno virtual (recomendado)
+   python3 -m venv venv
+   source venv/bin/activate  # En macOS/Linux
+   # venv\Scripts\activate   # En Windows
    
    # Instalar dependencias
    pip install -r requirements.txt
    
-   # Ejecutar migraciones de base de datos
-   python manage.py makemigrations
-   python manage.py migrate
+   # Configurar variables de entorno
+   # Crear archivo .env con tus credenciales de Supabase:
+   # SUPABASE_URL=tu_supabase_url
+   # SUPABASE_KEY=tu_supabase_key
    
-   # Crear superusuario (opcional)
-   python manage.py createsuperuser
-   
-   # Iniciar servidor Django
-   python manage.py runserver
+   # Iniciar servidor FastAPI
+   python3 server.py
    ```
    
    🌐 El Backend estará ejecutándose en: `http://localhost:8000`
+   📚 Documentación API en: `http://localhost:8000/docs`
 
 3. **Configuración del Frontend del Cliente (Next.js)**
    ```bash
@@ -161,31 +162,33 @@ npm test         # Ejecutar pruebas
 ## 🏗️ Estructura del Proyecto
 
 ```
-├── 📁 backend/                 # API REST de Django
-│   ├── 📁 base/               # App principal (usuarios, autenticación)
-│   ├── 📁 product/            # Gestión de productos
-│   ├── 📁 order/              # Procesamiento de pedidos
-│   ├── 📁 customizeorder/     # Pedidos de pasteles personalizados
-│   ├── 📁 feedback/           # Reseñas y calificaciones
-│   ├── 📁 decoration/         # Decoraciones de pasteles
-│   └── 📁 media/              # Imágenes subidas
+├── 📁 backend/                 # API REST de FastAPI
+│   ├── 📁 routers/            # Endpoints de la API
+│   │   ├── users.py           # Autenticación y usuarios
+│   │   ├── products.py        # Gestión de productos
+│   │   └── reviews.py         # Reseñas y feedback
+│   ├── server.py              # Aplicación FastAPI principal
+│   ├── .env                   # Variables de entorno (Supabase)
+│   └── requirements.txt       # Dependencias Python
 ├── 📁 customer-frontend/       # Portal del cliente Next.js
 ├── 📁 admin_frontend/         # Panel de administración React
-├── 📁 env/                    # Entorno virtual de Python
 └── 📁 ProjectOutput/          # Galería de capturas de pantalla
 ```
 
 ## 🔑 Endpoints Principales de la API
 
 ```
-POST   /api/auth/login/              # Autenticación de usuario
-POST   /api/auth/register/           # Registro de usuario
+POST   /api/users/login              # Autenticación de usuario
+POST   /api/users/register           # Registro de usuario
+GET    /api/users/get_user           # Obtener datos del usuario
+POST   /api/users/logout             # Cerrar sesión
 GET    /api/products/                # Obtener todos los productos
-POST   /api/orders/                  # Crear nuevo pedido
-GET    /api/orders/{id}/             # Obtener detalles del pedido
+POST   /api/products/                # Crear nuevo producto
+GET    /api/feedback/                # Obtener reseñas
 POST   /api/feedback/                # Enviar reseña
-GET    /api/customize-orders/        # Obtener pedidos personalizados
 ```
+
+Documentación completa disponible en: `http://localhost:8000/docs`
 
 ## 🔧 Configuración
 
@@ -193,29 +196,31 @@ GET    /api/customize-orders/        # Obtener pedidos personalizados
 Crea un archivo `.env` en el directorio backend:
 
 ```env
-SECRET_KEY=tu-clave-secreta-django
-DEBUG=True
-DATABASE_URL=sqlite:///db.sqlite3
-ALLOWED_HOSTS=localhost,127.0.0.1
-CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
+SUPABASE_URL=tu_supabase_url
+SUPABASE_KEY=tu_supabase_anon_key
 ```
 
+Para obtener tus credenciales de Supabase:
+1. Crea una cuenta en [supabase.com](https://supabase.com)
+2. Crea un nuevo proyecto
+3. Ve a Settings → API
+4. Copia la URL del proyecto y la clave anon/public
+
 ### Configuración de Base de Datos
-El proyecto usa SQLite por defecto. Para usar PostgreSQL o MySQL, actualiza la configuración `DATABASES` en `backend/settings.py`.
+El proyecto usa Supabase (PostgreSQL) para la base de datos. Consulta `backend/README.md` para instrucciones detalladas de configuración del schema.
 
 ## 🚀 Despliegue
 
 ### Configuración de Producción
-1. Establecer `DEBUG=False` en la configuración de Django
-2. Configurar base de datos de producción
-3. Configurar servicio de archivos estáticos
-4. Usar variables de entorno para datos sensibles
-5. Configurar CORS para dominios de producción
+1. Configurar variables de entorno en el servicio de hosting
+2. Usar credenciales de Supabase de producción
+3. Configurar CORS para dominios de producción
+4. Configurar servicio de archivos estáticos para el frontend
 
 ### Hosting Recomendado
-- **Backend**: Heroku, DigitalOcean, AWS EC2
-- **Frontend**: Vercel, Netlify, AWS S3 + CloudFront
-- **Base de Datos**: PostgreSQL (Heroku Postgres, AWS RDS)
+- **Backend**: Railway, Render, Fly.io, AWS Lambda
+- **Frontend**: Vercel, Netlify, AWS Amplify
+- **Base de Datos**: Supabase (incluye PostgreSQL + Auth)
 
 ## 🤝 Contribuir
 

@@ -14,7 +14,7 @@ export const CustomOrderCheckoutOrders = (props) => {
   let customOrder = useGetUserCustomOrderQuery(props.CustomOrder_Id)
 
   if (customOrder.isLoading) return <div>Loading....</div>;
-  if (customOrder.isError) return <h1>An error occured {response.error.error}</h1>;
+  if (customOrder.isError) return <h1>An error occured {customOrder?.error?.message || 'Please try again'}</h1>;
   
   
   

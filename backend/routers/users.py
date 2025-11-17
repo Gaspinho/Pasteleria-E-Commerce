@@ -53,13 +53,42 @@ async def supa_register(user: User):
     if user.admin:
         metadata["admin"] = user.admin
     try:
+        # Crear usuario en Supabase Auth
         response = supabase.auth.admin.create_user({"email" : user.email, "password" : user.password, "data" : metadata})
         print(response.user.id)
-        _ = supabase.auth.admin.update_user_by_id( #bypass email confirmation
+        
+        # Bypass email confirmation
+        _ = supabase.auth.admin.update_user_by_id(
             response.user.id, 
             {"email_confirm": True}
         )
+        
         if response.user:
+            # Crear dirección por defecto para el usuario
+            default_address = {
+                "city": "Not specified",
+                "area": "Not specified",
+                "street_number": 0,
+                "house_number": 0
+            }
+            address_response = supabase.table('address').insert(default_address).execute()
+            address_id = address_response.data[0]['id'] if address_response.data else None
+            
+            # Crear usuario en app_user
+            user_type = "ADMIN" if user.admin else "CUSTOMER"
+            new_user_data = {
+                "id": response.user.id,
+                "email": user.email,
+                "first_name": metadata.get('first_name', 'Customer'),
+                "last_name": metadata.get('last_name', ''),
+                "type": user_type,
+                "is_staff": user.admin is not None,
+                "is_active": True,
+                "address_id": address_id
+            }
+            supabase.table('app_user').insert(new_user_data).execute()
+            print(f"User {response.user.id} created in app_user")
+            
             return {"message": "User registered successfully"}
         else:            
             raise HTTPException(

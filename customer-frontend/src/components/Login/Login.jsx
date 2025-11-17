@@ -21,13 +21,23 @@ export const Login = () => {
     }
     const res = await loginUser(actualData)
     if (res.error) {
-      setServerError(res.error.data.errors)
+      // Manejar diferentes estructuras de error de FastAPI
+      if (res.error.data && res.error.data.detail) {
+        setServerError({ non_field_errors: [res.error.data.detail] })
+      } else if (res.error.data && res.error.data.errors) {
+        setServerError(res.error.data.errors)
+      } else {
+        setServerError({ non_field_errors: ['An error occurred. Please try again.'] })
+      }
     }
     if (res.data) {
-      storeToken(res.data.token)
-      dispatch(setUserToken({ access_token: res.data.token }))
+      // FastAPI/Supabase devuelve { access_token, refresh_token, user_id }
+      storeToken({
+        access: res.data.access_token,
+        refresh: res.data.refresh_token
+      })
+      dispatch(setUserToken({ access_token: res.data.access_token }))
       router.push("/")
-      {res.data.token.type === 'ADMIN' ? router.push("/http://localhost:3001/admin/dashboard") :router.push("/")}  
     }
   }
   return (
@@ -48,7 +58,7 @@ export const Login = () => {
                   name='email'
                 />
               </div>
-              {server_error.email ? <p style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.email[0]}</p> : ""}
+              {server_error?.email ? <p style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.email[0]}</p> : ""}
               <div className="box-field">
                 <input
                   type="password"
@@ -57,7 +67,7 @@ export const Login = () => {
                   name='password'
                 />
               </div>
-              {server_error.password ? <p style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.password[0]}</p> : ""}
+              {server_error?.password ? <p style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.password[0]}</p> : ""}
 
               <button className="btn" type="submit">
                 login
@@ -71,7 +81,7 @@ export const Login = () => {
                 </span>
                 {/* //<a href="#">Lost your password?</a> */}
               </div>
-              {server_error.non_field_errors ? <lable style={{ fontSize: 16, color: 'red', paddingTop: 20 }} severity='error'>{server_error.non_field_errors[0]}</lable> : ''}
+              {server_error?.non_field_errors ? <label style={{ fontSize: 16, color: 'red', paddingTop: 20 }} severity='error'>{server_error.non_field_errors[0]}</label> : ''}
             </form>
           </div>
           

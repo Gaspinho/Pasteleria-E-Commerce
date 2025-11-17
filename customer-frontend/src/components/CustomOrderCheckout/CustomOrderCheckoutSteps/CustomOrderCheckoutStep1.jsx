@@ -59,11 +59,19 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
     const res = await PlaceOrder(actualData)
 
     if (res.error) {
-      console.log(res.error.data.errors)
-      setServerError(res.error.data.errors)
+      console.log(res.error)
+      // Manejar diferentes estructuras de error
+      if (res.error.data && res.error.data.errors) {
+        setServerError(res.error.data.errors)
+      } else if (res.error.data && res.error.data.detail) {
+        setServerError({ non_field_errors: [res.error.data.detail] })
+      } else {
+        setServerError({ non_field_errors: ['An error occurred. Please try again.'] })
+      }
     }
     if (res.data) {
       console.log(res.data)
+      setServerError({})
       onNext();
     } 
   }
@@ -93,9 +101,9 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                 required
               />
             </div>
-           {server_error.phone_Number ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.phone_Number[0]} </lable>) : ("")} 
+           {server_error?.phone_Number ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.phone_Number[0]} </label>) : ("")} 
           </div>
           <div className="checkout-form__item">
             <h4>Delivery Info</h4>
@@ -109,9 +117,9 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                   onChange={handleChange}
                   required
                 />
-                {server_error.house_Number ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.house_Number[0]} </lable>) : ("")}
+                {server_error?.house_Number ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.house_Number[0]} </label>) : ("")}
               </div>
               
               <div className="box-field">
@@ -123,9 +131,9 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                   onChange={handleChange}
                   required
                 />
-                {server_error.street_Number ? (
-              <lable style={{ fontSize: 16, color: "red"}}>
-                {server_error.street_Number[0]} </lable>) : ("")} 
+                {server_error?.street_Number ? (
+              <label style={{ fontSize: 16, color: "red"}}>
+                {server_error.street_Number[0]} </label>) : ("")} 
               </div> 
     
             </div>
@@ -139,9 +147,9 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                   onChange={handleChange}
                   required
                 />
-                {server_error.area ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.area[0]} </lable>) : ("")}
+                {server_error?.area ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.area[0]} </label>) : ("")}
               </div>
               <div className="box-field">
               <Dropdown 

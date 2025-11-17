@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import users, products, reviews
+from routers import users, products, reviews, custom_orders
 import uvicorn
 import os
 
@@ -46,6 +46,12 @@ app.include_router(
     tags=["feedback"]
 )
 
+app.include_router(
+    custom_orders.router,
+    prefix="/customizeorder",
+    tags=["custom-orders"]
+)
+
 @app.get("/")
 def read_root():
     return {
@@ -55,7 +61,8 @@ def read_root():
         "endpoints": {
             "users": "/api/users",
             "products": "/api/products",
-            "reviews": "/api/feedback"
+            "reviews": "/api/feedback",
+            "custom_orders": "/customizeorder"
         }
     }
 

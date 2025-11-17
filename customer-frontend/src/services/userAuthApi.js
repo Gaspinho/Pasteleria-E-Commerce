@@ -8,7 +8,7 @@ export const userAuthApi = createApi({
     registerUser: builder.mutation({
       query: (user) => {
         return {
-          url: 'user/register/',
+          url: 'api/users/register',
           method: 'POST',
           body: user,
           headers: {
@@ -20,7 +20,7 @@ export const userAuthApi = createApi({
     loginUser: builder.mutation({
       query: (user) => {
         return {
-          url: 'user/login/',
+          url: 'api/users/login',
           method: 'POST',
           body: user,
           headers: {
@@ -32,7 +32,7 @@ export const userAuthApi = createApi({
     getLoggedUser: builder.query({
       query: (access_token) => {
         return {
-          url: 'user/profile/',
+          url: 'api/users/get_user',
           method: 'GET',
           headers: {
             'authorization': `Bearer ${access_token}`,

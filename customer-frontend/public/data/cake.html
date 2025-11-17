@@ -2554,9 +2554,27 @@ console.log('select_topfilling func...');
 	           data['quantity'] = 1;
 	           data['special_instruction'] = $("#spec_note").val();
 			   var img_top_style = $('.cake-top-img-real').attr('style');
-			   var access_token = localStorage.getItem("access_token");
+			   
+			   // Obtener el access token desde sessionStorage (donde se guarda en el login)
+			   var access_token = sessionStorage.getItem("access_token");
+			   
+			   if (!access_token) {
+			       // Si no está en sessionStorage, intentar con localStorage por compatibilidad
+			       var tokenData = localStorage.getItem("access_token");
+			       try {
+			           var parsedToken = JSON.parse(tokenData);
+			           if (parsedToken && parsedToken.access) {
+			               access_token = parsedToken.access;
+			           } else {
+			               access_token = tokenData;
+			           }
+			       } catch (e) {
+			           access_token = tokenData;
+			       }
+			   }
 	
 	           console.log(data);
+	           console.log("Access token:", access_token);
 	
 	           //call ajax for add item to cart.
 	       //    order_type = 'pickup';
@@ -2566,7 +2584,7 @@ console.log('select_topfilling func...');
 	                   type: 'POST',
 	                   url : "http://127.0.0.1:8000/customizeorder/post/",
 					   headers: { "authorization": "Bearer " + access_token },
-	                   data: 'token='+ access_token +'&layer_id=' + data['layer_id'] + '&spongeflavor_id=' + data['spongeflavor_id'] + '&fillingtopdecoration_id=' + data['fillingtopdecoration_id'] +
+	                   data: '&layer_id=' + data['layer_id'] + '&spongeflavor_id=' + data['spongeflavor_id'] + '&fillingtopdecoration_id=' + data['fillingtopdecoration_id'] +
 							    '&imagetopdecoration_id=' + data['imagetopdecoration_id'] + '&icing=' + data['icing'] + '&amount=' + data['amount']  + '&msg_on_cake=' + data['msg_on_cake'] + '&msg_color_id=' + data['msg_color_id']+'&special_instruction='+data['special_instruction'],
 	                           success:function(response){
 								console.log("response",response)

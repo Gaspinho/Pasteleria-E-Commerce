@@ -1,10 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 // Define a service using a base URL and expected endpoints
+const baseQueryWithAuth = fetchBaseQuery({ 
+  baseUrl: 'http://127.0.0.1:8000/',
+  prepareHeaders: (headers) => {
+    // Obtener el token de sessionStorage
+    const token = sessionStorage.getItem('access_token')
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`)
+    }
+    return headers
+  },
+})
 
 export const customOrderApi = createApi({
   reducerPath: 'customOrderApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000/' }),
+  baseQuery: baseQueryWithAuth,
   endpoints: (builder) => ({
     getAllCustomOrders: builder.query({
       query: () => {
