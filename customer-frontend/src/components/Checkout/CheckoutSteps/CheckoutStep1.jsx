@@ -8,8 +8,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import {usePlaceOrderMutation} from '../../../services/orderApi'
 import { setOrder } from '../../../features/orderSlice';
 const countries = [
-  { label: "Islamabad", value: "Islamabad" },
-  { label: "Rawalpindi", value: "Rawalpindi" },
+  { label: "Concepción", value: "Concepción" },
+  { label: "Hualpen", value: "Hualpen" },
+  { label: "Talcahuano", value: "Talcahuano" },
+  { label: "San Pedro de La Paz", value: "San Pedro de La Paz" },
+  { label: "Chiguayante", value: "Chiguayante" },
+  { label: "Penco", value: "Penco" },
 ];
 const timezone = [
   { label: "10AM - 12PM", value: "10AM - 12PM" },
@@ -75,7 +79,7 @@ export const CheckoutStep1 = ({ onNext }) => {
         amount_Paid: 0
       },
       order_Status:'Order Pending',
-      delivery_Charges: 50,
+      delivery_Charges: 5000,
       total_Amount:total,
       note:userData.note,
       order_Delivery_Date : startDate,
@@ -87,8 +91,15 @@ export const CheckoutStep1 = ({ onNext }) => {
     const res = await PlaceOrder(actualData)
 
     if (res.error) {
-      console.log(res.error.data.errors)
-      setServerError(res.error.data.errors)
+      console.log(res.error)
+      // Manejar diferentes estructuras de error
+      if (res.error.data && res.error.data.errors) {
+        setServerError(res.error.data.errors)
+      } else if (res.error.data && res.error.data.detail) {
+        setServerError({ non_field_errors: [res.error.data.detail] })
+      } else {
+        setServerError({ non_field_errors: ['Ocurrió un error. Por favor intente nuevamente.'] })
+      }
     }
     if (res.data) {
       console.log(res.data)
@@ -112,11 +123,11 @@ export const CheckoutStep1 = ({ onNext }) => {
       <div className="checkout-form">
         <form onSubmit={handelSubmit}>
           <div className="checkout-form__item">
-            <h4>Info about you</h4>
+            <h4>Información sobre ti</h4>
             <div style={{display:'grid' , gridTemplateColumns:'repeat(2, 1fr)' , marginBottom:'1rem'}}>
               <div> 
-                <h6>Name:</h6>
-                <h6>Phone Number:</h6>
+                <h6>Nombre:</h6>
+                <h6>Número de Teléfono:</h6>
               </div>
               <div> 
                 <h6>{userData.first_Name} {" "} {userData.last_Name}</h6>
@@ -127,44 +138,44 @@ export const CheckoutStep1 = ({ onNext }) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter your Phone Number"
+                placeholder="Ingrese su Número de Teléfono"
                 name="phone_Number"
                 onChange={handleChange}
               />
             </div>
-           {server_error.phone_Number ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.phone_Number[0]} </lable>) : ("")} 
+           {server_error?.phone_Number ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.phone_Number[0]} </label>) : ("")} 
           </div>
           <div className="checkout-form__item">
-            <h4>Delivery Info</h4>
+            <h4>Información de Entrega</h4>
             <div className="box-field__row">
               <div className="box-field">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the House Number"
+                  placeholder="Ingrese el Número de Casa"
                   name="house_Number"
                   onChange={handleChange}
                   required
                 />
-                {server_error.house_Number ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.house_Number[0]} </lable>) : ("")}
+                {server_error?.house_Number ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.house_Number[0]} </label>) : ("")}
               </div>
               
               <div className="box-field">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the Street Number"
+                  placeholder="Ingrese el Número de Calle"
                   name="street_Number"
                   onChange={handleChange}
                   required
                 />
-                {server_error.street_Number ? (
-              <lable style={{ fontSize: 16, color: "red"}}>
-                {server_error.street_Number[0]} </lable>) : ("")} 
+                {server_error?.street_Number ? (
+              <label style={{ fontSize: 16, color: "red"}}>
+                {server_error.street_Number[0]} </label>) : ("")} 
               </div> 
     
             </div>
@@ -173,29 +184,29 @@ export const CheckoutStep1 = ({ onNext }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the Area (phase or Lane)"
+                  placeholder="Ingrese el Área (fase o pasaje)"
                   name="area"
                   onChange={handleChange}
                   required
                 />
-                {server_error.area ? (
-              <lable style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
-                {server_error.area[0]} </lable>) : ("")}
+                {server_error?.area ? (
+              <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
+                {server_error.area[0]} </label>) : ("")}
               </div>
               <div className="box-field">
               <Dropdown 
                options={countries}
                className="react-dropdown"
                onChange={(option)=> setCity(option.value)}
-               placeholder="Select a City"
+               placeholder="Seleccione una Ciudad"
                required
                />
               </div>  
             </div>
-            <h4>Delivery Date / Time </h4>
+            <h4>Fecha / Hora de Entrega</h4>
             <div className="box-field__row" style={{marginTop: "20px"}}>
               <div className="box-field">
-              <span style={{paddingBottom: "20px"}}> Select Date</span>    
+              <span style={{paddingBottom: "20px"}}>Seleccione Fecha</span>    
               <DatePicker className="box-field" selected={startDate} onChange={(date) => setStartDate(date)} />
               </div>
             <div className="box-field">
@@ -203,24 +214,24 @@ export const CheckoutStep1 = ({ onNext }) => {
               options={timezone}
               className="react-dropdown"
               onChange={(option)=> setTime(option.value)}
-              placeholder="Delivery Time" 
+              placeholder="Hora de Entrega" 
               required 
             />
             </div>
             </div>
           </div>
           <div className="checkout-form__item">
-            <h4>Note</h4>
+            <h4>Nota</h4>
             <div className="box-field box-field__textarea">
               <textarea
                 className="form-control"
-                placeholder="Order note"
+                placeholder="Nota del pedido"
                 name='note'
                 onChange={handleChange}
               ></textarea>
-              {server_error.note ? (
-              <lable style={{ fontSize: 16, color: "red"}}>
-                {server_error.note[0]} </lable>) : ("")}
+              {server_error?.note ? (
+              <label style={{ fontSize: 16, color: "red"}}>
+                {server_error.note[0]} </label>) : ("")}
             </div>
             {/* <label className="checkbox-box checkbox-box__sm">
               <input type="checkbox" />
@@ -231,10 +242,10 @@ export const CheckoutStep1 = ({ onNext }) => {
           <div className="checkout-buttons">
             {/* <button className='btn btn-grey btn-icon'>
               {' '}
-              <i className='icon-arrow'></i> back
+              <i className='icon-arrow'></i> atrás
             </button> */}
             <button type="submit" className="btn btn-icon btn-next">
-              next <i className="icon-arrow"></i>
+              Siguiente <i className="icon-arrow"></i>
             </button>
           </div>
         </form>

@@ -20,12 +20,26 @@ export const ProfileOrders = () => {
   if (response.isError) {
     return (
       <div className='error-container'>
-        <h6>Ha ocurrido un error: {response.error.error}</h6>
+        <div className='error-icon'>⚠️</div>
+        <h3>No se pudieron cargar los pedidos</h3>
+        <p className='error-message'>
+          {response.error?.data?.detail || 
+           response.error?.error || 
+           'Ocurrió un problema al cargar tus pedidos'}
+        </p>
+        <button 
+          className='retry-button'
+          onClick={() => window.location.reload()}
+        >
+          Intentar nuevamente
+        </button>
       </div>
     );
   }
   
-  const orders = (response.data).slice().reverse();
+  // Validar que response.data sea un array antes de usar slice
+  const ordersData = Array.isArray(response.data) ? response.data : [];
+  const orders = ordersData.slice().reverse();
 
   const handleCollapse = (indx) => {
     if (active === indx) {
@@ -101,12 +115,65 @@ export const ProfileOrders = () => {
         }
 
         .error-container {
-          background: #fee;
-          border: 2px solid #fcc;
-          border-radius: 12px;
-          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+          border: 2px solid #ff6b6b;
+          border-radius: 16px;
+          padding: 3rem 2rem;
           text-align: center;
-          color: #c33;
+          box-shadow: 0 4px 15px rgba(255, 107, 107, 0.1);
+        }
+
+        .error-icon {
+          font-size: 3.5rem;
+          margin-bottom: 1rem;
+          animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-10px); }
+          75% { transform: translateX(10px); }
+        }
+
+        .error-container h3 {
+          color: #e74c3c;
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 0.75rem;
+        }
+
+        .error-message {
+          color: #c0392b;
+          font-size: 1rem;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+          max-width: 500px;
+        }
+
+        .retry-button {
+          background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+          color: white;
+          border: none;
+          padding: 0.75rem 2rem;
+          border-radius: 25px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .retry-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(231, 76, 60, 0.4);
+        }
+
+        .retry-button:active {
+          transform: translateY(0);
         }
 
         .empty-state {

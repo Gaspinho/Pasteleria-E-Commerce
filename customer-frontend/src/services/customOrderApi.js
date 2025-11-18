@@ -82,6 +82,11 @@ export const customOrderApi = createApi({
             'Content-type': 'application/json',
           }
         }
+      },
+      transformResponse: (response) => {
+        // El backend devuelve {orders: [...]}
+        // Extraemos el array directamente
+        return response?.orders || [];
       }
     }),     
   }),

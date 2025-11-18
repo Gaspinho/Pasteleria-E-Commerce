@@ -16,6 +16,12 @@ export const Header = () => {
   const [fixedNav, setFixedNav] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [height, width] = useWindowSize();
+  const [isClient, setIsClient] = useState(false); // Para evitar problemas de hidratación
+  
+  // Marcar cuando estamos en el cliente
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   
   // For Fixed nav
   useEffect(() => {
@@ -122,7 +128,7 @@ export const Header = () => {
                   </a>
                 </Link>
               </li> */}
-              {access_token ? ( <li> 
+              {isClient && access_token ? ( <li> 
                   <Link href="/logout">
                     <a>
                        Log Out
@@ -137,7 +143,7 @@ export const Header = () => {
                   </Link>
                 </li>
               )}
-              {access_token ? ( <li> 
+              {isClient && access_token ? ( <li> 
                   <Link href="/profile" >
                     <a>
                       <i className="icon-user"></i>
@@ -152,7 +158,7 @@ export const Header = () => {
                   </Link>
                 </li>
               )}
-              {access_token ? <li>
+              {isClient && access_token ? <li>
                 <Link href="/cart">
                   <a>
                     <i className="icon-cart"></i>
@@ -170,7 +176,7 @@ export const Header = () => {
               </li> }
             </ul>
             <div>
-              <h6 style={{marginLeft:'1rem'}}> {" "}{userData.first_name} {" "}{userData.last_name}</h6>
+              <h6 style={{marginLeft:'1rem'}}> {isClient && userData.first_name ? `${userData.first_name} ${userData.last_name}` : ''}</h6>
             </div>
           </div>
 

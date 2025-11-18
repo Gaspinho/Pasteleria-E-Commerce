@@ -19,9 +19,9 @@ export const Card = ({ order }) => {
             </a>
           </Link>
           <span className='checkout-order__item-price'>
-            Rs.{(price * quantity).toFixed(2)}
+            ${(price * quantity).toLocaleString('es-CL')}
           </span>
-          <span className='checkout-order__item-num'>Product ID: {productNumber}</span>
+          <span className='checkout-order__item-num'>ID del Producto: {productNumber}</span>
         </div>
       </div>
       {/* <!-- ORDER ITEM CARD EOF --> */}

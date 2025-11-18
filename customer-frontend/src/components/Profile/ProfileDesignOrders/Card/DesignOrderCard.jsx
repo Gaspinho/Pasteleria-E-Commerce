@@ -1,4 +1,10 @@
 export const DesignOrderCard = ({ order, index, onCollapse, active }) => {
+  // Validar que order tenga la estructura correcta
+  if (!order || !order.custom_cake) {
+    console.error('Order data is invalid:', order);
+    return null;
+  }
+
   const getStatusConfig = (status) => {
     const configs = {
       "Order Placed": { 
@@ -35,7 +41,8 @@ export const DesignOrderCard = ({ order, index, onCollapse, active }) => {
     return configs[status] || configs["Order Placed"];
   };
 
-  const statusConfig = getStatusConfig(order.CustomCake.order_Status);
+  // El order_Status está en la orden, no en el custom_cake
+  const statusConfig = getStatusConfig(order.order_Status);
 
   return (
     <>
@@ -59,7 +66,7 @@ export const DesignOrderCard = ({ order, index, onCollapse, active }) => {
           <div className='profile-orders__col'>
             <span className='profile-orders__col-mob'>Monto</span>
             <span className='profile-orders__item-price'>
-              ${order.CustomCake.amount}
+              ${order.custom_cake?.amount || 0}
             </span>
           </div>
           <div className='profile-orders__col status-col'>
@@ -90,7 +97,7 @@ export const DesignOrderCard = ({ order, index, onCollapse, active }) => {
             <div className='custom-cake-details'>
               <div className='cake-image-container'>
                 <img 
-                  src={`http://127.0.0.1:8000${order.CustomCake.finalProduct.finalProductImg}`} 
+                  src={`http://127.0.0.1:8000${order.custom_cake?.finalProduct?.finalProductImg || ''}`} 
                   alt="Diseño de pastel personalizado"
                   className='cake-image'
                 />
@@ -101,14 +108,14 @@ export const DesignOrderCard = ({ order, index, onCollapse, active }) => {
                   <div className='spec-icon'>🎂</div>
                   <div className='spec-content'>
                     <span className='spec-label'>Capas y Forma</span>
-                    <span className='spec-value'>{order.CustomCake.Cake_Shape_layers.layer_description}</span>
+                    <span className='spec-value'>{order.custom_cake?.Cake_Shape_layers?.layer_description || 'N/A'}</span>
                   </div>
                 </div>
                 <div className='spec-item'>
                   <div className='spec-icon'>🍰</div>
                   <div className='spec-content'>
                     <span className='spec-label'>Sabor del Bizcocho</span>
-                    <span className='spec-value'>{order.CustomCake.sponge_Flavor.flavor_name}</span>
+                    <span className='spec-value'>{order.custom_cake?.sponge_Flavor?.flavor_name || 'N/A'}</span>
                   </div>
                 </div>
               </div>

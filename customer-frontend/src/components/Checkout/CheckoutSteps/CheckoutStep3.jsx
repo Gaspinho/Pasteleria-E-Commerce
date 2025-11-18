@@ -27,31 +27,31 @@ export const CheckoutStep3 = () => {
       {/* <!-- BEING CHECKOUT STEP Three -->  */}
       <div className="checkout-purchase checkout-form">
         <h4>
-          Bake & Take Thanks
+          ¡Pastelería Mil Sabores 
           <br />
-          you for your Order!
+          Agradece tu Pedido!
         </h4>
         <p>
-          We at Bake & Take truly appreciate your business, and we’re so
-          grateful for the trust you’ve placed in us. We sincerely hope you are
-          satisfied with your purchase. and we’ll do our best to continue to
-          give you the kind of service you deserve.
+          En Pastelería Mil Sabores estamos muy
+          agradecidos por la confianza que has depositado en nosotros. Sinceramente esperamos que
+          estés satisfecho con tu compra y haremos nuestro mejor esfuerzo para continuar
+          brindándote el servicio que mereces.
         </p>
         <ul className="checkout-purchase__list">
           <li>
-            <span>Order number</span>{order.id}
+            <span>Número de Pedido</span>{order.id}
           </li>
           <li>
-            <span>Order status</span> Order Placed
+            <span>Estado del Pedido</span> Pedido Realizado
           </li>
           <li>
-            <span>Payment Statues</span>Awaiting Payment
+            <span>Estado de Pago</span>Esperando Pago
           </li>
           <li>
-            <span>Delivery Date</span> {order.order_Delivery_Date}
+            <span>Fecha de Entrega</span> {order.order_Delivery_Date}
           </li>
           <li>
-            <span>Delivery Time</span> {order.order_Delivery_Time}
+            <span>Hora de Entrega</span> {order.order_Delivery_Time}
           </li>
         </ul>
         

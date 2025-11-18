@@ -13,27 +13,27 @@ export const CheckoutOrders = () => {
   return (
     <>
       <div className="checkout-order">
-        <h5>Your Order</h5>
+        <h5>Tu Pedido</h5>
         {cart.map((order) => (
           <Card key={order.id} order={order} />
         ))}
       </div>
       <div className="cart-bottom__total">
         <div className="cart-bottom__total-goods">
-          Goods on
-          <span>Rs. {total.toFixed(2)}</span>
+          Productos
+          <span>${total.toLocaleString('es-CL')}</span>
         </div>
 
         <div className="cart-bottom__total-delivery">
-          Delivery{" "}
+          Entrega{" "}
           {/* <span className="cart-bottom__total-delivery-date">
             (May 16,2022 at 11:30)
           </span> */}
-          <span>Rs. 50</span>
+          <span>${(5000).toLocaleString('es-CL')}</span>
         </div>
         <div className="cart-bottom__total-num">
           total:
-          <span>{(total + 50).toFixed(2)}</span>
+          <span>${(total + 5000).toLocaleString('es-CL')}</span>
         </div>
       </div>
     </>

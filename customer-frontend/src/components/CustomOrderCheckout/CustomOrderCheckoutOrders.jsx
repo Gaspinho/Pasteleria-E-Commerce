@@ -46,9 +46,6 @@ export const CustomOrderCheckoutOrders = (props) => {
                 Mensaje en el Pastel: <span>{customOrder.msg_on_cake}</span>
               </div>
             )}
-            <div className='title6'>
-              Imagen Superior: <span>{customOrder?.Top_Img_Decoration?.name || 'Ninguna'}</span>
-            </div>
             {customOrder?.special_instruction && (
               <div className='title6'>
                 Instrucción Especial: <span>{customOrder.special_instruction}</span>

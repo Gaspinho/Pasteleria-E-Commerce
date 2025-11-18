@@ -23,11 +23,14 @@ export const store = configureStore({
     [feedbackApi.reducerPath]:  feedbackApi.reducer,
   }, 
   middleware: (getDefaultMiddleware) =>
-  getDefaultMiddleware().concat(userAuthApi.middleware,
+  getDefaultMiddleware().concat(
+    userAuthApi.middleware,
     userCRUDApi.middleware,
     productApi.middleware,
     feedbackApi.middleware,
-    customOrderApi.middleware),
+    customOrderApi.middleware,
+    orderApi.middleware
+  ),
 })
 
 setupListeners(store.dispatch)

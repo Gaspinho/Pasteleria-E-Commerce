@@ -74,6 +74,19 @@ async def create_custom_cake(
     Este endpoint recibe form data y crea el custom_cake en Supabase
     """
     try:
+        # LOG: Imprimir todos los datos recibidos
+        print(f"\n=== DATOS RECIBIDOS ===")
+        print(f"layer_id: {layer_id}")
+        print(f"spongeflavor_id: {spongeflavor_id}")
+        print(f"fillingtopdecoration_id: {fillingtopdecoration_id}")
+        print(f"imagetopdecoration_id: {imagetopdecoration_id}")
+        print(f"icing: {icing}")
+        print(f"amount: {amount}")
+        print(f"msg_on_cake: {msg_on_cake}")
+        print(f"msg_color_id: {msg_color_id}")
+        print(f"special_instruction: {special_instruction}")
+        print(f"======================\n")
+        
         # Obtener el usuario del token
         user_response = supabase.auth.get_user(token)
         user_id = user_response.user.id
@@ -121,6 +134,41 @@ async def create_custom_cake(
             except:
                 return False
         
+        # Función auxiliar para obtener UUID desde ID numérico
+        def get_uuid_from_numeric_id(table_name, numeric_id, id_column='id'):
+            if not numeric_id or numeric_id == "undefined" or numeric_id == "null" or str(numeric_id) == "0":
+                return None
+            try:
+                # Primero intentar como UUID
+                if is_valid_uuid(numeric_id):
+                    return numeric_id
+                
+                # Convertir a entero
+                numeric_id_int = int(numeric_id)
+                if numeric_id_int <= 0:
+                    return None
+                
+                # Obtener todos los registros ordenados por id
+                response = supabase.table(table_name).select('*').order('id').execute()
+                
+                print(f"\n--- Tabla {table_name} tiene {len(response.data) if response.data else 0} registros ---")
+                if response.data:
+                    for idx, record in enumerate(response.data, 1):
+                        print(f"  Posición {idx}: ID={record.get('id')[:8]}... {record}")
+                
+                if response.data and len(response.data) >= numeric_id_int:
+                    # Obtener el elemento en la posición (numeric_id - 1) ya que es 1-indexed
+                    uuid_result = response.data[numeric_id_int - 1]['id']
+                    print(f"✓ Convirtiendo {table_name} numeric_id {numeric_id} → posición {numeric_id_int} → UUID: {uuid_result}")
+                    return uuid_result
+                else:
+                    print(f"✗ {table_name} solo tiene {len(response.data) if response.data else 0} registros, pero se pidió posición {numeric_id_int}")
+                    
+            except Exception as e:
+                print(f"Error getting UUID for {table_name} with id {numeric_id}: {e}")
+                return None
+            return None
+        
         # Preparar datos para custom_cake - solo incluir UUIDs válidos
         custom_cake_data = {
             "customer_id": user_id,
@@ -131,26 +179,44 @@ async def create_custom_cake(
             "created_at": datetime.utcnow().isoformat()
         }
         
-        # Agregar campos UUID solo si son válidos
-        if is_valid_uuid(layer_id):
-            custom_cake_data["shape_layer_id"] = layer_id
+        # Convertir IDs numéricos a UUIDs con los nombres correctos de las tablas según el schema
+        layer_uuid = get_uuid_from_numeric_id('cake_shape_layer', layer_id) if layer_id else None
+        if layer_uuid:
+            custom_cake_data["shape_layer_id"] = layer_uuid
+            print(f"✓ layer_id {layer_id} → UUID: {layer_uuid}")
             
-        if is_valid_uuid(spongeflavor_id):
-            custom_cake_data["sponge_flavor_id"] = spongeflavor_id
+        sponge_uuid = get_uuid_from_numeric_id('sponge_flavor', spongeflavor_id) if spongeflavor_id else None
+        if sponge_uuid:
+            custom_cake_data["sponge_flavor_id"] = sponge_uuid
+            print(f"✓ spongeflavor_id {spongeflavor_id} → UUID: {sponge_uuid}")
             
-        if is_valid_uuid(fillingtopdecoration_id):
-            custom_cake_data["icing_id"] = fillingtopdecoration_id
+        # fillingtopdecoration_id corresponde a la tabla 'icing'
+        icing_uuid = get_uuid_from_numeric_id('icing', fillingtopdecoration_id) if fillingtopdecoration_id else None
+        if icing_uuid:
+            custom_cake_data["icing_id"] = icing_uuid
+            print(f"✓ fillingtopdecoration_id {fillingtopdecoration_id} → UUID: {icing_uuid}")
             
-        if is_valid_uuid(imagetopdecoration_id):
-            custom_cake_data["top_img_decoration_id"] = imagetopdecoration_id
+        # imagetopdecoration_id corresponde a la tabla 'decoration_image'
+        image_uuid = get_uuid_from_numeric_id('decoration_image', imagetopdecoration_id) if imagetopdecoration_id else None
+        if image_uuid:
+            custom_cake_data["top_img_decoration_id"] = image_uuid
+            print(f"✓ imagetopdecoration_id {imagetopdecoration_id} → UUID: {image_uuid}")
             
-        if is_valid_uuid(msg_color_id):
-            custom_cake_data["msg_color_id"] = msg_color_id
+        # msg_color_id puede ser 0, en ese caso no guardarlo
+        if msg_color_id and str(msg_color_id) != "0":
+            msg_color_uuid = get_uuid_from_numeric_id('msg_color', msg_color_id)
+            if msg_color_uuid:
+                custom_cake_data["msg_color_id"] = msg_color_uuid
+                print(f"✓ msg_color_id {msg_color_id} → UUID: {msg_color_uuid}")
         
-        print(f"Custom cake data to insert: {custom_cake_data}")
+        print(f"\nCustom cake data to insert: {custom_cake_data}")
         
         # Insertar en custom_cake
         response = supabase.table('custom_cake').insert(custom_cake_data).execute()
+        
+        print(f"\n=== RESPUESTA DE SUPABASE ===")
+        print(f"Response data: {response.data}")
+        print(f"==============================\n")
         
         if response.data:
             return {
@@ -184,6 +250,8 @@ async def get_user_custom_order_by_id(custom_cake_id: str):
     Incluye todas las relaciones necesarias para mostrar en el frontend
     """
     try:
+        print(f"\n=== OBTENIENDO CUSTOM CAKE: {custom_cake_id} ===")
+        
         # Obtener el custom_cake con todas sus relaciones
         response = supabase.table('custom_cake').select(
             '''
@@ -196,6 +264,8 @@ async def get_user_custom_order_by_id(custom_cake_id: str):
             final_product_img:final_product_img_id(*)
             '''
         ).eq('id', custom_cake_id).single().execute()
+        
+        print(f"Datos raw de Supabase: {response.data}")
         
         if response.data:
             # Transformar los datos al formato que espera el frontend
@@ -231,6 +301,10 @@ async def get_user_custom_order_by_id(custom_cake_id: str):
                     "finalProductImg": get_name_or_none(custom_cake.get("final_product_img"), 'image') or "/assets/img/cake-placeholder.jpg"
                 }
             }
+            
+            print(f"Datos formateados para el frontend: {formatted_data}")
+            print(f"================================================\n")
+            
             return formatted_data
         else:
             raise HTTPException(status_code=404, detail="Custom cake not found")

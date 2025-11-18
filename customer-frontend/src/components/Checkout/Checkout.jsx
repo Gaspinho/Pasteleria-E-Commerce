@@ -7,18 +7,18 @@ import {useReactToPrint} from 'react-to-print';
 
 const detailBlocks = [
   {
-    step: "Step 1",
-    title: "Order Details",
+    step: "Paso 1",
+    title: "Detalles del Pedido",
     icon: "icon-step1",
   },
   {
-    step: "Step 2",
-    title: "Payment method",
+    step: "Paso 2",
+    title: "Método de pago",
     icon: "icon-step2",
   },
   {
-    step: "Step 3",
-    title: "Finish!",
+    step: "Paso 3",
+    title: "¡Finalizar!",
     icon: "icon-step3",
   },
 ];
@@ -42,7 +42,7 @@ export const Checkout = () => {
     <>
       <div className="wrapper">
         {/* <!-- BEGIN DETAIL MAIN BLOCK --> */}
-        <div className="detail-block__items">
+        <div className="detail-block__items" style={{marginTop:"35px"}}>
           {detailBlocks.map((block, index) => (
             <div
               key={index}
@@ -99,7 +99,7 @@ export const Checkout = () => {
             </div>
           </div>
           {activeStep === 3 ?<button onClick={handlePrint} className="btn btn-icon">
-          Print Order Details 
+          Imprimir Detalles del Pedido 
         </button> :("") }
           
         </div>
