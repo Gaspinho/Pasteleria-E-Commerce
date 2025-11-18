@@ -1,16 +1,30 @@
 import { useState } from 'react';
 import { DesignOrderCard } from './Card/DesignOrderCard';
 import { useSelector } from "react-redux";
-import {useGetProfileOrderQuery} from '../../../services/customOrderApi'
+import { useGetProfileOrderQuery } from '../../../services/customOrderApi';
 
 export const ProfileDesignOrders = () => {
-  
-  const user = useSelector(state => state.user)
-  
+  const user = useSelector(state => state.user);
   const [active, setActive] = useState(-1);
   const response = useGetProfileOrderQuery(user.id);
-  if (response.isLoading) return <div>Loading....</div>;
-  if (response.isError) return <h6>An error occured {response.error.error}</h6>;
+  
+  if (response.isLoading) {
+    return (
+      <div className='loading-container'>
+        <div className='spinner'></div>
+        <p>Cargando pedidos personalizados...</p>
+      </div>
+    );
+  }
+  
+  if (response.isError) {
+    return (
+      <div className='error-container'>
+        <h6>Ha ocurrido un error: {response.error.error}</h6>
+      </div>
+    );
+  }
+  
   const orders = (response.data).slice().reverse();
 
   const handleCollapse = (indx) => {
@@ -20,15 +34,32 @@ export const ProfileDesignOrders = () => {
       setActive(indx);
     }
   };
+
+  if (orders.length === 0) {
+    return (
+      <div className='empty-state'>
+        <div className='empty-icon'>🎂</div>
+        <h3>No tienes pedidos personalizados</h3>
+        <p>Crea tu diseño de pastel personalizado y aparecerá aquí</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className='profile-orders'>
-        <div className='profile-orders__row profile-orders__row-head'>
-          <div className='profile-orders__col'>Date</div>
-          <div className='profile-orders__col'>Delivery address</div>
-          <div className='profile-orders__col'>amount</div>
-          <div className='profile-orders__col'>Status</div>
+        <div className='orders-header'>
+          <h2>Pedidos de Diseño Personalizado</h2>
+          <span className='orders-count'>{orders.length} pedido{orders.length !== 1 ? 's' : ''}</span>
         </div>
+        
+        <div className='profile-orders__row profile-orders__row-head'>
+          <div className='profile-orders__col'>Fecha</div>
+          <div className='profile-orders__col'>Dirección de Entrega</div>
+          <div className='profile-orders__col'>Monto</div>
+          <div className='profile-orders__col'>Estado</div>
+        </div>
+        
         {orders.map((order, index) => (
           <DesignOrderCard
             key={index}
@@ -39,6 +70,138 @@ export const ProfileDesignOrders = () => {
           />
         ))}
       </div>
+
+      <style jsx>{`
+        .loading-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 4rem 2rem;
+          gap: 1rem;
+        }
+
+        .spinner {
+          width: 50px;
+          height: 50px;
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid #f39c12;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .loading-container p {
+          color: #7f8c8d;
+          font-size: 1rem;
+        }
+
+        .error-container {
+          background: #fee;
+          border: 2px solid #fcc;
+          border-radius: 12px;
+          padding: 2rem;
+          text-align: center;
+          color: #c33;
+        }
+
+        .empty-state {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 4rem 2rem;
+          text-align: center;
+        }
+
+        .empty-icon {
+          font-size: 4rem;
+          margin-bottom: 1rem;
+          opacity: 0.5;
+        }
+
+        .empty-state h3 {
+          font-size: 1.5rem;
+          color: #2c3e50;
+          margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+          color: #7f8c8d;
+          font-size: 1rem;
+        }
+
+        .orders-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          padding-bottom: 1rem;
+          border-bottom: 2px solid #f0f0f0;
+        }
+
+        .orders-header h2 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #2c3e50;
+        }
+
+        .orders-count {
+          background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+          color: white;
+          padding: 0.375rem 0.875rem;
+          border-radius: 20px;
+          font-size: 0.875rem;
+          font-weight: 600;
+        }
+
+        .profile-orders__row-head {
+          background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+          color: white;
+          border-radius: 12px;
+          padding: 1rem 1.5rem;
+          margin-bottom: 1rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 0.875rem;
+          letter-spacing: 0.5px;
+        }
+
+        .profile-orders__row {
+          display: grid;
+          grid-template-columns: 1fr 2fr 1fr 1.5fr;
+          gap: 1rem;
+          align-items: center;
+        }
+
+        .profile-orders__col {
+          padding: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+          .profile-orders__row {
+            grid-template-columns: 1fr;
+          }
+
+          .profile-orders__row-head {
+            display: none;
+          }
+
+          .orders-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+          }
+
+          .orders-header h2 {
+            font-size: 1.25rem;
+          }
+        }
+      `}</style>
     </>
   );
 };

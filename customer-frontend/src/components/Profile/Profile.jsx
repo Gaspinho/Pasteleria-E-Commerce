@@ -8,9 +8,10 @@ export const Profile = () => {
   const user = useSelector(state => state.user)
 
   const [activeTab, setActiveTab] = useState('orders');
+  
   return (
     <>
-      {/* <!-- BEGIN PROFILE --> */}
+      {/* <!-- INICIO PERFIL --> */}
       <div className='profile'>
         <div className='wrapper'>
           <div className='profile-content'>
@@ -22,37 +23,44 @@ export const Profile = () => {
                     onClick={() => setActiveTab('myInfo')}
                     className={activeTab === 'myInfo' ? 'active' : ''}
                   >
-                    My info
+                    Mi Información
                   </li>
                   <li
                     onClick={() => setActiveTab('orders')}
                     className={activeTab === 'orders' ? 'active' : ''}
                   >
-                    My orders
+                    Mis Pedidos
                   </li>
-                   <li
+                  <li
                     onClick={() => setActiveTab('wishList')}
                     className={activeTab === 'wishList' ? 'active' : ''}
                   >
-                    Cake Design Order
+                    Pedidos de Diseño
                   </li> 
                 </ul>
 
                 <div className='box-tab-cont'>
                   {activeTab === 'myInfo' && (
                     <div className='tab-cont' id='profile-tab_1'>
-                      <div style={{display:'flex'}} > 
-                        <div style={{flex:"1.5"}}> 
-                         <h5> First Name</h5>
-                         <h5> Last Name</h5>
-                         <h5> Email</h5>
-                         <h5> Phone Number</h5>
-                        </div>
-                        <div style={{flex:"1.5"}}> 
-                        <h5> {user.first_Name}</h5>
-                         <h5> {user.last_Name}</h5>
-                         <h5> {user.email}</h5>
-                         <h5>{user.phone_Number}</h5>
+                      <div className='info-card'>
+                        <h3 className='info-card-title'>Información Personal</h3>
+                        <div className='info-grid'>
+                          <div className='info-item'>
+                            <label className='info-label'>Nombre</label>
+                            <p className='info-value'>{user.first_name || user.first_Name || 'No especificado'}</p>
+                          </div>
+                          <div className='info-item'>
+                            <label className='info-label'>Apellido</label>
+                            <p className='info-value'>{user.last_name || user.last_Name || 'No especificado'}</p>
+                          </div>
+                          <div className='info-item'>
+                            <label className='info-label'>Correo Electrónico</label>
+                            <p className='info-value'>{user.email || 'No especificado'}</p>
+                          </div>
+                          <div className='info-item'>
+                            <label className='info-label'>Número de Teléfono</label>
+                            <p className='info-value'>{user.phone || user.phone_Number || 'No especificado'}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -72,7 +80,65 @@ export const Profile = () => {
           alt=''
         />
       </div>
-      {/* <!-- PROFILE EOF   --> */}
+      {/* <!-- FIN PERFIL --> */}
+
+      <style jsx>{`
+        .info-card {
+          background: #fff;
+          border-radius: 12px;
+          padding: 2rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-card-title {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #2c3e50;
+          margin-bottom: 1.5rem;
+          padding-bottom: 1rem;
+          border-bottom: 2px solid #f0f0f0;
+        }
+
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1.5rem;
+        }
+
+        .info-item {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .info-label {
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: #7f8c8d;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .info-value {
+          font-size: 1rem;
+          color: #2c3e50;
+          font-weight: 500;
+          padding: 0.75rem;
+          background: #f8f9fa;
+          border-radius: 8px;
+          border-left: 3px solid #3498db;
+        }
+
+        @media (max-width: 768px) {
+          .info-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .info-card {
+            padding: 1.5rem;
+          }
+        }
+      `}</style>
     </>
   );
 };
