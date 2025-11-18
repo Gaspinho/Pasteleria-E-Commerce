@@ -41,7 +41,7 @@ app.include_router(
     tags=["users-legacy"]
 )
 
-# Router para endpoints de orders (parte de users por ahora)
+# Router para endpoints de orders (parte de users por ahora).
 app.include_router(
     users.router,
     prefix="/order",
