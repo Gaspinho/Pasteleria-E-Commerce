@@ -6,7 +6,7 @@ export const CustomOrderCheckoutStep2 = ({ onNext, onPrev }) => {
     <>
       {/* <!-- BEING CHECKOUT STEP TWO -->  */}
       <div className="checkout-payment checkout-form">
-        <h4>Payment Methods</h4>
+        <h4>Métodos de Pago</h4>
         {/* <div
           className={`checkout-payment__item ${
             payment === "credit-card" && "active"
@@ -80,13 +80,13 @@ export const CustomOrderCheckoutStep2 = ({ onNext, onPrev }) => {
         >
           <div className="checkout-payment__item-head">
             <label onClick={() => setPayment("cash")} className="radio-box">
-              Cash payment
+              Pago en Efectivo
               <input type="radio" checked={payment === "cash"} name="radio" />
               <span className="checkmark"></span>
               <span className="radio-box__info">
                 <i className="icon-info"></i>
                 <span className="radio-box__info-content">
-                  Currently We only Offer Cash on Delivery
+                  Actualmente solo ofrecemos Pago Contra Entrega
                 </span>
               </span>
             </label>
@@ -94,10 +94,10 @@ export const CustomOrderCheckoutStep2 = ({ onNext, onPrev }) => {
         </div>
         <div className="checkout-buttons">
           <button onClick={onPrev} className="btn btn-grey btn-icon">
-            <i className="icon-arrow"></i> back
+            <i className="icon-arrow"></i> Atrás
           </button>
           <button onClick={onNext} className="btn btn-icon btn-next">
-            next <i className="icon-arrow"></i>
+            Siguiente <i className="icon-arrow"></i>
           </button>
         </div>
       </div>

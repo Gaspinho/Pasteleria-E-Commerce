@@ -549,7 +549,7 @@ display: none;
 						<div class="footer-bag">
 							<div class="row">
 								<div class="col-xs-6">Importe total</div>
-								<div class="col-xs-6"><b id="first_part_amt" class="amt">0 CLP</b></div>
+								<div class="col-xs-6"><b id="first_part_amt" class="amt">$ 0</b></div>
 							</div>
 						</div>
 					</div>
@@ -643,7 +643,7 @@ display: none;
 							<li>Sabor del bizcocho: <b class="flavor_name"></b></li>
 							<li>Glaseado: <b class="topfilling_name"></b></li>
 							<li>Decoración superior: <b class="printimage_name"> </b></li>
-							<li>Gastos de entrega: <b>200</b></li>
+							<li>Gastos de entrega: <b>$5.000</b></li>
 						</ul>
 						<div class="middel-bag">
 							<div class="layer_right_div" >
@@ -655,7 +655,7 @@ display: none;
 						<div class="footer-bag">
 							<div class="row">
 								<div class="col-xs-6">Importe total</div>
-								<div class="col-xs-6"><b id="second_part_amt" class="amt">0 CLP</b></div>
+								<div class="col-xs-6"><b id="second_part_amt" class="amt">$0</b></div>
 							</div>
 						</div>
 					</div>
@@ -764,7 +764,7 @@ display: none;
 							<li>Sabor del bizcocho: <b class="flavor_name">Vainilla</b></li>
 							<li>Glaseado: <b class="topfilling_name">Chocolate Vainilla</b></li>
 							<li>Decoración superior: <b class="printimage_name"> </b></li>
-							<li>Gastos de entrega: <b>200</b></li>
+							<li>Gastos de entrega: <b>$5.000</b></li>
 							<!--        <li>Sprinkles: <b class="sidedecoration_name">Colored Sprinkles </b></li>
 								-->
 							<li>Mensaje: <b class="message_display"> </b></li>
@@ -783,7 +783,7 @@ display: none;
 						<div class="footer-bag">
 							<div class="row">
 								<div class="col-xs-6">Importe total</div>
-								<div class="col-xs-6"><b class="amt">0 CLP</b></div>
+								<div class="col-xs-6"><b class="amt">$0</b></div>
 							</div>
 						</div>
 					</div>
@@ -851,7 +851,7 @@ display: none;
 								</tr>
 								<tr>
 									<td class="text-right">Gastos de entrega:</td>
-									<td class="text-left"><b> 2.500 CLP (incluido) </b></td>
+									<td class="text-left"><b> $5.000 </b></td>
 								</tr>
 							</table>
 						</div>
@@ -870,7 +870,7 @@ display: none;
 						<input type="hidden" nmae="val1" id="val1" value="" />
 						<input type="hidden" nmae="val2" id="val2" value="" />
 
-						<h2>Importe total <b class="amt">0 CLP</b></h2>
+						<h2>Importe total <b class="amt">$0</b></h2>
 						<div class="step-action">
 		
 							<a href="localhost:3000" class="addcart-pink hvr-push" id="add_to_cart"style="background-color:#da627d" >  Finalizar compra</a>
@@ -1729,7 +1729,7 @@ function login()
 			 
 		       function formatCLP(amount){
 				var n = Math.round(Number(amount) || 0);
-				return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ' CLP';
+				return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") ;
 		       }
 
 		       function selectlayer(layer_id, image, la_number)
@@ -2411,7 +2411,7 @@ console.log('select_topfilling func...');
 	           ingradiance['imagetopdecoration_id'] = printimage_id;
 	           var td_price = $("#td_price_" + printimage_id).val();
 				// añadir cargo de entrega (CLP)
-				td_price = Number(td_price) + 2500;
+				td_price = Number(td_price) + 5000;
 			//var quantity = $(".range-slider__range").val();
 			var quantity = 1;
 			if(Number(quantity) > 0){

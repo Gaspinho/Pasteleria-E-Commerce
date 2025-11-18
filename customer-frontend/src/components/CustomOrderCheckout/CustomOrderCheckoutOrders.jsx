@@ -1,64 +1,69 @@
-import {  useGetUserCustomOrderQuery} from '../../services/customOrderApi'
-
-const getCustomOrder_Id = () => {
-  if (typeof window !== "undefined") {
-    let CustomOrder_Id = sessionStorage.getItem("CustomOrder_Id");
-    return CustomOrder_Id;
-  }
-  return 0;
-};
+// --- CAMBIO ---
+// Volvemos a usar el query original 'useGetUserCustomOrderQuery'
+import { useGetUserCustomOrderQuery } from '../../services/customOrderApi'
 
 export const CustomOrderCheckoutOrders = (props) => {
   
   console.log("card id" ,props.CustomOrder_Id)
-  let customOrder = useGetUserCustomOrderQuery(props.CustomOrder_Id)
 
-  if (customOrder.isLoading) return <div>Loading....</div>;
-  if (customOrder.isError) return <h1>An error occured {customOrder?.error?.message || 'Please try again'}</h1>;
+  // --- CAMBIO ---
+  // Usamos 'useGetUserCustomOrderQuery' con el ID del pastel (CustomOrder_Id)
+  let { data: customOrder, isLoading, isError, error } = useGetUserCustomOrderQuery(props.CustomOrder_Id)
+
+  if (isLoading) return <div>Cargando....</div>;
+  if (isError) return <h1>Ocurrió un error {error?.message || 'Por favor intente nuevamente'}</h1>;
   
+  const deliveryCost = 5000; // Como definimos
   
-  
+  // --- CAMBIO ---
+  // El 'amount' (subtotal) está en el nivel superior de la respuesta
+  const subtotal = customOrder?.amount || 0;
+  const total = subtotal;
+
   return (
     <>
       <div className="checkout-order">
-        <h5>Your Design Cake Order</h5>
+        <h5>Tu Pedido de Pastel Personalizado</h5>
         <div className='checkout-order__item'>
-          <div className='checkout-order__item-img'>
-            <img src={`http://127.0.0.1:8000${customOrder.data.finalProduct.finalProductImg}`} className=' js-img' alt='' />
-          </div>
-        <div className='checkout-order__item-info'>
           
+          <div className='checkout-order__item-info'>
+            
+            {/* --- CAMBIO ---
+                Accedemos a los datos directamente desde 'customOrder', 
+                sin el '.CustomCake' que usamos erróneamente antes.
+                La estructura de la API es: customOrder.sponge_Flavor.flavor_name
+            */}
             <div className='title6'>
-            Cake Flavor: <span>{customOrder.data.sponge_Flavor.flavor_name}</span>
+              Sabor del Pastel: <span>{customOrder.sponge_Flavor?.flavor_name || 'No especificado'}</span>
             </div>
             <div className='title6'>
-            Cake Shape: <span>{customOrder.data.Cake_Shape_layers.cake_shape}</span>
+              Forma del Pastel: <span>{customOrder.Cake_Shape_layers?.cake_shape || 'No especificado'}</span>
             </div>
             <div className='title6'>
-            Cake Layers: <span>{customOrder.data.Cake_Shape_layers.layer_description}</span>
+              Capas del Pastel: <span>{customOrder.Cake_Shape_layers?.layer_description || 'No especificado'}</span>
             </div>
             <div className='title6'>
-            Cake Icing: <span>{customOrder.data.Icing.decoration_name}</span>
+              Cobertura: <span>{customOrder.Icing?.decoration_name || 'No especificado'}</span>
             </div>
             <div className='title6'>
-            Msg on Cake: <span>{customOrder.data.msg_on_cake}</span>
+              Mensaje en el Pastel: <span>{customOrder.msg_on_cake || 'Ninguno'}</span>
             </div>
             <div className='title6'>
-            Top Image: <span>{customOrder.data.Top_Img_Decoration.name}</span>
+              Imagen Superior: <span>{customOrder.Top_Img_Decoration?.name || 'Ninguna'}</span>
             </div>
             <div className='title6'>
-            Special Instruction: <span>{customOrder.data.special_instruction}</span>
+              Instrucción Especial: <span>{customOrder.special_instruction || 'Ninguna'}</span>
             </div>
-        </div>
+          </div>
         
-      </div>
-      <div className="cart-bottom__total-delivery">
-          Delivery{" "}
-          <span>Rs. 200</span>
+        </div>
+        <div className="cart-bottom__total-delivery">
+          Entrega{" "}
+          <span>${deliveryCost.toLocaleString('es-CL')}</span>
         </div>
         <div className="cart-bottom__total-num">
           total:
-          <span>{(customOrder.data.amount).toFixed(2)}</span>
+          <span>${total.toLocaleString('es-CL')}</span>
         </div>
       </div>
     </>

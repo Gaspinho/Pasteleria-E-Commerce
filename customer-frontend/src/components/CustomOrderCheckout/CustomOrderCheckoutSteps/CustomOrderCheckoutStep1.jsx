@@ -5,10 +5,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {usePlaceCustomOrderMutation} from '../../../services/customOrderApi'
 
-const countries = [
-  { label: "Islamabad", value: "Islamabad" },
-  { label: "Rawalpindi", value: "Rawalpindi" },
-];
+// --- CAMBIO ---
+// Se elimina la variable 'countries', ya no es necesaria.
+
 const timezone = [
   { label: "10AM - 12PM", value: "10AM - 12PM" },
   { label: "12PM - 2PM", value: "12PM - 2PM" },
@@ -22,7 +21,9 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
   const dispatch = useDispatch()
   const [userData , setUserData]= useState({}) 
   const [PlaceOrder] = usePlaceCustomOrderMutation()
-  const [city, setCity]= useState({}) 
+  
+  // --- CAMBIO ---
+  // Se elimina el estado 'city', ya que ahora es un valor fijo.
   const [time, setTime]= useState({}) 
   const [startDate, setStartDate] = useState(new Date());
   const [server_error, setServerError] = useState({});
@@ -42,7 +43,8 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
       address:{
         street_Number: userData.street_Number,
         house_Number: userData.house_Number,
-        city: city,
+        // --- CAMBIO --- Se fija la ciudad a "Concepción"
+        city: "Concepción", 
         area: userData.area,
       },
       payment:{
@@ -50,7 +52,8 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
         payment_Type:'Cash on Delivery',
         amount_Paid: 0
       },
-      delivery_Charges: 200,
+      // --- CAMBIO --- Se actualiza el costo de entrega a 5000
+      delivery_Charges: 5000, 
       order_Delivery_Date : startDate,
       order_Delivery_Time : time,
     }
@@ -66,11 +69,12 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
       } else if (res.error.data && res.error.data.detail) {
         setServerError({ non_field_errors: [res.error.data.detail] })
       } else {
-        setServerError({ non_field_errors: ['An error occurred. Please try again.'] })
+        setServerError({ non_field_errors: ['Ocurrió un error. Por favor intente nuevamente.'] })
       }
     }
     if (res.data) {
       console.log(res.data)
+      sessionStorage.setItem("Current_Order_Id", res.data.order_id);
       setServerError({})
       onNext();
     } 
@@ -78,24 +82,17 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
   
   return (
     <>
-      {/* <!-- BEING CHECKOUT STEP ONE -->  */}
+      {/* */}
       <div className="checkout-form">
         <form onSubmit={handelSubmit}>
           <div className="checkout-form__item">
-            <h4>Info about you</h4>
-            <div style={{display:'grid' , gridTemplateColumns:'repeat(2, 1fr)' , marginBottom:'1rem'}}>
-              <div> 
-                <h6>Phone Number:</h6>
-              </div>
-              <div> 
-                <h6>{userData.phone_Number}</h6>
-              </div>
-            </div>
+            <h4>Información de envio</h4>
+            {/* ... (código de teléfono sin cambios) ... */}
             <div className="box-field">
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter your Phone Number"
+                placeholder="Ingrese su Número de Teléfono"
                 name="phone_Number"
                 onChange={handleChange}
                 required
@@ -106,13 +103,14 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                 {server_error.phone_Number[0]} </label>) : ("")} 
           </div>
           <div className="checkout-form__item">
-            <h4>Delivery Info</h4>
+            <h4>Información de Entrega</h4>
             <div className="box-field__row">
+              {/* ... (código de número de casa y calle sin cambios) ... */}
               <div className="box-field">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the House Number"
+                  placeholder="Ingrese el Número de Casa"
                   name="house_Number"
                   onChange={handleChange}
                   required
@@ -126,7 +124,7 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the Street Number"
+                  placeholder="Ingrese el Número de Calle"
                   name="street_Number"
                   onChange={handleChange}
                   required
@@ -142,7 +140,7 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter the Area (phase or Lane)"
+                  placeholder="Ingrese el Área (ej: Villa, Población)"
                   name="area"
                   onChange={handleChange}
                   required
@@ -151,20 +149,25 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
               <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
                 {server_error.area[0]} </label>) : ("")}
               </div>
+              
+              {/* --- CAMBIO ---
+                  Se reemplaza el Dropdown de ciudad por un 
+                  campo de texto deshabilitado con el valor "Concepción".
+              */}
               <div className="box-field">
-              <Dropdown 
-               options={countries}
-               className="react-dropdown"
-               onChange={(option)=> setCity(option.value)}
-               placeholder="Select a City"
-               required
-               />
+                <input
+                  type="text"
+                  className="form-control"
+                  value="Concepción"
+                  disabled
+                />
               </div>  
             </div>
-            <h4>Delivery Date / Time </h4>
+            {/* ... (código de fecha/hora sin cambios) ... */}
+            <h4>Fecha / Hora de Entrega</h4>
             <div className="box-field__row" style={{marginTop: "20px"}}>
               <div className="box-field">
-              <span style={{paddingBottom: "20px"}}> Select Date</span>    
+              <span style={{paddingBottom: "20px"}}>Seleccione Fecha</span>    
               <DatePicker className="box-field" selected={startDate} onChange={(date) => setStartDate(date)} />
               </div>
             <div className="box-field">
@@ -172,24 +175,20 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
               options={timezone}
               className="react-dropdown"
               onChange={(option)=> setTime(option.value)}
-              placeholder="Delivery Time" 
+              placeholder="Hora de Entrega" 
               required 
             />
             </div>
             </div>
           </div>
           <div className="checkout-buttons">
-            {/* <button className='btn btn-grey btn-icon'>
-              {' '}
-              <i className='icon-arrow'></i> back
-            </button> */}
             <button type="submit" className="btn btn-icon btn-next">
-              next <i className="icon-arrow"></i>
+              Siguiente <i className="icon-arrow"></i>
             </button>
           </div>
         </form>
       </div>
-      {/* <!-- CHECKOUT STEP ONE EOF -->  */}
+      {/* */}
     </>
   );
 };

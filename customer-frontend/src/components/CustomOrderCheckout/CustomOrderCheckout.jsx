@@ -15,18 +15,18 @@ const getCustomOrder_Id = () => {
 
 const detailBlocks = [
   {
-    step: "Step 1",
-    title: "Order Details",
+    step: "Paso 1",
+    title: "Detalles del Pedido",
     icon: "icon-step1",
   },
   {
-    step: "Step 2",
-    title: "Payment method",
+    step: "Paso 2",
+    title: "Método de pago",
     icon: "icon-step2",
   },
   {
-    step: "Step 3",
-    title: "Finish!",
+    step: "Paso 3",
+    title: "¡Finalizar!",
     icon: "icon-step3",
   },
 ];
@@ -44,7 +44,7 @@ export const CustomOrderCheckout = () => {
   let CustomOrder_Id =getCustomOrder_Id()
   console.log('CustomOrder_Id' ,CustomOrder_Id)
   
-  if(CustomOrder_Id== 0) return <h1>no order data in session storage</h1>;
+  if(CustomOrder_Id== 0) return <h1>No hay datos de pedido en el almacenamiento de sesión</h1>;
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -113,7 +113,7 @@ export const CustomOrderCheckout = () => {
             </div>
           </div>
           {activeStep === 3 ?<button onClick={handlePrint} className="btn btn-icon">
-          Print Order Details 
+          Imprimir Detalles del Pedido 
         </button> :("") }
           
         </div>

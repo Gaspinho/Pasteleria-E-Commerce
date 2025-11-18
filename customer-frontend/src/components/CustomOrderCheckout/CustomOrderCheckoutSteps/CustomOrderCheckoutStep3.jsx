@@ -1,68 +1,104 @@
-import { useEffect   } from 'react';
+import { useEffect, useState   } from 'react';
 import { useSelector } from "react-redux";
 import {useUpdateOrderMutation , useGetDetaildCustomOrderQuery} from '../../../services/customOrderApi'
 
 export const CustomOrderCheckoutStep3 = (props) => {
   const [updateOrder] = useUpdateOrderMutation();
-  
-  useEffect( async() => {
-    const data ={
-      id: props.CustomOrder_Id,
-      order_Status: "Order Placed",
-    }
-    const res= await updateOrder(data)
-      if(res.isError){
-        console.log(res.error.error)
-      }
-      if(res.data){
-         console.log(res.data)
-      }  
-  
-    },[] )
-    
-    let customOrder = useGetDetaildCustomOrderQuery(props.CustomOrder_Id)
+  const [realOrderId, setRealOrderId] = useState(null);
+useEffect(() => {
+    // --- CAMBIO ---
+    // Lee el ID del pedido real que guardamos en el Step 1
+    const newOrderId = sessionStorage.getItem("Current_Order_Id");
+    setRealOrderId(newOrderId);
 
-   if (customOrder.isLoading) return <div>Loading....</div>;
-   if (customOrder.isError) return <h1>An error occured {customOrder?.error?.message || 'Please try again'}</h1>;
+    // El resto de tu lógica del useEffect
+    const updateOrderStatus = async (id) => {
+      const data = {
+        id: id, // Usa el ID del pedido real
+        order_Status: "Order Placed",
+      };
+      const res = await updateOrder(data);
+      if (res.isError) {
+        console.log(res.error.error);
+      }
+      if (res.data) {
+        console.log(res.data);
+      }
+    };
+
+    if (newOrderId) {
+      updateOrderStatus(newOrderId);
+    }
+
+  }, [updateOrder]); // Añadir updateOrder a las dependencias
+  
+  
+  let customOrder = useGetDetaildCustomOrderQuery(realOrderId, {
+    skip: !realOrderId,
+  });
+  if (!realOrderId || customOrder.isLoading) return <div>Cargando....</div>;
+  if (customOrder.isError) return <h1>Ocurrió un error {customOrder?.error?.message || 'Por favor intente nuevamente'}</h1>;
+  console.log('detaild custom Order', customOrder.data)
+
+   if (customOrder.isLoading) return <div>Cargando....</div>;
+   if (customOrder.isError) return <h1>Ocurrió un error {customOrder?.error?.message || 'Por favor intente nuevamente'}</h1>;
      console.log('detaild custom Order', customOrder.data)
+
+   // --- CAMBIO ---
+   // Se calculan los montos para el desglose
+   const subtotal = customOrder.data.CustomCake?.amount || 0;
+   const delivery = customOrder.data.delivery_Charges || 0;
+   const total = subtotal + delivery;
+
   return (
     <>
-      {/* <!-- BEING CHECKOUT STEP Three -->  */}
+      {/* */}
       <div className="checkout-purchase checkout-form">
         <h4>
-          Bake & Take Thanks
+          ¡Pastelería Mil Sabores 
           <br />
-          you for your Order!
+          Agradecetu Pedido!
         </h4>
         <p>
-          We at Bake & Take truly appreciate your business, and we’re so
-          grateful for the trust you’ve placed in us. We sincerely hope you are
-          satisfied with your purchase. and we’ll do our best to continue to
-          give you the kind of service you deserve.
+          En Pastelería Mil Sabores estamos muy
+          agradecidos por la confianza que has depositado en nosotros. Sinceramente esperamos que
+          estés satisfecho con tu compra y haremos nuestro mejor esfuerzo para continuar
+          brindándote el servicio que mereces.
         </p>
         <ul className="checkout-purchase__list">
           <li>
-            <span>Order number</span>{customOrder.data.id}
+            <span>Número de Pedido</span>{customOrder.data.id}
           </li>
           <li>
-            <span>Order status</span> Order Placed
+            <span>Estado del Pedido</span> Pedido Realizado
           </li>
           <li>
-            <span>Payment Statues</span>Awaiting Payment
+            <span>Estado de Pago</span>Esperando Pago
           </li>
           <li>
-            <span>Delivery Date</span> {customOrder.data.order_Delivery_Date}
+            <span>Fecha de Entrega</span> {customOrder.data.order_Delivery_Date}
           </li>
           <li>
-            <span>Delivery Time</span> {customOrder.data.order_Delivery_Time}
+            <span>Hora de Entrega</span> {customOrder.data.order_Delivery_Time}
+          </li>
+          
+          {/* --- CAMBIO ---
+              Se reemplaza "Monto Total" por un desglose detallado 
+              usando los valores calculados y formato de moneda local.
+          */}
+          <li>
+            <span>Subtotal Pastel</span> ${subtotal.toLocaleString('es-CL')}
           </li>
           <li>
-            <span>Total Amount</span> {customOrder.data.CustomCake.amount}
+            <span>Entrega</span> ${delivery.toLocaleString('es-CL')}
+          </li>
+          <li>
+            <span>Monto Total</span> ${total.toLocaleString('es-CL')}
           </li>
         </ul>
         
       </div>
-      {/* <!-- CHECKOUT STEP TWO EOF -->  */}
+      {/* */}
     </>
   );
 };
