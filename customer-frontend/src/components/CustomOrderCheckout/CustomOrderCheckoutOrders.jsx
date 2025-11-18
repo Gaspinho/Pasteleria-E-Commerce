@@ -28,32 +28,28 @@ export const CustomOrderCheckoutOrders = (props) => {
           
           <div className='checkout-order__item-info'>
             
-            {/* --- CAMBIO ---
-                Accedemos a los datos directamente desde 'customOrder', 
-                sin el '.CustomCake' que usamos erróneamente antes.
-                La estructura de la API es: customOrder.sponge_Flavor.flavor_name
-            */}
+            {/* Mostrar información del pedido */}
             <div className='title6'>
-              Sabor del Pastel: <span>{customOrder.sponge_Flavor?.flavor_name || 'No especificado'}</span>
+              Sabor del Pastel: <span>{customOrder?.sponge_Flavor?.flavor_name || 'No especificado'}</span>
             </div>
             <div className='title6'>
-              Forma del Pastel: <span>{customOrder.Cake_Shape_layers?.cake_shape || 'No especificado'}</span>
+              Forma del Pastel: <span>{customOrder?.Cake_Shape_layers?.cake_shape || 'No especificado'}</span>
             </div>
             <div className='title6'>
-              Capas del Pastel: <span>{customOrder.Cake_Shape_layers?.layer_description || 'No especificado'}</span>
+              Capas del Pastel: <span>{customOrder?.Cake_Shape_layers?.layer_description || 'No especificado'}</span>
             </div>
             <div className='title6'>
-              Cobertura: <span>{customOrder.Icing?.decoration_name || 'No especificado'}</span>
+              Cobertura: <span>{customOrder?.Icing?.decoration_name || 'No especificado'}</span>
             </div>
-            {customOrder.msg_on_cake && (
+            {customOrder?.msg_on_cake && (
               <div className='title6'>
                 Mensaje en el Pastel: <span>{customOrder.msg_on_cake}</span>
               </div>
             )}
             <div className='title6'>
-              Imagen Superior: <span>{customOrder.Top_Img_Decoration?.name || 'Ninguna'}</span>
+              Imagen Superior: <span>{customOrder?.Top_Img_Decoration?.name || 'Ninguna'}</span>
             </div>
-            {customOrder.special_instruction && (
+            {customOrder?.special_instruction && (
               <div className='title6'>
                 Instrucción Especial: <span>{customOrder.special_instruction}</span>
               </div>

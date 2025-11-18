@@ -200,28 +200,35 @@ async def get_user_custom_order_by_id(custom_cake_id: str):
         if response.data:
             # Transformar los datos al formato que espera el frontend
             custom_cake = response.data
+            
+            # Función auxiliar para obtener el nombre de manera segura
+            def get_name_or_none(obj, key='name'):
+                if obj and isinstance(obj, dict):
+                    return obj.get(key)
+                return None
+            
             formatted_data = {
                 "id": custom_cake.get("id"),
                 "amount": custom_cake.get("amount", 0),
-                "msg_on_cake": custom_cake.get("msg_on_cake", ""),
-                "special_instruction": custom_cake.get("special_instruction", ""),
+                "msg_on_cake": custom_cake.get("msg_on_cake") or "",
+                "special_instruction": custom_cake.get("special_instruction") or "",
                 "order_status": custom_cake.get("order_status", "Order Pending"),
-                # Relaciones formateadas
+                # Relaciones formateadas - devolver None si no hay datos
                 "sponge_Flavor": {
-                    "flavor_name": custom_cake.get("sponge_flavor", {}).get("name", "Not specified")
-                } if custom_cake.get("sponge_flavor") else {"flavor_name": "Not specified"},
+                    "flavor_name": get_name_or_none(custom_cake.get("sponge_flavor"))
+                } if custom_cake.get("sponge_flavor") else None,
                 "Cake_Shape_layers": {
-                    "cake_shape": custom_cake.get("shape_layer", {}).get("shape_name", "Not specified"),
-                    "layer_description": custom_cake.get("shape_layer", {}).get("layer_description", "")
-                } if custom_cake.get("shape_layer") else {"cake_shape": "Not specified", "layer_description": ""},
+                    "cake_shape": get_name_or_none(custom_cake.get("shape_layer"), 'shape_name'),
+                    "layer_description": custom_cake.get("shape_layer", {}).get("layer_description") if custom_cake.get("shape_layer") else None
+                } if custom_cake.get("shape_layer") else None,
                 "Icing": {
-                    "decoration_name": custom_cake.get("icing", {}).get("name", "Not specified")
-                } if custom_cake.get("icing") else {"decoration_name": "Not specified"},
+                    "decoration_name": get_name_or_none(custom_cake.get("icing"))
+                } if custom_cake.get("icing") else None,
                 "Top_Img_Decoration": {
-                    "name": custom_cake.get("top_img_decoration", {}).get("image", "No image") if custom_cake.get("top_img_decoration") else "No decoration"
-                },
+                    "name": get_name_or_none(custom_cake.get("top_img_decoration"), 'image')
+                } if custom_cake.get("top_img_decoration") else None,
                 "finalProduct": {
-                    "finalProductImg": custom_cake.get("final_product_img", {}).get("image", "/assets/img/cake-placeholder.jpg") if custom_cake.get("final_product_img") else "/assets/img/cake-placeholder.jpg"
+                    "finalProductImg": get_name_or_none(custom_cake.get("final_product_img"), 'image') or "/assets/img/cake-placeholder.jpg"
                 }
             }
             return formatted_data
@@ -239,10 +246,10 @@ async def get_user_custom_order_by_id(custom_cake_id: str):
             "msg_on_cake": "",
             "special_instruction": "",
             "order_status": "Order Pending",
-            "sponge_Flavor": {"flavor_name": "Not specified"},
-            "Cake_Shape_layers": {"cake_shape": "Custom", "layer_description": "Custom design"},
-            "Icing": {"decoration_name": "Not specified"},
-            "Top_Img_Decoration": {"name": "No decoration"},
+            "sponge_Flavor": None,
+            "Cake_Shape_layers": None,
+            "Icing": None,
+            "Top_Img_Decoration": None,
             "finalProduct": {"finalProductImg": "/assets/img/cake-placeholder.jpg"}
         }
 
