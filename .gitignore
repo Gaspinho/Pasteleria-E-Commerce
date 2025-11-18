@@ -45,4 +45,5 @@ db.sqlite3
 
 venv
 env
+myenv
 .venv
