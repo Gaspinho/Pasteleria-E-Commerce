@@ -131,14 +131,14 @@ export const Header = () => {
               {isClient && access_token ? ( <li> 
                   <Link href="/logout">
                     <a>
-                       Log Out
+                       Cerrar Sesión
                     </a>
                   </Link> </li> ):
                   (
                 <li>
                   <Link href="/login">
                     <a>
-                    Log In
+                    Iniciar Sesión
                     </a>
                   </Link>
                 </li>

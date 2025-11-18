@@ -114,11 +114,11 @@ export const ReviewFrom = (props) => {
                 {server_error.content} </label>) : ("")}
           </div>
           <button type='send' className='btn'>
-            enviar
+            Enviar
           </button>
         </form>
         <div style={{marginTop:"1.5rem"}}>  
-          {success? <label style={{fontSize: 16,  paddingTop: 10 , color:'#450920'}}> Thank You for your Review </label > : ''}
+          {success? <label style={{fontSize: 16,  paddingTop: 10 , color:'#450920'}}> Gracias por tu reseña </label > : ''}
         </div>
         
       </div>

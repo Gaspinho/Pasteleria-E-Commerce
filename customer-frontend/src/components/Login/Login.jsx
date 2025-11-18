@@ -54,7 +54,7 @@ export const Login = () => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter your Email "
+                  placeholder="Ingresa tu correo electrónico"
                   name='email'
                 />
               </div>
@@ -63,23 +63,23 @@ export const Login = () => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Enter your password"
+                  placeholder="Ingresa tu contraseña"
                   name='password'
                 />
               </div>
               {server_error?.password ? <p style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.password[0]}</p> : ""}
 
               <button className="btn" type="submit">
-                login
+                Iniciar Sesión
               </button>
               <div className="login-form__bottom">
                 <span>
-                  No account?{" "}
+                  ¿No tienes cuenta?{" "}
                   <a onClick={() => router.push("/registration")}>
-                    Register now
+                    Regístrate ahora
                   </a>
                 </span>
-                {/* //<a href="#">Lost your password?</a> */}
+                {/* //<a href="#">¿Olvidaste tu contraseña?</a> */}
               </div>
               {server_error?.non_field_errors ? <label style={{ fontSize: 16, color: 'red', paddingTop: 20 }} severity='error'>{server_error.non_field_errors[0]}</label> : ''}
             </form>

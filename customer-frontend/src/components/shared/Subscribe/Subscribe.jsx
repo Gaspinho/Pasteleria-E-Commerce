@@ -13,18 +13,18 @@ export const Subscribe = () => {
               />
             </div>
             <form>
-              <h3>Stay in touch</h3>
-              <p>Nourish your skin with toxin-free cosmetic roducts.</p>
+              <h3>Mantente en contacto</h3>
+              <p>Recibe nuestras últimas ofertas y novedades.</p>
               <div className='box-field__row'>
                 <div className='box-field'>
                   <input
                     type='email'
                     className='form-control'
-                    placeholder='Enter your email'
+                    placeholder='Ingresa tu correo electrónico'
                   />
                 </div>
                 <button type='submit' className='btn'>
-                  subscribe
+                  Suscribirse
                 </button>
               </div>
             </form>

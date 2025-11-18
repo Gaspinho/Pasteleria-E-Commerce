@@ -42,7 +42,7 @@ export const SingleProduct = ({
                     paddingTop: "10px",
                   }}
                 >
-                  Add to cart
+                  Agregar al carrito
                 </span>
               </button>
             </div>
@@ -54,7 +54,9 @@ export const SingleProduct = ({
               <span className="products-item__name">{name}</span>
             </a>
           </Link>
-          <span className="products-item__cost">Price : {price}</span>
+          <span className="products-item__cost" style={{ color: '#27ae60', fontWeight: '600' }}>
+            ${typeof price === 'number' ? price.toLocaleString('es-CL') : price}
+          </span>
         </div>
       </div>
       {/* <!-- SINGLE PRODUCT ITEM EOF --> */}

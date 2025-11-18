@@ -10,12 +10,12 @@ export const Error = () => {
             <div className='error-page__info'>
               <div className='error-page__title'>
                 <span>404</span>
-                Page not found
+                Página no encontrada
               </div>
               <div className='error-page__subtitle'>
-                Please try Search or go back to{' '}
+                Por favor intenta buscar o regresa a la{' '}
                 <Link href='/'>
-                  <a>Homepage.</a>
+                  <a>Página de inicio.</a>
                 </Link>
               </div>
               <div className='box-field__row box-field__row-search'>
@@ -23,7 +23,7 @@ export const Error = () => {
                   <input
                     type='search'
                     className='form-control'
-                    placeholder='Search'
+                    placeholder='Buscar'
                   />
                 </div>
                 <button type='submit' className='btn btn-icon'>

@@ -3,17 +3,17 @@ import { PublicLayout } from 'layout/PublicLayout';
 
 const breadcrumbsData = [
   {
-    label: 'Home',
+    label: 'Inicio',
     path: '/',
   },
   {
-    label: 'My Profile',
+    label: 'Mi Perfil',
     path: '/profile',
   },
 ];
 const ProfilePage = () => {
   return (
-    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle='My Profile'>
+    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle='Mi Perfil'>
       <Profile />
     </PublicLayout>
   );

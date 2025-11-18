@@ -9,8 +9,8 @@ export const TopCategories = () => {
       {/* <!-- BEGIN TOP CATEGORIES --> */}
       <section className="top-categories">
         <SectionTitle
-          subTitle="ORder Your Cake"
-          title="Trending Cakes"
+          subTitle="Ordena Tu Pastel"
+          title="Pasteles en Tendencia"
           body=""
         />
         <div className="top-categories__items">

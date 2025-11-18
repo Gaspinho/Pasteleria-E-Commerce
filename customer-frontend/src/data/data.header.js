@@ -4,23 +4,23 @@ export const header = {
 
 export const navItem = [
   {
-    name: "Home",
+    name: "Inicio",
     path: "/",
   },
   {
-    name: "About us",
+    name: "Acerca de",
     path: "/about",
   },
   {
-    name: "Order Cake",
+    name: "Ordenar Pastel",
     path: "/shop",
   },
   {
-    name: "customize Cake",
+    name: "Personalizar Pastel",
     path: "/customisecake",
   },
   {
-    name: "contact Us",
+    name: "Contacto",
     path: "/contact",
   },
 ];

@@ -46,7 +46,7 @@ export const ContactFrom = () => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter your name"
+                  placeholder="Ingresa tu nombre"
                   name='userName'
                   required
                 />
@@ -58,7 +58,7 @@ export const ContactFrom = () => {
                 <input
                   type="email"
                   className="form-control"
-                  placeholder="Enter your email" name='email'
+                  placeholder="Ingresa tu correo electrónico" name='email'
                   required
                 />
                 {server_error.email ? (
@@ -68,7 +68,7 @@ export const ContactFrom = () => {
               <div className="box-field box-field__textarea">
                 <textarea
                   className="form-control"
-                  placeholder="Enter your message"
+                  placeholder="Ingresa tu mensaje"
                   name='message'
                 ></textarea>
                 {server_error.message ? (
@@ -76,7 +76,7 @@ export const ContactFrom = () => {
                 {server_error.message[0]} </lable>) : ("")}
               </div>
               <button type="submit" className="btn">
-                enviar
+                Enviar
               </button>
             </form>
             <div style={{marginTop:"1.5rem"}}>  

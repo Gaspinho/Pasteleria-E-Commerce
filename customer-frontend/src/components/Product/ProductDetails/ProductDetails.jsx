@@ -153,17 +153,15 @@ export const ProductDetails = () => {
             <div className="product-info">
               <h3>{product.name}</h3>
               {product.isStocked ? (
-                <span className="product-stock">in stock</span>
+                <span className="product-stock">En stock</span>
               ) : (
-                ""
+                <span className="product-stock">Agotado</span>
               )}
 
-              <span className="product-num">Product ID: {product.productNumber}</span>
-              {product.oldPrice ? (
-                <span className="product-price">Precio: {product.price}</span>
-              ) : (
-                <span className="product-price">${product.price}</span>
-              )}
+              <span className="product-num">ID del Producto: {product.productNumber}</span>
+              <span className="product-price" style={{ color: '#27ae60', fontSize: '1.5rem', fontWeight: '600' }}>
+                ${product.price?.toLocaleString('es-CL')}
+              </span>
               <p>{product.content}</p>
 
               {/* <!-- Social Share Link --> */}
@@ -233,10 +231,10 @@ export const ProductDetails = () => {
                   onClick={ access_token ? () => handleAddToCart(): () => console.log('login please')}
                   className="btn btn-icon"
                 >
-                  <i className="icon-cart"></i> cart
+                  <i className="icon-cart"></i> {addedInCart ? 'En el carrito' : 'Agregar al carrito'}
                 </button>
                 {/* <button className="btn btn-grey btn-icon">
-                  <i className="icon-heart"></i> wish
+                  <i className="icon-heart"></i> Favorito
                 </button> */}
               </div>
             </div>
@@ -250,13 +248,13 @@ export const ProductDetails = () => {
                   className={tab === 1 ? "active" : ""}
                   onClick={() => setTab(1)}
                 >
-                  Description
+                  Descripción
                 </li>
                 <li
                   className={tab === 2 ? "active" : ""}
                   onClick={() => setTab(2)}
                 >
-                  Reviews
+                  Reseñas
                 </li>
               </ul>
               <div className="box-tab-cont">

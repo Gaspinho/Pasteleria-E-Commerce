@@ -7,17 +7,17 @@ import { PublicLayout } from "layout/PublicLayout";
 
 const breadcrumbsData = [
   {
-    label: "Home",
+    label: "Inicio",
     path: "/",
   },
   {
-    label: "Contact",
+    label: "Contacto",
     path: "/contact",
   },
 ];
 const ContactPage = () => {
   return (
-    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Contact">
+    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Contacto">
       <ContactDetailBlock />
       <ContactInfo />
 

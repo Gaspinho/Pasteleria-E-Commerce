@@ -12,7 +12,9 @@ export const AsideItem = ({ aside }) => {
           </div>
           <div className='shop-aside__item-product-info'>
             <span className='shop-aside__item-product-title'>{name}</span>
-            <span className='shop-aside__item-product-price'>Rs. {price}</span>
+            <span className='shop-aside__item-product-price' style={{ color: '#27ae60', fontWeight: '600' }}>
+              ${typeof price === 'number' ? price.toLocaleString('es-CL') : price}
+            </span>
             <ul className='star-rating'>
               {[...Array(star)].map((star, index) => {
                 <li key={index}>

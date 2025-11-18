@@ -53,7 +53,7 @@ export const Registration = () => {
             }}
           >
             <form onSubmit={handleSubmit}>
-              <h3>Register Now</h3>
+              <h3>Regístrate Ahora</h3>
               {server_error.general && (
                 <div style={{ 
                   backgroundColor: '#fee', 
@@ -74,7 +74,7 @@ export const Registration = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Enter your first Name"
+                    placeholder="Ingresa tu nombre"
                     name="first_name"
                   />
                   {server_error?.first_name && Array.isArray(server_error.first_name) ? (
@@ -89,7 +89,7 @@ export const Registration = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Enter your last name"
+                    placeholder="Ingresa tu apellido"
                     name="last_name"
                   />
                 </div>
@@ -104,7 +104,7 @@ export const Registration = () => {
                 <input
                   type="email"
                   className="form-control"
-                  placeholder="Enter your email"
+                  placeholder="Ingresa tu correo electrónico"
                   name="email"
                 />
               </div>
@@ -119,7 +119,7 @@ export const Registration = () => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Enter your password"
+                  placeholder="Ingresa tu contraseña"
                   name="password"
                 />
               </div>
@@ -131,12 +131,12 @@ export const Registration = () => {
                 ""
               )}
               <button className="btn" type="submit">
-                Registration
+                Registrarse
               </button>
               <div className="login-form__bottom">
                 <span>
-                  Already have an account?{" "}
-                  <a onClick={() => router.push("/login")}>Log in</a>
+                  ¿Ya tienes una cuenta?{" "}
+                  <a onClick={() => router.push("/login")}>Iniciar sesión</a>
                 </span>
               </div>
             </form>

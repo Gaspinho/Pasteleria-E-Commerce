@@ -3,21 +3,21 @@ import { PublicLayout } from "layout/PublicLayout";
 
 const breadcrumbsData = [
   {
-    label: "Home",
+    label: "Inicio",
     path: "/",
   },
   {
-    label: "Order Cake",
+    label: "Ordenar Pastel",
     path: "/shop",
   },
   {
-    label: "Checkout",
+    label: "Pagar",
     path: "/checkout",
   },
 ];
 const CheckoutPage = () => {
   return (
-    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Checkout">
+    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Pagar">
       <Checkout />
     </PublicLayout>
   );

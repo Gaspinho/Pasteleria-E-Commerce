@@ -5,17 +5,17 @@ const { PublicLayout } = require("layout/PublicLayout");
 
 const breadcrumbsData = [
   {
-    label: "Home",
+    label: "Inicio",
     path: "/",
   },
   {
-    label: "Order Cake",
+    label: "Ordenar Pastel",
     path: "/shop",
   },
 ];
 const SingleProductPage = () => {
   return (
-    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Order Cake">
+    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Ordenar Pastel">
       <ProductDetails />
     </PublicLayout>
   );

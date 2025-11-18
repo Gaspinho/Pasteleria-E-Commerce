@@ -54,8 +54,8 @@ export const ProfileAside = () => {
                       {product.name}
                     </a>
                   </Link>
-                  <span className='profile-aside__viewed-item-price'>
-                    ${product.price}
+                  <span className='profile-aside__viewed-item-price' style={{ color: '#27ae60', fontWeight: '600' }}>
+                    ${typeof product.price === 'number' ? product.price.toLocaleString('es-CL') : product.price}
                   </span>
                 </div>
               </div>

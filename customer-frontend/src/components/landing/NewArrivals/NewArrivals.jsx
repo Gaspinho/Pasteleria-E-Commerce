@@ -12,8 +12,8 @@ export const NewArrivals = () => {
       {/* <!-- BEGIN NEW ARRIVALS --> */}
       <section className="arrivals">
         <SectionTitle
-          subTitle="ORder Your Cake"
-          title="Trending Cakes"
+          subTitle="Ordena Tu Pastel"
+          title="Pasteles en Tendencia"
           body=""
         />
 

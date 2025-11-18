@@ -293,7 +293,7 @@ export const Shop = () => {
                     style={{ marginTop: 8 }}
                     onClick={clearCategories}
                   >
-                    Clear categories
+                    Limpiar categorías
                   </button>
                 )}
               </div>

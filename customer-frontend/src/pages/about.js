@@ -9,17 +9,17 @@ import { Info } from "components/landing/Info/InfoAbout";
 
 const breadcrumbsData = [
   {
-    label: "Home",
+    label: "Inicio",
     path: "/",
   },
   {
-    label: "About Us",
+    label: "Acerca de",
     path: "/about",
   },
 ];
 const AboutPage = () => {
   return (
-    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="About Us">
+    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Acerca de Nosotros">
       <AboutDetailBlock />
 
       <Info />
