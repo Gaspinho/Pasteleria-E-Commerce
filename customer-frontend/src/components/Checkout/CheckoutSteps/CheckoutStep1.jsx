@@ -41,9 +41,9 @@ export const CheckoutStep1 = ({ onNext }) => {
   useEffect(() => {
       setUserData({
         id:data.id,
-        phone_Number: data.phone_Number,
-        first_Name: data.first_Name,
-        last_Name: data.last_Name,
+        phone_Number: data.phone_number,
+        first_Name: data.first_name,
+        last_Name: data.last_name,
         street_Number: "",
         house_Number:"",
         city: "",

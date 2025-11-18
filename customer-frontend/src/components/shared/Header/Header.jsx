@@ -52,10 +52,10 @@ export const Header = () => {
 
   const [userData, setUserData] = useState({
     id: "",
-    first_Name: "",
-    last_Name: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    phone_Number: "",
+    phone_number: "",
     type: "",
   });
 
@@ -63,11 +63,11 @@ export const Header = () => {
   useEffect(() => {
     if (data && isSuccess) {
       setUserData({
-        id: data.first_Name,
-        first_Name: data.first_Name,
-        last_Name: data.last_Name,
+        id: data.id,
+        first_name: data.first_name,
+        last_name: data.last_name,
         email: data.email,
-        phone_Number: data.phone_Number,
+        phone_number: data.phone_number,
         type: data.type,
       });
     }
@@ -79,10 +79,10 @@ export const Header = () => {
       dispatch(
         setUserInfo({
           id: data.id,
-          first_Name: data.first_Name,
-          last_Name: data.last_Name,
+          first_name: data.first_name,
+          last_name: data.last_name,
           email: data.email,
-          phone_Number: data.phone_Number,
+          phone_number: data.phone_number,
           type: data.type,
         })
       );
@@ -170,7 +170,7 @@ export const Header = () => {
               </li> }
             </ul>
             <div>
-              <h6 style={{marginLeft:'1rem'}}> {" "}{userData.first_Name} {" "}{userData.last_Name}</h6>
+              <h6 style={{marginLeft:'1rem'}}> {" "}{userData.first_name} {" "}{userData.last_name}</h6>
             </div>
           </div>
 

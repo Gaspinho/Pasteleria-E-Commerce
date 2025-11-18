@@ -34,6 +34,13 @@ app.include_router(
     tags=["users"]
 )
 
+# Router adicional para compatibilidad con el frontend
+app.include_router(
+    users.router,
+    prefix="/user",
+    tags=["users-legacy"]
+)
+
 app.include_router(
     products.router,
     prefix="/api/products",

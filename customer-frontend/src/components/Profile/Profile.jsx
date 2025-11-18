@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 export const Profile = () => {
   const user = useSelector(state => state.user)
 
-  const [activeTab, setActiveTab] = useState('orders');
+  const [activeTab, setActiveTab] = useState('myInfo');
   
   return (
     <>
@@ -47,11 +47,11 @@ export const Profile = () => {
                         <div className='info-grid'>
                           <div className='info-item'>
                             <label className='info-label'>Nombre</label>
-                            <p className='info-value'>{user.first_name || user.first_Name || 'No especificado'}</p>
+                            <p className='info-value'>{user.first_name || 'No especificado'}</p>
                           </div>
                           <div className='info-item'>
                             <label className='info-label'>Apellido</label>
-                            <p className='info-value'>{user.last_name || user.last_Name || 'No especificado'}</p>
+                            <p className='info-value'>{user.last_name || 'No especificado'}</p>
                           </div>
                           <div className='info-item'>
                             <label className='info-label'>Correo Electrónico</label>
@@ -59,7 +59,7 @@ export const Profile = () => {
                           </div>
                           <div className='info-item'>
                             <label className='info-label'>Número de Teléfono</label>
-                            <p className='info-value'>{user.phone || user.phone_Number || 'No especificado'}</p>
+                            <p className='info-value'>{user.phone_number || 'No especificado'}</p>
                           </div>
                         </div>
                       </div>

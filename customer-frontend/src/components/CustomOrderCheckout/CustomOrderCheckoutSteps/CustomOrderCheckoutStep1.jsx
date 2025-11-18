@@ -4,9 +4,16 @@ import Dropdown from "react-dropdown";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {usePlaceCustomOrderMutation} from '../../../services/customOrderApi'
+import {useGetLoggedUserQuery, useUpdatePhoneNumberMutation} from '../../../services/userCRUDApi'
 
-// --- CAMBIO ---
-// Se elimina la variable 'countries', ya no es necesaria.
+const countries = [
+  { label: "Concepción", value: "Concepción" },
+  { label: "Hualpen", value: "Hualpen" },
+  { label: "Talcahuano", value: "Talcahuano" },
+  { label: "San Pedro de La Paz", value: "San Pedro de La Paz" },
+  { label: "Chiguayante", value: "Chiguayante" },
+  { label: "Penco", value: "Penco" },
+];
 
 const timezone = [
   { label: "10AM - 12PM", value: "10AM - 12PM" },
@@ -21,13 +28,22 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
   const dispatch = useDispatch()
   const [userData , setUserData]= useState({}) 
   const [PlaceOrder] = usePlaceCustomOrderMutation()
-  
-  // --- CAMBIO ---
-  // Se elimina el estado 'city', ya que ahora es un valor fijo.
+  const [updatePhoneNumber] = useUpdatePhoneNumberMutation()
+  const [city, setCity]= useState({}) 
   const [time, setTime]= useState({}) 
   const [startDate, setStartDate] = useState(new Date());
   const [server_error, setServerError] = useState({});
- 
+  
+  // Obtener información del usuario logueado
+  const access_token = sessionStorage.getItem('access_token')
+  const {data: userInfo, isLoading: userLoading} = useGetLoggedUserQuery(access_token)
+  
+  // Establecer el número de teléfono del usuario si ya existe
+  useEffect(() => {
+    if (userInfo?.phone_number) {
+      setUserData(prev => ({ ...prev, phone_Number: userInfo.phone_number }))
+    }
+  }, [userInfo])
   const handleChange = event => {
     const name = event.target.name;
     const value = event.target.value;
@@ -37,22 +53,29 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
   console.log("step 1 customer props" ,CustomOrder_Id)
   const handelSubmit = async (e) =>{ 
     e.preventDefault();
+    
+    // Usar el teléfono del formulario si se ingresó, si no, usar el del usuario
+    const phoneToUse = userData.phone_Number || userInfo?.phone_number;
+    
+    if (!phoneToUse) {
+      setServerError({ phone_Number: ['Por favor ingrese un número de teléfono'] });
+      return;
+    }
+    
     const actualData = {
-      phone_Number:userData.phone_Number,
+      phone_Number: phoneToUse,
       CustomOrder:CustomOrder_Id,
       address:{
         street_Number: userData.street_Number,
         house_Number: userData.house_Number,
-        // --- CAMBIO --- Se fija la ciudad a "Concepción"
-        city: "Concepción", 
-        area: userData.area,
+        city: city,
+        area: userData.area || "",
       },
       payment:{
         payment_Status: 'Pending',
         payment_Type:'Cash on Delivery',
         amount_Paid: 0
       },
-      // --- CAMBIO --- Se actualiza el costo de entrega a 5000
       delivery_Charges: 5000, 
       order_Delivery_Date : startDate,
       order_Delivery_Time : time,
@@ -75,6 +98,20 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
     if (res.data) {
       console.log(res.data)
       sessionStorage.setItem("Current_Order_Id", res.data.order_id);
+      
+      // Si el usuario no tenía teléfono registrado, o cambió el teléfono, actualizarlo
+      if (userData.phone_Number && userInfo?.id && userData.phone_Number !== userInfo?.phone_number) {
+        try {
+          await updatePhoneNumber({
+            id: userInfo.id,
+            phone_number: userData.phone_Number
+          })
+          console.log('Phone number updated successfully')
+        } catch (error) {
+          console.log('Error updating phone number:', error)
+        }
+      }
+      
       setServerError({})
       onNext();
     } 
@@ -87,15 +124,25 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
         <form onSubmit={handelSubmit}>
           <div className="checkout-form__item">
             <h4>Información de envio</h4>
-            {/* ... (código de teléfono sin cambios) ... */}
+            {userInfo?.phone_number && (
+              <div style={{display:'grid' , gridTemplateColumns:'repeat(2, 1fr)' , marginBottom:'1rem'}}>
+                <div> 
+                  <h6>Teléfono Registrado:</h6>
+                </div>
+                <div> 
+                  <h6>{userInfo.phone_number}</h6>
+                </div>
+              </div>
+            )}
             <div className="box-field">
               <input
                 type="text"
                 className="form-control"
-                placeholder="Ingrese su Número de Teléfono"
+                placeholder={userInfo?.phone_number ? "Cambiar número de teléfono" : "Ingrese su número de teléfono"}
                 name="phone_Number"
+                value={userData.phone_Number || ''}
                 onChange={handleChange}
-                required
+                required={!userInfo?.phone_number}
               />
             </div>
            {server_error?.phone_Number ? (
@@ -105,12 +152,11 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
           <div className="checkout-form__item">
             <h4>Información de Entrega</h4>
             <div className="box-field__row">
-              {/* ... (código de número de casa y calle sin cambios) ... */}
               <div className="box-field">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Ingrese el Número de Casa"
+                  placeholder="Número"
                   name="house_Number"
                   onChange={handleChange}
                   required
@@ -124,7 +170,7 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Ingrese el Número de Calle"
+                  placeholder="Calle"
                   name="street_Number"
                   onChange={handleChange}
                   required
@@ -140,27 +186,23 @@ export const CustomOrderCheckoutStep1 = ({ onNext , CustomOrder_Id }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Ingrese el Área (ej: Villa, Población)"
+                  placeholder="Depto/Torre/Casa (opcional)"
                   name="area"
                   onChange={handleChange}
-                  required
                 />
                 {server_error?.area ? (
               <label style={{ fontSize: 16, color: "red", paddingTop: 10 }}>
                 {server_error.area[0]} </label>) : ("")}
               </div>
               
-              {/* --- CAMBIO ---
-                  Se reemplaza el Dropdown de ciudad por un 
-                  campo de texto deshabilitado con el valor "Concepción".
-              */}
               <div className="box-field">
-                <input
-                  type="text"
-                  className="form-control"
-                  value="Concepción"
-                  disabled
-                />
+              <Dropdown 
+               options={countries}
+               className="react-dropdown"
+               onChange={(option)=> setCity(option.value)}
+               placeholder="Seleccione una ciudad"
+               required
+               />
               </div>  
             </div>
             {/* ... (código de fecha/hora sin cambios) ... */}

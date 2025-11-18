@@ -9,7 +9,7 @@ export const Logout = () => {
   const perform = () => {
     const dispatch = useDispatch();
     dispatch(
-      unsetUserInfo({ first_Name: "", last_Name: "", email: "", type: "" })
+      unsetUserInfo({ id: "", first_name: "", last_name: "", email: "", phone_number: "", type: "" })
     );
     dispatch(unSetUserToken({ access_token: null }));
     removeToken();

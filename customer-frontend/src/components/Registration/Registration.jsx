@@ -14,18 +14,25 @@ export const Registration = () => {
     const data = new FormData(e.currentTarget);
 
     const actualData = {
-      first_Name: data.get('first_Name'),
-      last_Name: data.get('last_Name'),
+      first_name: data.get('first_name'),
+      last_name: data.get('last_name'),
       email: data.get('email'),
       password: data.get('password'),
-      phone_Number: '03000000000',
+      phone_number: '03000000000',
       type: "CUSTOMER",
     }
     const res = await registerUser(actualData)
     if (res.error) {
-      console.log(typeof (res.error.data.errors))
-      console.log(res.error.data.errors)
-      setServerError(res.error.data.errors)
+      console.log('Error completo:', res.error)
+      // Manejar diferentes estructuras de error
+      if (res.error.data?.errors) {
+        setServerError(res.error.data.errors)
+      } else if (res.error.data?.detail) {
+        // Error simple de FastAPI
+        setServerError({ general: res.error.data.detail })
+      } else {
+        setServerError({ general: 'Error durante el registro' })
+      }
     }
     if (res.data) {
       console.log(typeof (res.data))
@@ -47,6 +54,19 @@ export const Registration = () => {
           >
             <form onSubmit={handleSubmit}>
               <h3>Register Now</h3>
+              {server_error.general && (
+                <div style={{ 
+                  backgroundColor: '#fee', 
+                  padding: '10px', 
+                  borderRadius: '5px',
+                  marginBottom: '15px',
+                  border: '1px solid #fcc'
+                }}>
+                  <p style={{ fontSize: 14, color: "red", margin: 0 }}>
+                    {server_error.general}
+                  </p>
+                </div>
+              )}
                 <div
                   className="box-field "
                   style={{ width: "100% !important" }}
@@ -55,11 +75,11 @@ export const Registration = () => {
                     type="text"
                     className="form-control"
                     placeholder="Enter your first Name"
-                    name="first_Name"
+                    name="first_name"
                   />
-                  {server_error.first_Name ? (
+                  {server_error?.first_name && Array.isArray(server_error.first_name) ? (
                     <p style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-                      {server_error.first_Name[0]}
+                      {server_error.first_name[0]}
                     </p>
                   ) : (
                     ""
@@ -70,12 +90,12 @@ export const Registration = () => {
                     type="text"
                     className="form-control"
                     placeholder="Enter your last name"
-                    name="last_Name"
+                    name="last_name"
                   />
                 </div>
-                {server_error.last_Name ? (
+                {server_error?.last_name && Array.isArray(server_error.last_name) ? (
                   <p style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-                    {server_error.last_Name[0]}
+                    {server_error.last_name[0]}
                   </p>
                 ) : (
                   ""
@@ -88,7 +108,7 @@ export const Registration = () => {
                   name="email"
                 />
               </div>
-              {server_error.email ? (
+              {server_error?.email && Array.isArray(server_error.email) ? (
                 <p style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
                   {server_error.email[0]}
                 </p>
@@ -103,7 +123,7 @@ export const Registration = () => {
                   name="password"
                 />
               </div>
-              {server_error.password ? (
+              {server_error?.password && Array.isArray(server_error.password) ? (
                 <p style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
                   {server_error.password[0]}
                 </p>

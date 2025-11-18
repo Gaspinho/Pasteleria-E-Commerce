@@ -265,11 +265,22 @@ async def place_custom_order(order: CustomOrderCreate, token: str = Depends(get_
         user_id = user_response.user.id
         
         # Paso 1: Crear la dirección
+        # Convertir a números enteros, si es posible
+        try:
+            street_num = int(order.address.street_Number)
+        except (ValueError, TypeError):
+            street_num = 0
+        
+        try:
+            house_num = int(order.address.house_Number)
+        except (ValueError, TypeError):
+            house_num = 0
+        
         address_data = {
             "city": order.address.city,
-            "area": order.address.area,
-            "street_number": int(order.address.street_Number),
-            "house_number": int(order.address.house_Number)
+            "area": order.address.area or "",
+            "street_number": street_num,
+            "house_number": house_num
         }
         address_response = supabase.table('address').insert(address_data).execute()
         address_id = address_response.data[0]['id']

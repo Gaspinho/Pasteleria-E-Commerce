@@ -45,15 +45,19 @@ export const CustomOrderCheckoutOrders = (props) => {
             <div className='title6'>
               Cobertura: <span>{customOrder.Icing?.decoration_name || 'No especificado'}</span>
             </div>
-            <div className='title6'>
-              Mensaje en el Pastel: <span>{customOrder.msg_on_cake || 'Ninguno'}</span>
-            </div>
+            {customOrder.msg_on_cake && (
+              <div className='title6'>
+                Mensaje en el Pastel: <span>{customOrder.msg_on_cake}</span>
+              </div>
+            )}
             <div className='title6'>
               Imagen Superior: <span>{customOrder.Top_Img_Decoration?.name || 'Ninguna'}</span>
             </div>
-            <div className='title6'>
-              Instrucción Especial: <span>{customOrder.special_instruction || 'Ninguna'}</span>
-            </div>
+            {customOrder.special_instruction && (
+              <div className='title6'>
+                Instrucción Especial: <span>{customOrder.special_instruction}</span>
+              </div>
+            )}
           </div>
         
         </div>
