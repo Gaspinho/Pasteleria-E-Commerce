@@ -42,3 +42,7 @@ __pycache__/
 # Database
 *.sqlite3
 db.sqlite3
+
+venv
+env
+.venv
