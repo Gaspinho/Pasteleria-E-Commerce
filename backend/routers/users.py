@@ -29,6 +29,11 @@ class TokenResponse(BaseModel):
     access_token: str
     refresh_token: str
     user_id: str
+    is_staff: bool
+    user_type: str
+    email: str
+    first_name: str
+    last_name: str
 
 class UserDataGet(BaseModel):
     email: str
@@ -139,16 +144,32 @@ async def supa_login(user: User):
     try:
         response = supabase.auth.sign_in_with_password({"email" : user.email, "password" : user.password})
         if response.user:
+            # Obtener información del usuario desde app_user
+            user_id = response.user.id
+            app_user_response = supabase.table('app_user').select('*').eq('id', user_id).execute()
+            
+            if not app_user_response.data or len(app_user_response.data) == 0:
+                raise HTTPException(status_code=404, detail="User not found in app_user table")
+            
+            user_data = app_user_response.data[0]
+            
             return TokenResponse(
                 access_token=response.session.access_token,
                 refresh_token=response.session.refresh_token,
-                user_id=response.user.id
+                user_id=response.user.id,
+                is_staff=user_data.get('is_staff', False),
+                user_type=user_data.get('type', 'CUSTOMER'),
+                email=user_data.get('email', user.email),
+                first_name=user_data.get('first_name', ''),
+                last_name=user_data.get('last_name', '')
             )
         else:            
             raise HTTPException(
                 status_code=400,
                 detail="Unexpected error during user login"
             )
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Supabase error: {e}")
         raise HTTPException(status_code=400, detail="Supabase error during login")
@@ -463,4 +484,229 @@ async def get_ordered_products(order_id: str):
     except Exception as e:
         print(f"Error getting ordered products: {e}")
         raise HTTPException(status_code=500, detail="Error al obtener los productos del pedido")
+
+
+# ============================================
+# Endpoints adicionales para el admin frontend
+# ============================================
+
+@router.get("/getAllcustomers")
+async def get_all_customers(token: str = Depends(get_access_token)):
+    """Obtener todos los usuarios que son clientes (no staff)"""
+    try:
+        # Verificar que el usuario actual es staff
+        user_response = supabase.auth.get_user(token)
+        user_id = user_response.user.id
+        
+        # Verificar si es staff
+        staff_check = supabase.table('app_user').select('is_staff').eq('id', user_id).execute()
+        if not staff_check.data or not staff_check.data[0].get('is_staff', False):
+            raise HTTPException(status_code=403, detail="Solo usuarios staff pueden acceder a esta información")
+        
+        # Obtener todos los clientes (usuarios que no son staff)
+        response = supabase.table('app_user').select('*').eq('is_staff', False).execute()
+        
+        # Formatear la respuesta para que coincida con lo que espera el frontend
+        customers = []
+        for user in response.data:
+            customers.append({
+                "id": user.get('id'),
+                "first_Name": user.get('first_name', ''),
+                "last_Name": user.get('last_name', ''),
+                "email": user.get('email', ''),
+                "phone_Number": user.get('phone_number', ''),
+                "type": user.get('type', 'CUSTOMER'),
+                "is_active": user.get('is_active', True)
+            })
+        
+        return customers
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error getting customers: {e}")
+        raise HTTPException(status_code=500, detail=f"Error al obtener clientes: {str(e)}")
+
+
+@router.get("/getAllstaff")
+async def get_all_staff(token: str = Depends(get_access_token)):
+    """Obtener todos los usuarios que son staff"""
+    try:
+        # Verificar que el usuario actual es staff
+        user_response = supabase.auth.get_user(token)
+        user_id = user_response.user.id
+        
+        # Verificar si es staff
+        staff_check = supabase.table('app_user').select('is_staff').eq('id', user_id).execute()
+        if not staff_check.data or not staff_check.data[0].get('is_staff', False):
+            raise HTTPException(status_code=403, detail="Solo usuarios staff pueden acceder a esta información")
+        
+        # Obtener todos los staff
+        response = supabase.table('app_user').select('*').eq('is_staff', True).execute()
+        
+        # Formatear la respuesta
+        staff_members = []
+        for user in response.data:
+            staff_members.append({
+                "id": user.get('id'),
+                "first_Name": user.get('first_name', ''),
+                "last_Name": user.get('last_name', ''),
+                "email": user.get('email', ''),
+                "phone_Number": user.get('phone_number', ''),
+                "type": user.get('type', 'STAFF'),
+                "is_active": user.get('is_active', True)
+            })
+        
+        return staff_members
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error getting staff: {e}")
+        raise HTTPException(status_code=500, detail=f"Error al obtener staff: {str(e)}")
+
+
+@router.get("/getAllorder")
+async def get_all_orders(token: str = Depends(get_access_token)):
+    """Obtener todas las órdenes - solo para staff"""
+    try:
+        # Verificar que el usuario actual es staff
+        user_response = supabase.auth.get_user(token)
+        user_id = user_response.user.id
+        
+        # Verificar si es staff
+        staff_check = supabase.table('app_user').select('is_staff').eq('id', user_id).execute()
+        if not staff_check.data or not staff_check.data[0].get('is_staff', False):
+            raise HTTPException(status_code=403, detail="Solo usuarios staff pueden acceder a esta información")
+        
+        # Obtener todas las órdenes con información relacionada
+        response = supabase.table('order').select(
+            '*, app_user!order_customer_id_fkey(id, first_name, last_name, email, phone_number), address(*), payment(*)'
+        ).order('placed_at', desc=True).execute()
+        
+        # Formatear la respuesta
+        orders = []
+        for order in response.data:
+            customer = order.get('app_user', {})
+            address = order.get('address', {})
+            payment = order.get('payment', {})
+            
+            orders.append({
+                "id": order.get('id'),
+                "customer_id": order.get('customer_id'),
+                "customer_name": f"{customer.get('first_name', '')} {customer.get('last_name', '')}".strip(),
+                "customer_email": customer.get('email', ''),
+                "customer_phone": customer.get('phone_number', ''),
+                "order_Status": order.get('status', ''),
+                "total_Amount": order.get('total_amount', 0),
+                "delivery_Charges": order.get('delivery_charges', 0),
+                "placed_at": order.get('placed_at', ''),
+                "delivery_at": order.get('delivery_at', ''),
+                "delivery_time_window": order.get('delivery_time_window', ''),
+                "note": order.get('note', ''),
+                "address": {
+                    "city": address.get('city', ''),
+                    "area": address.get('area', ''),
+                    "street_number": address.get('street_number', 0),
+                    "house_number": address.get('house_number', 0)
+                },
+                "payment": {
+                    "payment_status": payment.get('payment_status', ''),
+                    "payment_type": payment.get('payment_type', ''),
+                    "amount_paid": payment.get('amount_paid', 0)
+                }
+            })
+        
+        return orders
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error getting orders: {e}")
+        raise HTTPException(status_code=500, detail=f"Error al obtener órdenes: {str(e)}")
+
+
+@router.get("/Uprofile/{user_id}")
+async def get_user_profile_by_id(user_id: str, token: str = Depends(get_access_token)):
+    """Obtener perfil de un usuario específico por ID"""
+    try:
+        # Verificar que el usuario actual es staff
+        user_response = supabase.auth.get_user(token)
+        current_user_id = user_response.user.id
+        
+        # Verificar si es staff o si está accediendo a su propio perfil
+        staff_check = supabase.table('app_user').select('is_staff').eq('id', current_user_id).execute()
+        is_staff = staff_check.data and staff_check.data[0].get('is_staff', False)
+        
+        if not is_staff and current_user_id != user_id:
+            raise HTTPException(status_code=403, detail="No autorizado para ver este perfil")
+        
+        # Obtener información del usuario con dirección
+        response = supabase.table('app_user').select('*, address(*)').eq('id', user_id).execute()
+        
+        if not response.data:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
+        
+        user_data = response.data[0]
+        address_data = user_data.get('address', {}) if isinstance(user_data.get('address'), dict) else {}
+        
+        return {
+            "id": user_data.get('id'),
+            "email": user_data.get('email', ''),
+            "first_Name": user_data.get('first_name', ''),
+            "last_Name": user_data.get('last_name', ''),
+            "phone_Number": user_data.get('phone_number', ''),
+            "type": user_data.get('type', 'CUSTOMER'),
+            "is_staff": user_data.get('is_staff', False),
+            "is_active": user_data.get('is_active', True),
+            "data_Joind": user_data.get('created_at', ''),
+            "last_login": user_data.get('last_login', ''),
+            "address": {
+                "house_Number": address_data.get('house_number', ''),
+                "street_Number": address_data.get('street_number', ''),
+                "city": address_data.get('city', ''),
+                "area": address_data.get('area', '')
+            }
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error getting user profile: {e}")
+        raise HTTPException(status_code=500, detail=f"Error al obtener perfil: {str(e)}")
+
+
+@router.delete("/delete/{user_id}")
+async def delete_user_by_id(user_id: str, token: str = Depends(get_access_token)):
+    """Eliminar un usuario - solo para staff"""
+    try:
+        # Verificar que el usuario actual es staff
+        user_response = supabase.auth.get_user(token)
+        current_user_id = user_response.user.id
+        
+        # Verificar si es staff
+        staff_check = supabase.table('app_user').select('is_staff').eq('id', current_user_id).execute()
+        if not staff_check.data or not staff_check.data[0].get('is_staff', False):
+            raise HTTPException(status_code=403, detail="Solo usuarios staff pueden eliminar usuarios")
+        
+        # No permitir que un usuario se elimine a sí mismo
+        if current_user_id == user_id:
+            raise HTTPException(status_code=400, detail="No puedes eliminar tu propio usuario")
+        
+        # Eliminar usuario de app_user (esto también eliminará el usuario de auth si hay cascade)
+        response = supabase.table('app_user').delete().eq('id', user_id).execute()
+        
+        if not response.data:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
+        
+        # También intentar eliminar de auth
+        try:
+            if SUPABASE_SERVICE_KEY:
+                supabase_admin.auth.admin.delete_user(user_id)
+        except Exception as e:
+            print(f"Warning: Could not delete user from auth: {e}")
+        
+        return {"message": "Usuario eliminado exitosamente", "user_id": user_id}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error deleting user: {e}")
+        raise HTTPException(status_code=500, detail=f"Error al eliminar usuario: {str(e)}")
+
 

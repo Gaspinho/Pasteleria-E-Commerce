@@ -241,3 +241,76 @@ async def get_product_rating_summary(product_id: int):
     except Exception as e:
         print(f"Supabase error: {e}")
         raise HTTPException(status_code=500, detail="Error fetching rating summary")
+
+
+# ============================================
+# Legacy endpoints para compatibilidad con frontend admin
+# ============================================
+
+@router.get("/getAllReview")
+async def get_all_reviews_legacy(token: str = Depends(get_access_token)):
+    """Endpoint legacy - obtener todas las reseñas para admin"""
+    try:
+        response = supabase.table("reviews_with_product").select("*").order("review_date", desc=True).execute()
+        
+        # Formatear para el frontend con estructura anidada
+        reviews = []
+        for review in response.data:
+            reviews.append({
+                "review_Id": review.get("review_id"),
+                "product_Id": review.get("product_id"),
+                "product_Name": review.get("product_name"),
+                "customer": {
+                    "customer_Id": review.get("user_id"),
+                    "first_Name": review.get("author_name", "").split()[0] if review.get("author_name") else "Usuario",
+                    "last_Name": " ".join(review.get("author_name", "").split()[1:]) if review.get("author_name") and len(review.get("author_name", "").split()) > 1 else "",
+                    "email": review.get("author_email")
+                },
+                "rating": review.get("rating"),
+                "content": review.get("content"),
+                "review_Date": review.get("review_date"),
+                "created_at": review.get("created_at")
+            })
+        
+        return reviews
+    except Exception as e:
+        print(f"Supabase error: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching reviews")
+
+
+@router.get("/getAllQuestion")
+async def get_all_questions_legacy(token: str = Depends(get_access_token)):
+    """Endpoint legacy - obtener todas las preguntas para admin"""
+    try:
+        response = supabase.table("question").select("*").order("message_date", desc=True).execute()
+        
+        # Formatear para el frontend
+        questions = []
+        for question in response.data:
+            questions.append({
+                "question_Id": question.get("id"),
+                "user_Name": question.get("user_name"),
+                "email": question.get("email"),
+                "message": question.get("message"),
+                "message_Date": question.get("message_date"),
+                "created_at": question.get("message_date")  # Usar message_date como fallback
+            })
+        
+        return questions
+    except Exception as e:
+        print(f"Supabase error: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching questions")
+
+
+@router.delete("/deleteReview/{review_id}")
+async def delete_review_legacy(review_id: int, token: str = Depends(get_access_token)):
+    """Endpoint legacy - eliminar una reseña"""
+    return await delete_review(review_id, token)
+
+
+@router.delete("/deleteQuestion/{question_id}")
+async def delete_question_legacy(question_id: int, token: str = Depends(get_access_token)):
+    """Endpoint legacy - eliminar una pregunta"""
+    return await delete_question(question_id, token)
+
+

@@ -1,10 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import API_CONFIG from '../config/apiConfig'
 
 // Define a service using a base URL and expected endpoints
 
 export const feedbackApi = createApi({
   reducerPath: 'feedbackApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000/' }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: API_CONFIG.baseURL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     getAllReview: builder.query({
       query: () => {
@@ -20,7 +30,7 @@ export const feedbackApi = createApi({
     getAllQuestion: builder.query({
       query: () => {
         return {
-          url: `feedback/getAllQuestion/`,
+          url: 'feedback/getAllQuestion',
           method: 'GET',
           headers: {
             'Content-type': 'application/json',
@@ -30,7 +40,7 @@ export const feedbackApi = createApi({
     postReview: builder.mutation({
       query: (review) => {
         return {
-          url: `feedback/postReview/`,
+          url: 'feedback/postReview',
           method: 'POST',
           body: review,
           headers: {
@@ -41,7 +51,7 @@ export const feedbackApi = createApi({
     postQusetion: builder.mutation({
       query: (Qusetion) => {
         return {
-          url: `feedback/postQusetion/`,
+          url: 'feedback/postQusetion',
           method: 'POST',
           body: Qusetion,
           headers: {

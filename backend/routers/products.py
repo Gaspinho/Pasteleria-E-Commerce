@@ -267,3 +267,93 @@ async def get_product_by_sku(sku: str):
     except Exception as e:
         print(f"Supabase error: {e}")
         raise HTTPException(status_code=500, detail="Error fetching product")
+
+
+# ============================================
+# Legacy endpoints para compatibilidad con frontend admin
+# ============================================
+
+@router.get("/getAllproduct")
+async def get_all_products_legacy():
+    """Endpoint legacy - obtener todos los productos para admin frontend"""
+    try:
+        response = supabase.table("productos_full").select("*").order("product_id", desc=True).execute()
+        
+        # Formatear respuesta para el frontend
+        products = []
+        for product in response.data:
+            products.append({
+                "product_Id": product.get("product_id"),
+                "product_Name": product.get("product_name"),
+                "product_SKU": product.get("product_sku"),
+                "product_Description": product.get("product_description"),
+                "product_Price": product.get("product_price"),
+                "product_Stock": product.get("product_stock"),
+                "product_Is_Sale": product.get("product_is_sale"),
+                "product_category": {
+                    "category_Id": product.get("category_id"),
+                    "category_Name": product.get("category_name")
+                },
+                "imageGallery": {
+                    "image1": product.get("image1", ""),
+                    "image2": product.get("image2", ""),
+                    "image3": product.get("image3", ""),
+                    "image4": product.get("image4", "")
+                },
+                "review_Count": product.get("review_count", 0),
+                "avg_Rating": product.get("avg_rating", 0.0),
+                "created_at": product.get("created_at"),
+                "updated_at": product.get("updated_at")
+            })
+        
+        return products
+    except Exception as e:
+        print(f"Supabase error: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching products")
+
+
+@router.get("/getDetailedProduct/{product_id}")
+async def get_detailed_product_legacy(product_id: int):
+    """Endpoint legacy - obtener detalles de un producto"""
+    try:
+        response = supabase.table("productos_full").select("*").eq("product_id", product_id).execute()
+        
+        if not response.data:
+            raise HTTPException(status_code=404, detail="Product not found")
+        
+        product = response.data[0]
+        return {
+            "product_Id": product.get("product_id"),
+            "product_Name": product.get("product_name"),
+            "product_SKU": product.get("product_sku"),
+            "product_Description": product.get("product_description"),
+            "product_Price": product.get("product_price"),
+            "product_Stock": product.get("product_stock"),
+            "product_Is_Sale": product.get("product_is_sale"),
+            "category_Name": product.get("category_name"),
+            "category_Id": product.get("category_id"),
+            "imageGallery": {
+                "id": product.get("image_gallery_id"),
+                "image1": product.get("image1", ""),
+                "image2": product.get("image2", ""),
+                "image3": product.get("image3", ""),
+                "image4": product.get("image4", "")
+            },
+            "review_Count": product.get("review_count", 0),
+            "avg_Rating": product.get("avg_rating", 0.0),
+            "created_at": product.get("created_at"),
+            "updated_at": product.get("updated_at")
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Supabase error: {e}")
+        raise HTTPException(status_code=500, detail="Error fetching product")
+
+
+@router.delete("/delete/{product_id}")
+async def delete_product_legacy(product_id: int, token: str = Depends(get_access_token)):
+    """Endpoint legacy - eliminar un producto"""
+    return await delete_product(product_id, token)
+
+
