@@ -43,58 +43,58 @@ const NewStaff =() =>{
     };
   return (
     <div className="newUser" >
-      <h1 className="newUserTitle">Create New Staff User Account</h1>
-      {success ? (<Alert severity="success"> {"       "}Staff Added Successfully {"       "}</Alert>) : ( "")} 
+      <h1 className="newUserTitle">Crear Nueva Cuenta de Usuario del Personal</h1>
+      {success ? (<Alert severity="success"> {"       "}Personal Agregado Exitosamente {"       "}</Alert>) : ( "")} 
       <form className="newUserForm" onSubmit={handleSubmit} style={{backgroundImage:`url(${backImg})`}}>
         <div className="newUserItem">
-          <lable>First Name</lable>
-          <input type="text" placeholder="Enter First Name" name="first_Name" />
+          <lable>Nombre</lable>
+          <input type="text" placeholder="Ingrese el Nombre" name="first_Name" />
           {server_error.first_Name ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.first_Name[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
-          <lable>Last Name</lable>
-          <input type="text" placeholder="Enter Last Name" name="last_Name" />
+          <lable>Apellido</lable>
+          <input type="text" placeholder="Ingrese el Apellido" name="last_Name" />
           {server_error.last_Name ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.last_Name[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
-          <lable>Email</lable>
-          <input type="email" placeholder="Enter Email Address" name="email" />
+          <lable>Correo Electrónico</lable>
+          <input type="email" placeholder="Ingrese el Correo Electrónico" name="email" />
           {server_error.email ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.email[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
-          <lable>Password</lable>
-          <input type="password" placeholder="Enter Password" name="password"/>
+          <lable>Contraseña</lable>
+          <input type="password" placeholder="Ingrese la Contraseña" name="password"/>
           {server_error.password ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.password[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
-          <lable>Phone Number</lable>
+          <lable>Número de Teléfono</lable>
           <input type="text" placeholder="03xxxxxxxxx" name="phone_Number" />
           {server_error.phone_Number ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.phone_Number[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
-          <lable>User Type</lable>
+          <lable>Tipo de Usuario</lable>
           <select className="newUserSelect" name="type" id="type">
             <option value="STAFF">Staff</option>
             <option value="DELIVER_BOY">Delivery Boy</option>
           </select>
         </div>
         <div className="newUserItem">
-          <lable>House Number</lable>
-          <input type="text" placeholder="Enter House Number" name="house_Number"/>
+          <lable>Número de Casa</lable>
+          <input type="text" placeholder="Ingrese el Número de Casa" name="house_Number"/>
           {server_error.house_Number ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.house_Number[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
-          <lable>Street Number</lable>
-          <input type="text" placeholder="Enter Street Number " name="street_Number" />
+          <lable>Número de Calle</lable>
+          <input type="text" placeholder="Ingrese el Número de Calle" name="street_Number" />
           {server_error.street_Number ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.street_Number[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
-          <lable>Area</lable>
-          <input type="text" name="area" placeholder="Enter Area/Phase" />
+          <lable>Área</lable>
+          <input type="text" name="area" placeholder="Ingrese Área/Fase" />
           {server_error.area ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.area[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
-          <lable>City</lable>
+          <lable>Ciudad</lable>
           <select className="newUserSelect" name="city" id="city">
             <option value="Islamabad">Islamabad</option>
             <option value="Rawalpindi">Rawalpindi</option>
@@ -102,7 +102,7 @@ const NewStaff =() =>{
         </div>
         <div> </div>
         
-        {isLoading ? <CircularProgress /> : <button  type="submit" className="newUserButton">Create Staff</button> } 
+        {isLoading ? <CircularProgress /> : <button  type="submit" className="newUserButton">Crear Personal</button> } 
       </form>
     </div>
   );

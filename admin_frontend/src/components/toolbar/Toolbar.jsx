@@ -28,7 +28,7 @@ const Toolbar = () => {
             className={currentLink === 1 ? "active" : ""}
           >
             <Link to="/admin/dashboard">
-              <MdDashboard /> <span> Dashboard </span>{" "}
+              <MdDashboard /> <span> Tablero </span>{" "}
             </Link>{" "}
           </li>
           <li
@@ -37,7 +37,7 @@ const Toolbar = () => {
           >
             <Link to="/admin/designtool">
               {" "}
-              <MdDesignServices /> <span> Customize Orders </span>{" "}
+              <MdDesignServices /> <span> Pedidos Personalizados </span>{" "}
             </Link>
           </li>
           {/* <li
@@ -54,7 +54,7 @@ const Toolbar = () => {
             className={currentLink === 4 ? "active" : ""}
           >
             <Link to='/admin/orders'>
-              <MdAssignment /> <span> Orders </span>{" "}
+              <MdAssignment /> <span> Pedidos </span>{" "}
             </Link>
           </li>
           <li
@@ -63,7 +63,7 @@ const Toolbar = () => {
           >
             <Link to='/admin/customers'>
               {" "}
-              <BsFillPeopleFill /> <span> Customers </span>{" "}
+              <BsFillPeopleFill /> <span> Clientes </span>{" "}
             </Link>
           </li>
           <li
@@ -72,7 +72,7 @@ const Toolbar = () => {
           >
             <Link to='/admin/staff'>
               {" "}
-              <FaPeopleCarry /> <span> Staff  </span>{" "}
+              <FaPeopleCarry /> <span> Personal  </span>{" "}
             </Link>
           </li>
           <li
@@ -81,7 +81,7 @@ const Toolbar = () => {
           >
             <Link to='/admin/products'>
               {" "}
-              <IoStorefrontOutline /> <span> Products </span>{" "}
+              <IoStorefrontOutline /> <span> Productos </span>{" "}
             </Link>
           </li>
           <li
@@ -90,7 +90,7 @@ const Toolbar = () => {
           >
             <Link to="/admin/feedbacks">
               {" "}
-              <MdDynamicFeed /> <span> Reviews </span>{" "}
+              <MdDynamicFeed /> <span> Reseñas </span>{" "}
             </Link>
           </li>
           <li
@@ -99,7 +99,7 @@ const Toolbar = () => {
           >
             <Link to="/admin/question">
               {" "}
-              <MdNotifications /> <span> Messages </span>{" "}
+              <MdNotifications /> <span> Mensajes </span>{" "}
             </Link>
           </li>
           <li
@@ -108,13 +108,13 @@ const Toolbar = () => {
           >
             <Link to="/admin/Profile">
               {" "}
-              <CgProfile  /> <span> Profile </span>{" "}
+              <CgProfile  /> <span> Perfil </span>{" "}
             </Link>
           </li>
           <li>
             <Link to="/logout">
               {" "}
-              <BiLogOut /> <span> Log Out </span>{" "}
+              <BiLogOut /> <span> Cerrar Sesión </span>{" "}
             </Link>
           </li>
         </ul>

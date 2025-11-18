@@ -24,24 +24,24 @@ const OrderDetails = () => {
     <div ref={componentRef} >
       <div className='contain' style={{backgroundImage:`url(${backImg})`}}>
         <div className='detailsTitle'>
-          <h1>Order Invoice</h1>
-          <button className="printButton" onClick={handlePrint}> Print Invoice</button>
+          <h1>Factura del Pedido</h1>
+          <button className="printButton" onClick={handlePrint}> Imprimir Factura</button>
         </div>
         <div>
-          <h2 > Order Statues: </h2>
+          <h2 > Estado del Pedido: </h2>
           <div ><OrderTrack data={responseInfo.data}  /></div>
         </div>
         <div className='sectionsHeading1'>
-          <h2 > Order Details : </h2>
-          <h2 style={{ marginLeft:"28rem" }}> Delivery Address</h2>
+          <h2 > Detalles del Pedido : </h2>
+          <h2 style={{ marginLeft:"28rem" }}> Dirección de Entrega</h2>
         </div>
         <div className='orderDetails'>
           <div className='leftHead'>
-            <p className='spani'>Order ID: </p><br/>
-            <p className='spani'>Placment Date/Time: </p><br/>
-            <p className='spani'>Delivery_Charges: </p><br/>
-            <p className='spani'>Total Amount: </p><br/>
-            <p className='spani'>Note: </p><br/>
+            <p className='spani'>ID de Pedido: </p><br/>
+            <p className='spani'>Fecha/Hora de Solicitud: </p><br/>
+            <p className='spani'>Cargos de Envío: </p><br/>
+            <p className='spani'>Monto Total: </p><br/>
+            <p className='spani'>Nota: </p><br/>
           </div>
           <div className='rightvalue'>
             <p className='spani'>{responseInfo.data.order_Id}</p><br/>
@@ -52,11 +52,11 @@ const OrderDetails = () => {
           </div>
           <div className='delivrySection'>
             <div className='leftHead'>
-            <p className='spani'>Customer: </p><br/>
-            <p className='spani'>Phone Number: </p><br/>
-            <p className='spani'>Delivery Address: </p><br/>
-            <p className='spani'>Delivery Date: </p><br/>
-            <p className='spani'>Delivery Time Slot: </p><br/>
+            <p className='spani'>Cliente: </p><br/>
+            <p className='spani'>Número de Teléfono: </p><br/>
+            <p className='spani'>Dirección de Entrega: </p><br/>
+            <p className='spani'>Fecha de Entrega: </p><br/>
+            <p className='spani'>Horario de Entrega: </p><br/>
             </div>
             <div className='rightvalue'>
             <p className='spani'>{responseInfo.data.customer.first_Name}  {responseInfo.data.customer.last_Name}</p><br/>
@@ -71,12 +71,12 @@ const OrderDetails = () => {
           </div>
         </div>
         <div className='sectionsHeading'>
-          <h2 > Order Payment: </h2>         
+          <h2 > Pago del Pedido: </h2>         
         </div>
         <div className='orderDetails'>
           <div className='leftHead'>
-            <p className='spani'>Payment ID: </p><br/>
-            <p className='spani'>Payment Status: </p><br/>
+            <p className='spani'>ID de Pago: </p><br/>
+            <p className='spani'>Estado del Pago: </p><br/>
           </div>
           <div className='rightvalue'>
             <p className='spani'>{responseInfo.data.payment.payment_Id}</p><br/>
@@ -84,8 +84,8 @@ const OrderDetails = () => {
           </div>
           <div className='delivrySection'>
             <div className='leftHead'>
-            <p className='spani'>Payment Type: </p><br/>
-            <p className='spani'>Amount Paid: </p><br/>
+            <p className='spani'>Tipo de Pago: </p><br/>
+            <p className='spani'>Monto Pagado: </p><br/>
             </div>
             <div className='rightvalue'>
             <p className='spani'>{responseInfo.data.payment.payment_Type}</p><br/>
@@ -95,7 +95,7 @@ const OrderDetails = () => {
           </div>
         </div>
         <div className='sectionsHeading'>
-          <h2 > Products: </h2>
+          <h2 > Productos: </h2>
         </div>
         <div>
           {<OrderdProducts data={id} />}

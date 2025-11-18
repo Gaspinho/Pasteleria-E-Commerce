@@ -94,16 +94,16 @@ function NewProduct() {
             
           </div>
         </div>
-        <div className="dataContainer"><div className="info_data"><div className="name"><h1> Name: {''} {data.product_Name}</h1></div>
-            <div className="productInfo "><h3>Sale Status:</h3><span> {data.product_isSale}</span></div>
-            <div className="productInfo "><h3> Product Price:</h3><span> Rs. {' '}{data.product_Price}</span></div>
-            <div className="productInfo"><h3>Product Stock:</h3><span> {data.product_Stock} </span></div>
-            <div className="productInfo "><h3>Product Category:</h3><span> {data.category_Name} {''} Cake </span></div>
-            <div className="descript"><h3> Product Description:</h3><p>{data.product_Description}</p></div>
+        <div className="dataContainer"><div className="info_data"><div className="name"><h1> Nombre: {''} {data.product_Name}</h1></div>
+            <div className="productInfo "><h3>Estado de Venta:</h3><span> {data.product_isSale}</span></div>
+            <div className="productInfo "><h3> Precio del Producto:</h3><span> Rs. {' '}{data.product_Price}</span></div>
+            <div className="productInfo"><h3>Stock del Producto:</h3><span> {data.product_Stock} </span></div>
+            <div className="productInfo "><h3>Categoría del Producto:</h3><span> {data.category_Name} {''} Cake </span></div>
+            <div className="descript"><h3> Descripción del Producto:</h3><p>{data.product_Description}</p></div>
           </div>
         <form className="editProductForm" onSubmit={handleSubmit}>
           <div className="newproductItem">
-            <label>Product Name</label>
+            <label>Nombre del Producto</label>
             <input
               type="text"
               name="product_Name"
@@ -115,7 +115,7 @@ function NewProduct() {
                 {server_error.product_Name[0]} </lable>) : ("")}
           </div>
           <div className="newproductItem">
-            <label>Product Description</label>
+            <label>Descripción del Producto</label>
             <input type="text" name="product_Description" 
             value={data.product_Description || ""}
             onChange={handleChange}
@@ -125,7 +125,7 @@ function NewProduct() {
                 {server_error.product_Name[0]} </lable>) : ("")}
           </div>
           <div className="newproductItem">
-            <label>Product Price</label>
+            <label>Precio del Producto</label>
             <input type="text"  name="product_Price"
              value={data.product_Price || ""}
             onChange={handleChange}
@@ -136,7 +136,7 @@ function NewProduct() {
               </lable>) : ("")}
           </div>
           <div className="newproductItem">
-            <label>Product Stock</label>
+            <label>Stock del Producto</label>
             <input type="text" name="product_Stock" value={data.product_Stock || ""}
               onChange={handleChange} />
             {server_error.product_Stock ? (
@@ -144,7 +144,7 @@ function NewProduct() {
               {server_error.product_Stock[0]}</lable>) : ("")}
           </div>
           <div className="newproductItem">
-            <label>Product Sale Status</label>
+            <label>Estado de Venta del Producto</label>
             <select className="newProductSelect" name="product_isSale" id="product_isSale" 
             value={data.product_isSale || " "}
             onChange={handleChange} >
@@ -154,7 +154,7 @@ function NewProduct() {
           </div>
           <div className="btn_con">
           <div className="newproductItem">
-            <label>Update Category</label>
+            <label>Actualizar Categoría</label>
             <select className="newProductSelect" name="category_Name" id="category_Name"
             value={data.category_Name || ""}
             onChange={handleChange} required>
@@ -166,7 +166,7 @@ function NewProduct() {
           </div>
           {isLoading ? (<CircularProgress /> ) : (
             <button type="submit" className="btn1">
-              Add Product</button>
+              Agregar Producto</button>
           )}
           </div>       
         </form>
@@ -174,7 +174,7 @@ function NewProduct() {
         {server_error.image2 ? <Alert severity='error'>{ `image2: ${server_error.image2[0]}`}</Alert> : ''} 
         {server_error.image3 ? <Alert severity='error'>{ `image3: ${server_error.image3[0]}`}</Alert> : ''} 
         {server_error.image4 ? <Alert severity='error'>{ `image4: ${server_error.image4[0]}`}</Alert> : ''} 
-        {success? <Alert severity='success'> Product addedd Successfully </Alert> : ''} 
+        {success? <Alert severity='success'> Producto agregado exitosamente </Alert> : ''} 
         
       </div>
       </div>

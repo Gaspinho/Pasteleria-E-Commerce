@@ -19,7 +19,7 @@ export const ContactInfo = () => {
               </p>
             </div>
             <div className="contacts-info__social">
-              <span>Find us here:</span>
+              <span>Encuentranos aqui:</span>
               <ul>
                 {footerSocial.map((social, index) => (
                   <li key={index}>

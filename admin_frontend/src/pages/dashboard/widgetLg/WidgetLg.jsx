@@ -25,14 +25,14 @@ export default function WidgetLg() {
 
   return (
     <div className="widgetLg">
-      <h3 className="widgetLgTitle">Latest Orders</h3>
+      <h3 className="widgetLgTitle">Últimos Pedidos</h3>
       <table className="widgetLgTable">
       <tbody>  
         <tr className="widgetLgTr">
-          <th className="widgetLgTh">Order ID</th>
-          <th className="widgetLgTh">Date</th>
-          <th className="widgetLgTh">Total Amount</th>
-          <th className="widgetLgTh">Order Status</th>
+          <th className="widgetLgTh">ID de Pedido</th>
+          <th className="widgetLgTh">Fecha</th>
+          <th className="widgetLgTh">Monto Total</th>
+          <th className="widgetLgTh">Estado del Pedido</th>
         </tr>
         {arr.map((data, index) => (
           <tr  key={index} className="widgetLgTr">

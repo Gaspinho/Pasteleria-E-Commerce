@@ -79,9 +79,9 @@ function CustomerEdit() {
   
   return (
     <div className="user">
-      <h1 className="userTitle">User Profile</h1>
+      <h1 className="userTitle">Perfil de Usuario</h1>
       {success ? (
-        <Alert severity="success"> Profile Data Updated Successfully </Alert>
+        <Alert severity="success"> Datos del Perfil Actualizados Exitosamente </Alert>
       ) : (
         ""
       )}
@@ -94,22 +94,22 @@ function CustomerEdit() {
             <img src={user_image} alt="" className="userShowImg" />
             <div className="userShowTopTitle  ">
               <span className="userShowUsername ">
-                <span style={{ marginRight: "2rem" }}> First Name: </span>{" "}
+                <span style={{ marginRight: "2rem" }}> Nombre: </span>{" "}
                 {data.first_Name}
               </span>
               <span className="userShowUsername FontSize">
-                <span style={{ marginRight: "2rem" }}>Last Name:</span>{" "}
+                <span style={{ marginRight: "2rem" }}>Apellido:</span>{" "}
                 {data.last_Name}
               </span>
             </div>
           </div>
           <div className="userShowBottom">
-            <span className="userShowTitle FontSize ">Account Details</span>
+            <span className="userShowTitle FontSize ">Detalles de la Cuenta</span>
             <div className="userShowInfo">
               <div >
                 <BadgeOutlined sx={{marginRight:'0.2rem'}} />
                 <span>
-                  User ID: 
+                  ID de Usuario: 
                 </span>
               </div>
               <div >
@@ -120,7 +120,7 @@ function CustomerEdit() {
               <div >
               <CalendarToday sx={{marginRight:'0.2rem'}} />
               <span>
-                Account Created At: 
+                Cuenta Creada el: 
               </span>
               </div>
               <div >
@@ -131,19 +131,19 @@ function CustomerEdit() {
               <div >
               <CalendarToday sx={{marginRight:'0.2rem'}} />
               <span>
-                Last Login At:
+                Último Acceso:
               </span>
               </div>
               <div >
                 <span> {data.last_login}</span>
               </div>
             </div>
-            <span className="userShowTitle FontSize">Contact Details</span>
+            <span className="userShowTitle FontSize">Detalles de Contacto</span>
             <div className="userShowInfo">
               <div >
               <PhoneAndroid sx={{marginRight:'0.2rem'}} />
               <span>
-                Phone Number: 
+                Número de Teléfono: 
               </span>
               </div>
               <div >
@@ -154,7 +154,7 @@ function CustomerEdit() {
               <div >
               <MailOutline sx={{marginRight:'0.2rem'}} />
               <span>
-                Email: 
+                Correo Electrónico: 
               </span>
               </div>
               <div >
@@ -163,12 +163,12 @@ function CustomerEdit() {
             </div>
 
             <div className="userShowInfo">
-              <span className="userShowTitle FontSize ">Address:</span>
+              <span className="userShowTitle FontSize ">Dirección:</span>
             </div>
             <div className="userShowInfo">
               <div >
               <House sx={{marginRight:'0.2rem'}} />
-              <span> House Number: </span>
+              <span> Número de Casa: </span>
               </div>
               <div >
                 <span> {data.house_Number}</span>
@@ -177,7 +177,7 @@ function CustomerEdit() {
             <div className="userShowInfo">
               <div >
               <Signpost sx={{marginRight:'0.2rem'}} />
-              <span> Street Number: </span>
+              <span> Número de Calle: </span>
               </div>
               <div >
                 <span> {data.street_Number}</span>
@@ -186,7 +186,7 @@ function CustomerEdit() {
             <div className="userShowInfo">
               <div >
               <LocationSearching sx={{marginRight:'0.2rem'}} />
-              <span> Area: </span>
+              <span> Área: </span>
               </div>
               <div >
                 <span> {data.area}</span>
@@ -195,7 +195,7 @@ function CustomerEdit() {
             <div className="userShowInfo">
               <div >
               <LocationCity sx={{marginRight:'0.2rem'}} />
-              <span> City: </span>
+              <span> Ciudad: </span>
               </div>
               <div >
                 <span> {data.city}</span>
@@ -208,11 +208,11 @@ function CustomerEdit() {
           style={{ backgroundImage: `url(${backImg})` }}
         >
           <div>
-            <span className="userUpdateTitle">Edit</span>
+            <span className="userUpdateTitle">Editar</span>
             <form className="userUpdateForm" onSubmit={handleSubmit}>
               <div className="userUpdateLeft">
                 <span className="userUpdateItem">
-                  <label>First Name</label>
+                  <label>Nombre</label>
                   <input
                     type="text"
                     name="first_Name"
@@ -231,7 +231,7 @@ function CustomerEdit() {
                   )}
                 </span>
                 <span className="userUpdateItem">
-                  <label>Last Name</label>
+                  <label>Apellido</label>
                   <input
                     type="text"
                     value={data.last_Name || ""}
@@ -250,7 +250,7 @@ function CustomerEdit() {
                   )}
                 </span>
                 <span className="userUpdateItem">
-                  <label>Phone Number</label>
+                  <label>Número de Teléfono</label>
                   <input
                     type="text"
                     value={data.phone_Number || ""}
@@ -269,10 +269,10 @@ function CustomerEdit() {
                   )}
                 </span>
                 <span className="userShowTitle">
-                  <label style={{ marginTop: "3px" }}>Address:</label>
+                  <label style={{ marginTop: "3px" }}>Dirección:</label>
                 </span>
                 <span className="userUpdateItem">
-                  <label>House Number</label>
+                  <label>Número de Casa</label>
                   <input
                     type="text"
                     value={data.house_Number || ""}
@@ -282,7 +282,7 @@ function CustomerEdit() {
                   />
                 </span>
                 <span className="userUpdateItem">
-                  <label>Street Number</label>
+                  <label>Número de Calle</label>
                   <input
                     type="text"
                     value={data.street_Number || ""}
@@ -292,7 +292,7 @@ function CustomerEdit() {
                   />
                 </span>
                 <span className="userUpdateItem">
-                  <label>Area</label>
+                  <label>Área</label>
                   <input
                     type="text"
                     value={data.area || ""}
@@ -302,7 +302,7 @@ function CustomerEdit() {
                   />
                 </span>
                 <span className="userUpdateItem">
-                  <label>City</label>
+                  <label>Ciudad</label>
                   <select
                     className="userUpdateSelect"
                     name="city"
@@ -320,7 +320,7 @@ function CustomerEdit() {
                   <CircularProgress />
                 ) : (
                   <button type="submit" className="userUpdateButton">
-                    Update
+                    Actualizar
                   </button>
                 )}
               </div>

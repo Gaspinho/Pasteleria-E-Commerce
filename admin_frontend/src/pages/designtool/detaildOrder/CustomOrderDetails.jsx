@@ -26,33 +26,33 @@ const CustomOrderDetails = () => {
           style={{ backgroundImage: `url(${backImg})` }}
         >
           <div className="customOrder_detailsTitle">
-            <h1>Order Invoice</h1>
+            <h1>Factura del Pedido</h1>
             <button className="customOrder_printButton" onClick={handlePrint}>
               {" "}
-              Print Invoice
+              Imprimir Factura
             </button>
           </div>
           <div>
-            <h2> Order Statues: </h2>
+            <h2> Estado del Pedido: </h2>
             <div>
               <OrderTrack data={res.data} />
             </div>
           </div>
           <div className="customOrder_sectionsHeading1">
-            <h2> Order Details : </h2>
-            <h2 style={{ marginLeft: "23rem" }}> Delivery Address</h2>
+            <h2> Detalles del Pedido : </h2>
+            <h2 style={{ marginLeft: "23rem" }}> Dirección de Entrega</h2>
           </div>
           <div className="customOrder_orderDetails">
             <div className="customOrder_leftHead">
-              <p className="customOrder_span">Order ID: </p>
+              <p className="customOrder_span">ID de Pedido: </p>
               <br />
-              <p className="customOrder_span">Placment Date: </p>
+              <p className="customOrder_span">Fecha de Solicitud: </p>
               <br />
-              <p className="customOrder_span">Placment Date/Time: </p>
+              <p className="customOrder_span">Fecha/Hora de Solicitud: </p>
               <br />
-              <p className="customOrder_span">Delivery_Charges: </p>
+              <p className="customOrder_span">Cargos de Envío: </p>
               <br />
-              <p className="customOrder_span">Total Amount: </p>
+              <p className="customOrder_span">Monto Total: </p>
               <br />
             </div>
             <div className="customOrder_rightvalue">
@@ -80,15 +80,15 @@ const CustomOrderDetails = () => {
             </div>
             <div className="delivrySection">
               <div className="customOrder_leftHead">
-                <p className="customOrder_span">Customer: </p>
+                <p className="customOrder_span">Cliente: </p>
                 <br />
-                <p className="customOrder_span">Phone Number: </p>
+                <p className="customOrder_span">Número de Teléfono: </p>
                 <br />
-                <p className="customOrder_span">Delivery Address: </p>
+                <p className="customOrder_span">Dirección de Entrega: </p>
                 <br />
-                <p className="customOrder_span">Delivery Date: </p>
+                <p className="customOrder_span">Fecha de Entrega: </p>
                 <br />
-                <p className="customOrder_span">Delivery Time Slot: </p>
+                <p className="customOrder_span">Horario de Entrega: </p>
                 <br />
               </div>
               <div className="customOrder_rightvalue">
@@ -119,13 +119,13 @@ const CustomOrderDetails = () => {
             </div>
           </div>
           <div className="customOrder_sectionsHeading">
-            <h2> Order Payment: </h2>
+            <h2> Pago del Pedido: </h2>
           </div>
           <div className="orderDetails">
             <div className="customOrder_leftHead">
-              <p className="customOrder_span">Payment ID: </p>
+              <p className="customOrder_span">ID de Pago: </p>
               <br />
-              <p className="customOrder_span">Payment Status: </p>
+              <p className="customOrder_span">Estado del Pago: </p>
               <br />
             </div>
             <div className="customOrder_rightvalue">
@@ -138,9 +138,9 @@ const CustomOrderDetails = () => {
             </div>
             <div className="delivrySection">
               <div className="customOrder_leftHead">
-                <p className="customOrder_span">Payment Type: </p>
+                <p className="customOrder_span">Tipo de Pago: </p>
                 <br />
-                <p className="customOrder_span">Amount Paid: </p>
+                <p className="customOrder_span">Monto Pagado: </p>
                 <br />
               </div>
               <div className="customOrder_rightvalue">
@@ -156,7 +156,7 @@ const CustomOrderDetails = () => {
               </div>
             </div>
           </div>
-          <h2> Cake Design </h2>
+          <h2> Diseño del Pastel </h2>
           <div className="designCakeProduct">
               <img
                 src={`http://127.0.0.1:8000${res.data.CustomCake.finalProduct.finalProductImg}`}
@@ -165,38 +165,38 @@ const CustomOrderDetails = () => {
               />
             <div>
               <div className="customOrderCakeGrid">
-                <h3>Cake Shape: </h3>
+                <h3>Forma del Pastel: </h3>
                 <p className="customOrderCakeinfo">
                   {res.data.CustomCake.Cake_Shape_layers.cake_shape}{" "}
                 </p>
               </div>
               <div className="customOrderCakeGrid">
-                <h3>Cake Flavor: </h3>
+                <h3>Sabor del Pastel: </h3>
                 <p className="customOrderCakeinfo">
                   {res.data.CustomCake.sponge_Flavor.flavor_name}{" "}
                 </p>
               </div>
               <div className="customOrderCakeGrid">
-                <h3>Cake Layers: </h3>
+                <h3>Capas del Pastel: </h3>
                 <p className="customOrderCakeinfo">
                   {" "}
                   Rs. {res.data.CustomCake.Cake_Shape_layers.layer_description}{" "}
                 </p>
               </div>
               <div className="customOrderCakeGrid">
-                <h3>Cake Icing: </h3>
+                <h3>Glaseado del Pastel: </h3>
                 <p className="customOrderCakeinfo">
                   {res.data.CustomCake.Icing.decoration_name}
                 </p>
               </div>
               <div className="customOrderCakeGrid">
-                <h3>Msg on Cake: </h3>
+                <h3>Mensaje en el Pastel: </h3>
                 <p className="customOrderCakeinfo"> style={{color:`${res.data.msg_color.color_Code}`}}
                   {res.data.CustomCake.msg_on_cake}{" "}
                 </p>
               </div>
               <div className="customOrderCakeGrid">
-                <h3>Special Instruction: </h3>
+                <h3>Instrucción Especial: </h3>
                 <p className="customOrderCakeinfo">
                   {" "}
                   {res.data.CustomCake.special_instruction}{" "}
@@ -204,7 +204,7 @@ const CustomOrderDetails = () => {
               </div>
             </div>
             <div>
-              <h3>Top Image:</h3>
+              <h3>Imagen Superior:</h3>
                <h3>{res.data.CustomCake.Top_Img_Decoration.name}{" "} </h3>
               <img
                 src={`http://127.0.0.1:8000${res.data.CustomCake.Top_Img_Decoration.image}`}

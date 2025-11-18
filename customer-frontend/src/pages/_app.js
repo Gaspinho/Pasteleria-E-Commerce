@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
 import '../styles/styles.scss';
+import '../components/CustomCakeDesigner/styles/customCakeDesigner.scss';
 import { Provider } from 'react-redux'
 import { store } from '../app/store'
 

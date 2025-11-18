@@ -55,7 +55,7 @@ const UserLogin = () => {
             alt="logo"
             src={logo}
         />
-          <Typography variant='h5' component="div" sx={{ flexGrow: 1 }}>  Bake and Take  Admin Dashboard </Typography>
+          <Typography variant='h5' component="div" sx={{ flexGrow: 1 }}>  Bake and Take - Panel de Administración </Typography>
         </Toolbar>
       </AppBar>
     </Box >
@@ -63,7 +63,7 @@ const UserLogin = () => {
         <Grid item lg={5} sm={7} xs={12}>
           <Card sx={{ width: "100%", height: "100%",marginTop:'30px' ,backgroundImage:`url(${backImg})`}}>
             <Box sx={{ mx: 3, height: 300 }}>
-              <h3 style={{color:"#A53860", fontSize: 33, textAlign:"center" ,marginTop:'30px'}}> Admin Login</h3>
+              <h3 style={{color:"#A53860", fontSize: 33, textAlign:"center" ,marginTop:'30px'}}> Inicio de Sesión Admin</h3>
               {server_error ? console.log(server_error) : ""}
               <Box
                 component="form"
@@ -78,7 +78,7 @@ const UserLogin = () => {
                   fullWidth
                   id="email"
                   name="email"
-                  label="Email Address"
+                  label="Correo Electrónico"
                 />
                 {server_error.email ? (
                   <Typography
@@ -95,7 +95,7 @@ const UserLogin = () => {
                   fullWidth
                   id="password"
                   name="password"
-                  label="Password"
+                  label="Contraseña"
                   type="password"
                 />
                 {server_error.password ? (
@@ -116,7 +116,7 @@ const UserLogin = () => {
                       variant="contained"
                       sx={{ mt: 3, mb: 2, px: 5 }}
                     >
-                      Login
+                      Iniciar Sesión
                     </Button>
                   )}
                 </Box>

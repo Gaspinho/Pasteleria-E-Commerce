@@ -19,10 +19,10 @@ function OrderdProducts(props) {
           </div>
           <div className='productDetails'>
             <div className="headings">
-              <h3 className='element'>Product Number </h3>
-              <h3 className='element'>Name </h3>
-              <h3 className='element'>Price </h3>
-              <h3 className='element'>Quantity </h3> 
+              <h3 className='element'>Número de Producto </h3>
+              <h3 className='element'>Nombre </h3>
+              <h3 className='element'>Precio </h3>
+              <h3 className='element'>Cantidad </h3> 
             </div>
             <div className="data1">
               <h3 className='element'>{data.product_Id.product_Id} </h3>

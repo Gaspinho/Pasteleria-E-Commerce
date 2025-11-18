@@ -9,6 +9,7 @@ import authReducer from '../features/authSlice'
 import userReducer from '../features/userSlice'
 import{customOrderApi} from '../services/customOrderApi'
 import orderReducer from '../features/orderSlice'
+import customCakeReducer from '../features/customCakeSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     auth: authReducer,
     user: userReducer,
     order: orderReducer,
+    customCake: customCakeReducer,
     [customOrderApi.reducerPath]: customOrderApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [userCRUDApi.reducerPath]: userCRUDApi.reducer,

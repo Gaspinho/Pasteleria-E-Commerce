@@ -15,21 +15,21 @@ function Question() {
   return (
     <>
       <div>
-        <h1> Customers Questions </h1> 
+        <h1> Preguntas de Clientes </h1> 
       </div>
       <div className="reviewsGrid">
         {arr.map((qdata, index) => (
           <div key={index} className="container">
               <div className="col">
                   <img src={afatar} alt="" />
-                  <div className="name"> Sender Name: {" "} {qdata.userName} </div>
+                  <div className="name"> Nombre del Remitente: {" "} {qdata.userName} </div>
                   <p className='reviewMsg'>
                     {qdata.email}
                   </p>
                   <p>
                     {qdata.messageDate}
                   </p>
-                  <h5>Message</h5>
+                  <h5>Mensaje</h5>
                   <h5>{qdata.message}</h5>
               </div>
           </div>

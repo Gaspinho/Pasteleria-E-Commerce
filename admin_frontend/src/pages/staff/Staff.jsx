@@ -23,11 +23,11 @@ function Staff() {
   };
   const handleDelete = (props)=>{
     confirmAlert({
-      title: 'Confirm to Delete Staff Member',
-      message: 'Are you sure to Delete Staff Member.',
+      title: 'Confirmar Eliminación de Miembro del Personal',
+      message: '¿Está seguro de eliminar este miembro del personal?',
       buttons: [
         {
-          label: 'Yes',
+          label: 'Sí',
           onClick: async() => {
             const res= await deleteUser(props)
             if(res.error){
@@ -42,13 +42,13 @@ function Staff() {
         }]});
   }
   const columns = [
-    {field: "type", headerName: "Staff", width: 90,headerClassName: 'column', },
+    {field: "type", headerName: "Personal", width: 90,headerClassName: 'column', },
     {field: "id", headerName: "ID", width: 70,headerClassName: 'column', },
-    {field: "first_Name",headerName: "First Name",width: 200, headerClassName: 'column',},
-    {field: "last_Name",headerName: "Last name",width: 200,headerClassName: 'column',},
-    {field: "email", headerName: "Email", width: 310 ,headerClassName: 'column',}, 
-    {field: "phone_Number",headerName: "Phone Number",width: 250,headerClassName: 'column',},
-    {field: "action",headerName: "Action",width: 310,headerClassName: 'column',
+    {field: "first_Name",headerName: "Nombre",width: 200, headerClassName: 'column',},
+    {field: "last_Name",headerName: "Apellido",width: 200,headerClassName: 'column',},
+    {field: "email", headerName: "Correo Electrónico", width: 310 ,headerClassName: 'column',}, 
+    {field: "phone_Number",headerName: "Número de Teléfono",width: 250,headerClassName: 'column',},
+    {field: "action",headerName: "Acción",width: 310,headerClassName: 'column',
       renderCell: (params) => {
         return (
           <>
@@ -65,10 +65,10 @@ function Staff() {
   return (
     <>
       <div className="userTitleContainer">
-        <h1 className="userTitle">Staff List</h1>
-        {success ? (<Alert severity="success"> {"       "}Staff Deleted Successfully </Alert>) : ( "")} 
+        <h1 className="userTitle">Lista de Personal</h1>
+        {success ? (<Alert severity="success"> {"       "}Personal Eliminado Exitosamente </Alert>) : ( "")} 
         <Link to="/admin/newstaff">
-          <button className="userAddButton"> Create User</button>
+          <button className="userAddButton"> Crear Usuario</button>
         </Link>
       </div>
       <div className="userList"> 

@@ -27,8 +27,8 @@ function Products() {
   return (
     <div>
       <div className="titlediv">
-      <h1 style={{ marginBottom: "3rem" }}> Products List </h1>
-      <button className="newBtn" onClick={() => handleNew()}> New Product </button>
+      <h1 style={{ marginBottom: "3rem" }}> Lista de Productos </h1>
+      <button className="newBtn" onClick={() => handleNew()}> Nuevo Producto </button>
       </div>
       <div className="productGrid">
         {arr.map((data, index) => (
@@ -77,11 +77,11 @@ function Products() {
                 <span>ID: {data.product_Id}</span>
               </div>
               <div className="dataProduct ">
-                <h3>For Sale:</h3>
+                <h3>En Venta:</h3>
                 <span> {data.product_isSale} </span>
               </div>
               <div className="dataProduct ">
-                <h3> Price:</h3>
+                <h3> Precio:</h3>
                 <span> {data.product_Price} PKR</span>
               </div>
               <div className="dataProduct">
@@ -89,18 +89,18 @@ function Products() {
                 <span> {data.product_Stock} </span>
               </div>
               <div className="dataProduct ">
-                <h3> Category:</h3>
+                <h3> Categoría:</h3>
                 <span> {data.product_category.category_Name} </span>
               </div>
               <div className="description">
-                <h3>Description:</h3>
+                <h3>Descripción:</h3>
                 <p>{data.product_Description}</p>
               </div>
               <button
                 className="buy--btn"
                 onClick={() => handleEdit(data.product_Id)}
               >
-                Edit Product
+                Editar Producto
               </button>
             </div>
           </section>

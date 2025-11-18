@@ -12,15 +12,15 @@ import user_image from "../header/UserAfatar.jpg";
 
 const user_menu = [
   {
-    content: "Dashboard",
+    content: "Tablero",
     path: "/admin/dashboard",
   },
   {
-    content: "Profile",
+    content: "Perfil",
     path: "/admin/profile",
   },
   {
-    content: "Logout",
+    content: "Cerrar Sesión",
     path: "/logout",
   },
 ];
@@ -96,7 +96,7 @@ const Header = () => {
         <div className="headerRight">
           <div className="headerSearch">
             <BiSearch />
-            <input type="text" placeholder="Search" />
+            <input type="text" placeholder="Buscar" />
           </div>
           <div className="headerItems">
             <Dropdown
@@ -108,7 +108,7 @@ const Header = () => {
         </div>
       </div>
       <div className="third-row">
-        <h3>Welcome Back, {userData.first_Name}</h3>
+        <h3>Bienvenido de nuevo, {userData.first_Name}</h3>
       </div>
     </div>
   );

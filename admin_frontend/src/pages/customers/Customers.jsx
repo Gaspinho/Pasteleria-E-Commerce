@@ -19,11 +19,11 @@ export default function Customers() {
 
   const handleDelete = (props) => {
     confirmAlert({
-      title: 'Confirm to Delete Customer',
-      message: 'Are you sure to Delete Staff Member.',
+      title: 'Confirmar Eliminación de Cliente',
+      message: '¿Está seguro de eliminar este cliente?',
       buttons: [
         {
-          label: 'Yes',
+          label: 'Sí',
           onClick: async() => { 
             await deleteUser(props)
             setSuccess(true)              
@@ -43,11 +43,11 @@ export default function Customers() {
   };
   const columns = [
     {field: "id", headerName: "ID", width: 130,headerClassName: 'column', },
-    {field: "first_Name",headerName: "First Name",width: 270, headerClassName: 'column',},
-    {field: "last_Name",headerName: "Last name",width: 270,headerClassName: 'column',},
-    {field: "email", headerName: "Email", width: 360 ,headerClassName: 'column',}, 
-    {field: "phone_Number",headerName: "Phone Number",width: 310,headerClassName: 'column',},
-    {field: "action",headerName: "Action",width: 320,headerClassName: 'column',
+    {field: "first_Name",headerName: "Nombre",width: 270, headerClassName: 'column',},
+    {field: "last_Name",headerName: "Apellido",width: 270,headerClassName: 'column',},
+    {field: "email", headerName: "Correo Electrónico", width: 360 ,headerClassName: 'column',}, 
+    {field: "phone_Number",headerName: "Número de Teléfono",width: 310,headerClassName: 'column',},
+    {field: "action",headerName: "Acción",width: 320,headerClassName: 'column',
       renderCell: (params) => {
         return (
           <>
@@ -65,8 +65,8 @@ export default function Customers() {
   return (
     <>
     <div style={{display: 'flex' , flexDirection:"row"}}>
-      <h1 className="userTitle">Customers List</h1>
-      {success ? (<Alert severity="success"> Customer Deleted Successfully </Alert>) : ( "")}
+      <h1 className="userTitle">Lista de Clientes</h1>
+      {success ? (<Alert severity="success"> Cliente Eliminado Exitosamente </Alert>) : ( "")}
     </div>
       
       <div className="userList">

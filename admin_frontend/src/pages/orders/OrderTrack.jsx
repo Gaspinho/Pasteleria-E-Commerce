@@ -27,35 +27,35 @@ function OrderTrack(props) {
           <div className= "canceldOrder1">
              <Cancel />
           </div>
-          <p className="text">Order Placed</p>
+          <p className="text">Pedido Realizado</p>
         </li>
         <li>
           <FaBoxOpen className="icon" />
           <div className="canceldOrder">
             <Cancel />
           </div>
-          <p className="text">Under Package</p>
+          <p className="text">En Empaque</p>
         </li>
         <li>
           <LocalShipping className="icon" />
           <div className="canceldOrder" >
             <Cancel />
           </div>
-          <p className="text">On The way to deliver</p>
+          <p className="text">En Camino a Entregar</p>
         </li>
         <li>
          <House className="icon" />
           <div className= "canceldOrder">
             <Cancel />
           </div>
-          <p className="text">Delivered</p>
+          <p className="text">Entregado</p>
         </li>
         <li>
           <Cancel className="icon" />
           <div className= "canceldOrder">
             <BsCheckCircle />
           </div>
-          <p className="text">Canceled</p>
+          <p className="text">Cancelado</p>
         </li>
       </ul>
     </div>
@@ -79,11 +79,11 @@ function OrderTrack(props) {
       order_Status: orderStatus
     }
     confirmAlert({
-      title: `Update Order Status to ${orderStatus}`,
-      message: 'Are you sure to Update Order Status.',
+      title: `Actualizar Estado del Pedido a ${orderStatus}`,
+      message: '¿Está seguro de actualizar el estado del pedido?',
       buttons: [
         {
-          label: 'Yes',
+          label: 'Sí',
           
           onClick: async() => {
             setdata({
@@ -120,7 +120,7 @@ function OrderTrack(props) {
             onClick={() => handleUpdate("Order Placed")}
           > <BsCheckCircle className="uil" />
           </div>
-          <p className="text">Order Placed</p>
+          <p className="text">Pedido Realizado</p>
         </li>
         <li>
           <FaBoxOpen className="icon" />
@@ -132,7 +132,7 @@ function OrderTrack(props) {
           >
             <BsCheckCircle className="uil" />
           </div>
-          <p className="text">Under Package</p>
+          <p className="text">En Empaque</p>
         </li>
         <li>
           <LocalShipping className="icon" />
@@ -144,7 +144,7 @@ function OrderTrack(props) {
           >
             <BsCheckCircle className="uil" />
           </div>
-          <p className="text">On The way to deliver</p>
+          <p className="text">En Camino a Entregar</p>
         </li>
         <li>
          <House className="icon" />
@@ -156,7 +156,7 @@ function OrderTrack(props) {
           >
             <BsCheckCircle className="uil" />
           </div>
-          <p className="text">Delivered</p>
+          <p className="text">Entregado</p>
         </li>
         <li>
           <div>  

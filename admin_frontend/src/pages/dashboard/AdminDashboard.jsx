@@ -10,7 +10,7 @@ function AdminDashboard() {
   return (
     <div className="home">
       <FeaturedInfo />
-      <Chart data={userData} title="Sales Analytics" grid dataKey="Active User"/>
+      <Chart data={userData} title="Análisis de Ventas" grid dataKey="Active User"/>
       <div className="homeWidgets">
         <WidgetSm/>
         <WidgetLg/>

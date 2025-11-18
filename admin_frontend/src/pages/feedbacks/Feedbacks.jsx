@@ -34,7 +34,7 @@ function Feedbacks() {
   return (
     <>
       <div>
-        <h1> Customers Reviews </h1>
+        <h1> Reseñas de Clientes </h1>
       </div>
       <div className="reviewsGrid">
         {arr.map((data, index) => (
@@ -53,7 +53,7 @@ function Feedbacks() {
                   <p>
                     {data.reviewDate}
                   </p>
-                  <h5>Product Reviewd</h5>
+                  <h5>Producto Reseñado</h5>
                   <h5>{data.productReviewed.product_Name}</h5>
               </div>
           </div>

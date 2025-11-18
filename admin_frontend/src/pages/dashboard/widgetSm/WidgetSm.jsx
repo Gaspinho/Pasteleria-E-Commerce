@@ -21,19 +21,19 @@ export default function WidgetSm() {
   }
   return (
     <div className="widgetSm">
-      <span className="widgetSmTitle">New Join Customrs</span>
+      <span className="widgetSmTitle">Nuevos Clientes</span>
       <div className="widgetSmListItem">  
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Customer ID</span>
+            <span className="widgetSmUsername">ID de Cliente</span>
           </div>
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Name</span> 
+            <span className="widgetSmUsername">Nombre</span> 
           </div>
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Phone </span>
+            <span className="widgetSmUsername">Teléfono </span>
           </div>
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">Action</span>
+            <span className="widgetSmUsername">Acción</span>
           </div>
       </div> 
       <div className="widgetSmList">
@@ -51,7 +51,7 @@ export default function WidgetSm() {
           </div>
           <button className="widgetSmButton" onClick={() => handleDisplay(user.id)}>
             <Visibility className="widgetSmIcon"  />
-            Display
+            Ver
           </button>
         </div>
         ))}    

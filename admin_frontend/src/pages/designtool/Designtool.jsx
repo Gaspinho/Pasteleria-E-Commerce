@@ -24,11 +24,11 @@ function Designtool() {
       order_Status:"Canceled",
     }
     confirmAlert({
-      title: 'Confirm to Cancel Order',
-      message: 'Are you sure to Cancel this Order.',
+      title: 'Confirmar Cancelación de Pedido',
+      message: '¿Está seguro de cancelar este pedido?',
       buttons: [
         {
-          label: 'Yes',
+          label: 'Sí',
           onClick: async() => {
             const res= await updateOrder(updateData)
             if(res.isError){
@@ -53,7 +53,7 @@ function Designtool() {
 
   return (
     <div >
-      <h1 style={{ marginBottom: "3rem" }}>Custom Orders List </h1>
+      <h1 style={{ marginBottom: "3rem" }}>Lista de Pedidos Personalizados </h1>
       <div className="customOrdergrid">
         {arr.map((data, index) => (
           <div key={index} className="customOrdercontainer">
@@ -62,42 +62,42 @@ function Designtool() {
               <div className="customOrderdata">
                 <h1 className="customOrdertitle">{data.order_Status}</h1>
                 <div className='customOrderdataGrid'>
-                  <h3>Cake Shape: </h3>
+                  <h3>Forma del Pastel: </h3>
                   <p className='customOrderinfo'>{data.Cake_Shape_layers.cake_shape} </p>
                 </div>
                 <div className='customOrderdataGrid'>
-                  <h3>Cake Flavor: </h3>
+                  <h3>Sabor del Pastel: </h3>
                   <p className='customOrderinfo'>{data.sponge_Flavor.flavor_name} {" "} </p>
                 </div>
                 <div className='customOrderdataGrid'>
-                  <h3>Cake Icing: </h3>
+                  <h3>Glaseado del Pastel: </h3>
                   <p className='customOrderinfo'>{data.Icing.decoration_name}</p>
                 </div>
                 <div className='customOrderdataGrid'>
-                  <h3>Msg on Cake: </h3>
+                  <h3>Mensaje en el Pastel: </h3>
                   <p className='customOrderinfo' style={{color:`${data.msg_color.color_Code}`}}>{data.msg_on_cake} </p>
                 </div>
                 <div className='customOrderdataGrid'>
-                  <h3>Top Image: </h3>
+                  <h3>Imagen Superior: </h3>
                   <p className='customOrderinfo'>{data.Top_Img_Decoration.name} </p>
                 </div>
                 <div className='customOrderdataGrid'>
-                  <h3>Total Amount: </h3>
+                  <h3>Monto Total: </h3>
                   <p className='customOrderinfo'> Rs. {' '} {data.amount} </p>
                 </div>
                 <div className='customOrderdataGrid'>
-                  <h3>Special Instruction: </h3>
+                  <h3>Instrucción Especial: </h3>
                   <p className='customOrderinfo'> {data.special_instruction} </p>
                 </div>
                 <div className="customOrderbuttons">
                   <button className="customOrderbutton" onClick={() => handleEdit(data.id)}>
-                     Order Details </button>
+                     Detalles del Pedido </button>
                   <button
                     className="customOrderbutton" 
                     style={{ backgroundColor: "red" }} 
                     onClick={() => handleCancel(data.id)}
                   >
-                    Cancel Order
+                    Cancelar Pedido
                   </button>
                 </div>
               </div>
