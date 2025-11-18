@@ -26,20 +26,47 @@ const UserLogin = () => {
     }
     const res = await loginUser(actualData)
     if (res.error) {
-      setServerError(res.error.data.errors)
+      console.error('Login error:', res.error)
+      // Manejar diferentes tipos de errores
+      if (res.error.data && res.error.data.detail) {
+        setServerError({ non_field_errors: [res.error.data.detail] })
+      } else if (res.error.status === 400) {
+        setServerError({ non_field_errors: ['Email o contraseña incorrectos'] })
+      } else {
+        setServerError({ non_field_errors: ['Error al iniciar sesión'] })
+      }
     }
     if (res.data) {
-      storeToken(res.data.token)
-      let { access_token } = getToken()
-      dispatch(setUserToken({ access_token: access_token }))
-      res.data.token.type === 'ADMIN' ? navigate('/admin/dashboard'):  navigate('/dashboard') 
+      console.log('Login response:', res.data)
       
+      // Verificar si el usuario es staff/admin
+      if (!res.data.is_staff) {
+        setServerError({ non_field_errors: ['Acceso denegado. Solo usuarios staff pueden acceder al panel de administración.'] })
+        return
+      }
+      
+      // Guardar tokens en localStorage
+      localStorage.setItem('access_token', res.data.access_token)
+      localStorage.setItem('refresh_token', res.data.refresh_token)
+      
+      // Guardar información del usuario
+      const userData = {
+        access_token: res.data.access_token,
+        refresh_token: res.data.refresh_token,
+        user_id: res.data.user_id,
+        email: res.data.email,
+        first_name: res.data.first_name,
+        last_name: res.data.last_name,
+        is_staff: res.data.is_staff,
+        user_type: res.data.user_type
+      }
+      
+      dispatch(setUserToken(userData))
+      
+      // Redirigir al dashboard de admin con recarga completa para actualizar el estado
+      window.location.href = '/admin/dashboard'
     }
   }
-  let { access_token } = getToken()
-  useEffect(() => {
-    dispatch(setUserToken({ access_token: access_token }))
-  }, [access_token, dispatch])
 
   return (
     <div>  

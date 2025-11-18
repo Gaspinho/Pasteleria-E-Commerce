@@ -238,7 +238,8 @@ async def get_all_custom_orders():
     """Obtener todas las órdenes personalizadas"""
     try:
         response = supabase.table('custom_cake_order').select('*, custom_cake(*), address(*), payment(*)').execute()
-        return {"orders": response.data}
+        # Devolver el array directamente, no dentro de un objeto "orders"
+        return response.data if response.data else []
     except Exception as e:
         print(f"Supabase error: {e}")
         raise HTTPException(status_code=500, detail="Error fetching custom orders")

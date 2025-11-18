@@ -1,15 +1,25 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import API_CONFIG from '../config/apiConfig'
 
 // Define a service using a base URL and expected endpoints
 
 export const productApi = createApi({
   reducerPath: 'productApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000/' }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: API_CONFIG.baseURL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     postProduct: builder.mutation({
       query: (formData) => {
         return {
-          url: 'product/add/',
+          url: 'product/add',
           method: 'POST',
           body: formData,
         }
@@ -18,7 +28,7 @@ export const productApi = createApi({
     addImages: builder.mutation({
       query: (formData) => {
         return {
-          url: 'product/image/add/',
+          url: 'product/image/add',
           method: 'POST',
           body: formData,
         }
@@ -27,7 +37,7 @@ export const productApi = createApi({
     getAllProduct: builder.query({
       query: () => {
         return {
-          url: 'product/getAllproduct/',
+          url: 'product/getAllproduct',
           method: 'GET', 
           headers: {
             'Content-type': 'application/json',

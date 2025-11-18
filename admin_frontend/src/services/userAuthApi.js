@@ -19,7 +19,7 @@ export const userAuthApi = createApi({
     registerUser: builder.mutation({
       query: (user) => {
         return {
-          url: 'user/register/',
+          url: 'user/register',
           method: 'POST',
           body: user,
           headers: {
@@ -31,7 +31,7 @@ export const userAuthApi = createApi({
     loginUser: builder.mutation({
       query: (user) => {
         return {
-          url: 'user/login/',
+          url: 'user/login',
           method: 'POST',
           body: user,
           headers: {
@@ -43,9 +43,9 @@ export const userAuthApi = createApi({
     registerStaff: builder.mutation({
       query: (user) => {
         return {
-          url: 'user/registerStaff/',
+          url: 'user/register',
           method: 'POST',
-          body: user,
+          body: { ...user, admin: 'true' },
           headers: {
             'Content-type': 'application/json',
           }

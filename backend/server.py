@@ -54,10 +54,24 @@ app.include_router(
     tags=["products"]
 )
 
+# Router adicional para compatibilidad con admin frontend
+app.include_router(
+    products.router,
+    prefix="/product",
+    tags=["products-legacy"]
+)
+
 app.include_router(
     reviews.router,
     prefix="/api/feedback",
     tags=["feedback"]
+)
+
+# Router adicional para compatibilidad con admin frontend
+app.include_router(
+    reviews.router,
+    prefix="/feedback",
+    tags=["feedback-legacy"]
 )
 
 app.include_router(
