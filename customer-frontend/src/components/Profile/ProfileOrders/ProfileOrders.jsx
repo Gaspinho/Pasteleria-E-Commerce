@@ -240,13 +240,16 @@ export const ProfileOrders = () => {
 
         .profile-orders__row {
           display: grid;
-          grid-template-columns: 1fr 2fr 1fr 1.5fr;
+          grid-template-columns: minmax(150px, 1fr) minmax(250px, 2.5fr) minmax(120px, 1fr) minmax(180px, 1.5fr);
           gap: 1rem;
           align-items: center;
+          width: 100%;
         }
 
         .profile-orders__col {
           padding: 0.5rem;
+          overflow: visible;
+          word-wrap: break-word;
         }
 
         @media (max-width: 768px) {

@@ -237,6 +237,20 @@ export const Card = ({ order, index, onCollapse, active }) => {
           cursor: pointer;
         }
 
+        .profile-orders__row {
+          display: grid;
+          grid-template-columns: minmax(150px, 1fr) minmax(250px, 2.5fr) minmax(120px, 1fr) minmax(180px, 1.5fr);
+          gap: 1rem;
+          align-items: center;
+          width: 100%;
+        }
+
+        .profile-orders__col {
+          overflow: visible;
+          word-wrap: break-word;
+          min-width: 0;
+        }
+
         .profile-orders__item-date,
         .profile-orders__item-addr,
         .profile-orders__item-price {
