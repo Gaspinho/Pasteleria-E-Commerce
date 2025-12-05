@@ -15,7 +15,7 @@ class InitTransactionRequest(BaseModel):
     session_id: str
     buy_order: str
 
-@router.post("/webpay/init")
+@router.post("/init")
 async def init_transaction(request: InitTransactionRequest):
     try:
         return_url = "http://127.0.0.1:8000/webpay/return"  # URL de retorno
@@ -42,8 +42,8 @@ async def init_transaction(request: InitTransactionRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al iniciar la transacción: {str(e)}")
 
-@router.post("/webpay/return")
-@router.get("/webpay/return")
+@router.post("/return")
+@router.get("/return")
 async def return_transaction(token_ws: str):
     try:
         response = transaction.commit(token_ws)
@@ -54,7 +54,7 @@ async def return_transaction(token_ws: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al confirmar la transacción: {str(e)}")
 
-# @router.post("/webpay/refund")
+# @router.post("/refund")
 # async def refund_transaction(token_ws: str, amount: int):
 #     try:
 #         response = transaction.refund(token_ws, amount)

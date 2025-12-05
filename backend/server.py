@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import users, products, reviews, custom_orders
+from routers import users, products, reviews, custom_orders, transbank_route
 import uvicorn
 import os
 
@@ -78,6 +78,12 @@ app.include_router(
     custom_orders.router,
     prefix="/customizeorder",
     tags=["custom-orders"]
+)
+
+app.include_router(
+    transbank_route.router,
+    prefix="/webpay",
+    tags=["payment"]
 )
 
 @app.get("/")

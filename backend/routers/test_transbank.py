@@ -8,7 +8,7 @@ from transbank_route import router
 from fastapi import FastAPI
 
 app = FastAPI()
-app.include_router(router)
+app.include_router(router,prefix="/webpay")
 print([route.path for route in app.routes])
 client = TestClient(app)
 
