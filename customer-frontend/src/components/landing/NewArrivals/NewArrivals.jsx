@@ -10,17 +10,6 @@ export const NewArrivals = () => {
   return (
     <>
       {/* <!-- BEGIN NEW ARRIVALS --> */}
-      <section className="arrivals">
-        <SectionTitle
-          subTitle="Ordena Tu Pastel"
-          title="Pasteles en Tendencia"
-          body=""
-        />
-
-        <div className="products-items">
-          <ProductsCarousel products={newArrival} />
-        </div>
-      </section>
       {/* <!-- NEW ARRIVALS EOF --> */}
     </>
   );

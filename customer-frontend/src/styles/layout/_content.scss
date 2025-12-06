@@ -310,11 +310,11 @@ h6,
       margin: 0 7.1px;
 
       a {
-        padding: 0 30px;
-        height: 41px;
-        line-height: 40px;
-        background: #faf9ff;
-        border: 1px solid #eeeeee;
+        padding: 15px;
+        height: auto;
+        line-height: normal;
+        background: transparent;
+        border: none;
         font-size: 16px;
         color: #666666;
         display: block;
@@ -328,12 +328,7 @@ h6,
         }
       }
 
-      &.active {
-        a {
-          background: #d05278;
-          color: #ffffff;
-        }
-      }
+      /* active state handled on the `li` (.nav-tab-list li.active) to avoid double borders */
     }
   }
 }

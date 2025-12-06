@@ -40,14 +40,7 @@ export const Footer = () => {
             {/* Payment method */}
             <div className="footer-top__payments">
               <span style={{ color: "#fff" }}>Metodos de pago:</span>
-              <h6>Cash On Delivery </h6>
-              <ul>
-                {paymentMethods.map((payment, index) => (
-                  <li key={index}>
-                    <img style={{width:'80px' , marginLeft:"2rem"}} src={payment.icon} className="js-img" alt="" />
-                  </li>
-                ))}
-              </ul>
+              <h6>Efectivo</h6>
             </div>
           </div>
           <div className="footer-copy">

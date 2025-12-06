@@ -27,7 +27,7 @@ export const Login = () => {
       } else if (res.error.data && res.error.data.errors) {
         setServerError(res.error.data.errors)
       } else {
-        setServerError({ non_field_errors: ['An error occurred. Please try again.'] })
+        setServerError({ non_field_errors: ['Ocurrio un error. Intenta nuevamente.'] })
       }
     }
     if (res.data) {

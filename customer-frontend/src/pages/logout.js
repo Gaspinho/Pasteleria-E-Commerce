@@ -3,18 +3,18 @@ import { Logout } from "components/Logout/Logout"
 
 const breadcrumbsData = [
   {
-    label: 'Home',
+    label: 'Inicio',
     path: '/',
   },
   {
-    label: "logout",
+    label: "Cerrar Sesión",
     path: "/logout",
   },
 ];
 
 const LogoutPage =() =>{
   return (
-    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="logout">
+    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Cerrar Sesión">
       <Logout />
     </PublicLayout>
   );

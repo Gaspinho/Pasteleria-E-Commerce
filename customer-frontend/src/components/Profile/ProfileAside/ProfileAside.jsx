@@ -37,31 +37,6 @@ export const ProfileAside = () => {
             alt=''
           />
         </div>
-        
-        <div className='profile-aside__viewed'>
-          <h5>Has Visto Recientemente</h5>
-          <div className='viewed-list'>
-            {recentlyViewed.map((product) => (
-              <div key={product.id} className='profile-aside__viewed-item'>
-                <Link href={`/product/${product.id}`}>
-                  <a className='profile-aside__viewed-item-img'>
-                    <img src={product.image} className='js-img' alt={product.name} />
-                  </a>
-                </Link>
-                <div className='profile-aside__viewed-item-info'>
-                  <Link href={`/product/${product.id}`}>
-                    <a className='profile-aside__viewed-item-title'>
-                      {product.name}
-                    </a>
-                  </Link>
-                  <span className='profile-aside__viewed-item-price' style={{ color: '#27ae60', fontWeight: '600' }}>
-                    ${typeof product.price === 'number' ? product.price.toLocaleString('es-CL') : product.price}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       <style jsx>{`

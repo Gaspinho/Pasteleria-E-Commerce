@@ -17,7 +17,7 @@ footer {
   margin-top: 20px;
   padding-bottom: 16px;
   &-top {
-    padding: 60px 0 57px;
+    padding: 20px 0 16px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.1);
@@ -84,7 +84,7 @@ footer {
     }
   }
   &-nav {
-    padding: 60px 0 63px;
+    padding: 20px 0 16px;
     border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.1);
     display: flex;
     justify-content: space-between;
@@ -171,8 +171,8 @@ footer {
     }
   }
   &-copy {
-    padding-top: 20px;
-    padding-bottom: 4px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     font-size: 14px;
     line-height: 170%;
     color: #999999;
@@ -211,7 +211,7 @@ footer {
     max-width: 145px;
   }
   .footer-top {
-    padding: 40px 0 40px;
+    padding: 16px 0;
   }
   .footer-nav__col:last-of-type {
     margin-right: 0;
@@ -225,7 +225,7 @@ footer {
     font-size: 16px;
   }
   .footer-nav {
-    padding: 40px 0 40px;
+    padding: 16px 0;
   }
   .footer-nav__col-title {
     font-size: 20px;

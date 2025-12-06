@@ -4,17 +4,17 @@ import { PublicLayout } from "layout/PublicLayout";
 
 const breadcrumbsData = [
   {
-    label: "Home",
+    label: "Inicio",
     path: "/",
   },
   {
-    label: "Login",
+    label: "Iniciar Sesión",
     path: "/login",
   },
 ];
 const LoginPage = () => {
   return (
-    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Login">
+    <PublicLayout breadcrumb={breadcrumbsData} breadcrumbTitle="Iniciar Sesión">
       <Login />
     </PublicLayout>
   );
