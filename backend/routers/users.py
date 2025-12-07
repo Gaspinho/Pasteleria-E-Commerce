@@ -51,7 +51,41 @@ class UserDataUpdate(BaseModel):
     street_number: str | None
     area: str | None
     city: str | None
+    
+class Address(BaseModel):
+    street_Number: str
+    house_Number: str
+    city: str
+    area: str
 
+class Payment(BaseModel):
+    payment_Status: str
+    payment_Type: str
+    amount_Paid: int
+
+class Product(BaseModel):
+    id: str
+    name: str
+    price: float
+    quantity: int
+    image: str | None = None
+    productNumber: str | None = None
+
+class OrderCreate(BaseModel):
+    customer: str  # UUID del usuario
+    phone_Number: str
+    address: Address
+    payment: Payment
+    order_Status: str
+    delivery_Charges: int
+    total_Amount: float
+    note: str | None = None
+    order_Delivery_Date: str
+    order_Delivery_Time: str
+    products: list[Product]
+
+class OrderUpdate(BaseModel):
+    order_Status: str | None = None
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login") 
 
 async def get_access_token(token: str = Depends(oauth2_scheme)):
@@ -258,30 +292,91 @@ async def get_profile(token: str = Depends(get_access_token)):
     """Alias de get_user para compatibilidad con el frontend"""
     return await supa_get_user(token)
 
-@router.post("/update_user")
-async def supa_update_user(userdata: UserDataUpdate, token: str = Depends(get_access_token), request: Request = None):
+# @router.post("/update_user")
+# async def supa_update_user(userdata: UserDataUpdate, token: str = Depends(get_access_token), request: Request = None):
+#     try:
+#         refresh_token = request.headers.get("X-Refresh-Token")
+#     except:
+#         print(e)
+#         raise HTTPException(status_code=500, detail="No Refresh token given")
+#     try:
+#         supabase.auth.set_session(access_token=token, refresh_token=refresh_token)
+#         data_dict = userdata.model_dump(exclude_none=True)
+#         phone_value = data_dict.pop('phone', None)
+#         user_metadata = data_dict
+#         payload = {}
+#         if phone_value is not None:
+#             payload['phone'] = phone_value
+#         if user_metadata:
+#             payload['data'] = user_metadata
+#         print(payload)
+#         _ = supabase.auth.update_user(payload)
+#         return {"message": "User data updated successfully"}
+#     except Exception as e:
+#         print(f"Supabase error: {e}")
+#         raise HTTPException(status_code=500, detail="Supabase error during deletion")
+@router.put("/update_user_at")
+async def supa_update_user_at(userdata: UserDataUpdate, token: str = Depends(get_access_token)):
     try:
-        refresh_token = request.headers.get("X-Refresh-Token")
-    except:
-        print(e)
-        raise HTTPException(status_code=500, detail="No Refresh token given")
-    try:
-        supabase.auth.set_session(access_token=token, refresh_token=refresh_token)
-        data_dict = userdata.model_dump(exclude_none=True)
-        phone_value = data_dict.pop('phone', None)
-        user_metadata = data_dict
-        payload = {}
-        if phone_value is not None:
-            payload['phone'] = phone_value
-        if user_metadata:
-            payload['data'] = user_metadata
-        print(payload)
-        _ = supabase.auth.update_user(payload)
-        return {"message": "User data updated successfully"}
+        # Get user from Supabase Auth
+        user_id = supabase.auth.get_user(token).user.id
+        app_user_response = supabase.table('app_user').select('address_id').eq('id', user_id).single().execute()
+        address_id = app_user_response.data.get('address_id')
+        if not address_id:
+            # Manejo de error si el usuario no tiene una dirección asociada
+            raise HTTPException(status_code=404, detail="User address not found.")
+        if userdata.phone is not None:
+            data_to_update_app = {
+                "phone_number": userdata.phone
+            }
+            res_app_user = supabase.table('app_user').update(data_to_update_app).eq('id', user_id).execute()
+        data_to_update_address = {}
+        if userdata.house_number is not None:
+            data_to_update_address["house_number"] = userdata.house_number
+        if userdata.street_number is not None:
+            data_to_update_address["street_number"] = userdata.street_number
+        if userdata.area is not None:
+            data_to_update_address["area"] = userdata.area
+        if userdata.city is not None:
+            data_to_update_address["city"] = userdata.city
+        if data_to_update_address:
+            res_address = supabase.table('address').update(data_to_update_address).eq('id', address_id).execute()
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Supabase error: {e}")
-        raise HTTPException(status_code=500, detail="Supabase error during deletion")
+        raise HTTPException(status_code=500, detail=f"Supabase error during get_user: {str(e)}")
 
+@router.put("/update_user_id")
+async def supa_update_user_id(user_id: str, userdata: UserDataUpdate): #, token: str = Depends(get_access_token)
+    try:
+        app_user_response = supabase.table('app_user').select('address_id').eq('id', user_id).single().execute()
+        address_id = app_user_response.data.get('address_id')
+        if not address_id:
+            # Manejo de error si el usuario no tiene una dirección asociada
+            raise HTTPException(status_code=404, detail="User address not found.")
+        if userdata.phone is not None:
+            data_to_update_app = {
+                "phone_number": userdata.phone
+            }
+            res_app_user = supabase.table('app_user').update(data_to_update_app).eq('id', user_id).execute()
+        data_to_update_address = {}
+        if userdata.house_number is not None:
+            data_to_update_address["house_number"] = userdata.house_number
+        if userdata.street_number is not None:
+            data_to_update_address["street_number"] = userdata.street_number
+        if userdata.area is not None:
+            data_to_update_address["area"] = userdata.area
+        if userdata.city is not None:
+            data_to_update_address["city"] = userdata.city
+        if data_to_update_address:
+            res_address = supabase.table('address').update(data_to_update_address).eq('id', address_id).execute()
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Supabase error: {e}")
+        raise HTTPException(status_code=500, detail=f"Supabase error during get_user: {str(e)}")
+        
 @router.get("/user/orders/{user_id}")
 async def get_user_orders(user_id: str):
     """Obtener pedidos normales del usuario (productos del catálogo)"""
@@ -295,41 +390,6 @@ async def get_user_orders(user_id: str):
     except Exception as e:
         print(f"Error al obtener pedidos: {e}")
         raise HTTPException(status_code=500, detail="Error al obtener los pedidos del usuario")
-
-class Address(BaseModel):
-    street_Number: str
-    house_Number: str
-    city: str
-    area: str
-
-class Payment(BaseModel):
-    payment_Status: str
-    payment_Type: str
-    amount_Paid: int
-
-class Product(BaseModel):
-    id: str
-    name: str
-    price: float
-    quantity: int
-    image: str | None = None
-    productNumber: str | None = None
-
-class OrderCreate(BaseModel):
-    customer: str  # UUID del usuario
-    phone_Number: str
-    address: Address
-    payment: Payment
-    order_Status: str
-    delivery_Charges: int
-    total_Amount: float
-    note: str | None = None
-    order_Delivery_Date: str
-    order_Delivery_Time: str
-    products: list[Product]
-
-class OrderUpdate(BaseModel):
-    order_Status: str | None = None
 
 @router.post("/placeOrder/")
 async def place_order(order: OrderCreate, token: str = Depends(get_access_token)):
