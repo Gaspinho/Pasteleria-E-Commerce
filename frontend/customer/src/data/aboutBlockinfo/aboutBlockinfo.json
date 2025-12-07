@@ -1,0 +1,17 @@
+[
+  {
+    "step": "Envíos a",
+    "title": "Concepción",
+    "icon": "icon-shipping"
+  },
+  {
+    "step": "Teléfono de contacto",
+    "title": "+56 9 8765 4321",
+    "icon": "icon-helpline"
+  },
+  {
+    "step": "Atención al cliente",
+    "title": "Estamos felices de ayudarte",
+    "icon": "icon-24"
+  }
+]

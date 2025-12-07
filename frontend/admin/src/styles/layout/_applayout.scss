@@ -1,0 +1,191 @@
+/* ============================================
+   APP LAYOUT - Responsive Main Layout
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.AppLayout {
+  color: $text-primary;
+  background-color: $base-bg;
+  min-height: 100vh;
+  position: relative;
+}
+
+.layoutContent {
+  padding-left: $sidebar-width;
+  background-color: $base-bg;
+  min-height: 100vh;
+  @include transition(padding-left);
+  overflow-x: hidden;
+  
+  &Main {
+    padding: 30px;
+    max-width: 100%;
+    overflow-x: hidden;
+    
+    @include respond-to('xl') {
+      padding: 25px;
+    }
+    
+    @include respond-to('lg') {
+      padding: 20px;
+    }
+    
+    @include respond-to('md') {
+      padding: 15px;
+    }
+    
+    @include respond-to('sm') {
+      padding: 10px;
+    }
+  }
+  
+  // When sidebar is collapsed
+  &.sidebar-collapsed {
+    padding-left: $sidebar-collapsed-width;
+  }
+  
+  // Responsive Tablet & Mobile - No sidebar padding
+  @include respond-to('md') {
+    padding-left: 0;
+    
+    &.sidebar-collapsed {
+      padding-left: 0;
+    }
+  }
+}
+
+// Page Container
+.page-container {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+// Page Header
+.page-header {
+  @include flex-between;
+  margin-bottom: $spacing-xl;
+  padding-bottom: $spacing-lg;
+  border-bottom: 2px solid $border-light;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin: 0;
+    
+    @include respond-to('md') {
+      font-size: $font-size-2xl;
+    }
+    
+    @include respond-to('sm') {
+      font-size: $font-size-xl;
+    }
+  }
+  
+  &__actions {
+    @include flex-end;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+    
+    @include respond-to('sm') {
+      width: 100%;
+      justify-content: flex-start;
+      gap: $spacing-sm;
+    }
+  }
+  
+  @include respond-to('md') {
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+  }
+}
+
+// Content Section
+.content-section {
+  background-color: $bg-light;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  box-shadow: $shadow-sm;
+  
+  @include respond-to('lg') {
+    padding: $spacing-lg;
+    margin-bottom: $spacing-lg;
+  }
+  
+  @include respond-to('md') {
+    padding: $spacing-md;
+    margin-bottom: $spacing-md;
+    border-radius: $radius-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+    margin-bottom: $spacing-sm;
+    border-radius: $radius-sm;
+  }
+}
+
+// Grid System
+.grid-container {
+  display: grid;
+  gap: $spacing-xl;
+  
+  &.cols-1 {
+    grid-template-columns: 1fr;
+  }
+  
+  &.cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    
+    @include respond-to('md') {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+    
+    @include respond-to('lg') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include respond-to('sm') {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &.cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+    
+    @include respond-to('xl') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    @include respond-to('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @include respond-to('sm') {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @include respond-to('md') {
+    gap: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    gap: $spacing-sm;
+  }
+}

@@ -1,0 +1,13 @@
+/* Widget styles are now handled by Material-UI components and inline styles */
+.widget-card {
+  height: 100%;
+  border-radius: 12px;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f0f0;
+}

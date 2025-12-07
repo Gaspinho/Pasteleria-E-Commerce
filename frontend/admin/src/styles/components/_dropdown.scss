@@ -1,0 +1,98 @@
+/* ============================================
+   DROPDOWN COMPONENT - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  
+  &__toggle {
+    @include flex-center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background-color: $bg-light;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    cursor: pointer;
+    @include transition(all);
+    
+    &:hover {
+      border-color: $primary-color;
+      background-color: $bg-hover;
+    }
+    
+    i, svg {
+      @include transition(transform);
+    }
+    
+    &.active {
+      i, svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  
+  &__menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    min-width: 200px;
+    background-color: $bg-light;
+    border-radius: $radius-md;
+    box-shadow: $shadow-lg;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    @include transition(all, 0.2s, ease);
+    z-index: $z-index-dropdown;
+    max-height: 400px;
+    overflow-y: auto;
+    @include custom-scrollbar(4px);
+    
+    &.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    &-item {
+      display: block;
+      padding: $spacing-md;
+      color: $text-primary;
+      @include transition(background-color);
+      cursor: pointer;
+      border-bottom: 1px solid $border-light;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      &:hover {
+        background-color: $bg-hover;
+        color: $primary-color;
+      }
+      
+      &:active {
+        background-color: $primary-light;
+        color: $text-light;
+      }
+    }
+  }
+  
+  // Responsive
+  @include respond-to('sm') {
+    &__menu {
+      right: auto;
+      left: 0;
+      min-width: 180px;
+      
+      &-item {
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}

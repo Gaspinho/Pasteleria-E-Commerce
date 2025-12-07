@@ -1,0 +1,145 @@
+/* ============================================
+   BUTTONS COMPONENT - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.btn {
+  @include button($primary-color, $text-light, $spacing-sm $spacing-lg, $radius-md);
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  border: none;
+  @include flex-center;
+  gap: $spacing-sm;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: $primary-color;
+    }
+  }
+  
+  // Button Variants
+  &--primary {
+    background-color: $primary-color;
+    
+    &:hover {
+      background-color: $primary-dark;
+    }
+  }
+  
+  &--secondary {
+    background-color: $secondary-color;
+    
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+    }
+  }
+  
+  &--success {
+    background-color: $success-color;
+    
+    &:hover {
+      background-color: darken($success-color, 10%);
+    }
+  }
+  
+  &--danger {
+    background-color: $danger-color;
+    
+    &:hover {
+      background-color: darken($danger-color, 10%);
+    }
+  }
+  
+  &--warning {
+    background-color: $warning-color;
+    color: $text-dark;
+    
+    &:hover {
+      background-color: darken($warning-color, 10%);
+    }
+  }
+  
+  &--info {
+    background-color: $info-color;
+    
+    &:hover {
+      background-color: darken($info-color, 10%);
+    }
+  }
+  
+  &--outline {
+    background-color: transparent;
+    border: 2px solid $primary-color;
+    color: $primary-color;
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $text-light;
+    }
+  }
+  
+  // Button Sizes
+  &--sm {
+    padding: $spacing-xs $spacing-md;
+    font-size: $font-size-sm;
+  }
+  
+  &--lg {
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-lg;
+  }
+  
+  &--block {
+    width: 100%;
+    display: flex;
+  }
+  
+  // Icon Button
+  &--icon {
+    padding: $spacing-sm;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    
+    &.btn--sm {
+      width: 32px;
+      height: 32px;
+    }
+    
+    &.btn--lg {
+      width: 48px;
+      height: 48px;
+    }
+  }
+  
+  // Responsive
+  @include respond-to('sm') {
+    padding: $spacing-xs $spacing-md;
+    font-size: $font-size-sm;
+    
+    &--lg {
+      padding: $spacing-sm $spacing-lg;
+      font-size: $font-size-base;
+    }
+  }
+}
+
+// Button Group
+.btn-group {
+  @include flex-start;
+  gap: $spacing-sm;
+  
+  @include respond-to('sm') {
+    flex-wrap: wrap;
+    
+    .btn {
+      flex: 1;
+      min-width: fit-content;
+    }
+  }
+}
