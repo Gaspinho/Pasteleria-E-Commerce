@@ -1,0 +1,221 @@
+/* ============================================
+   SIDEBAR/TOOLBAR COMPONENT - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.bt-toolbar {
+  min-width: $sidebar-width;
+  width: $sidebar-width;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: $bg-sidebar;
+  box-shadow: $shadow-lg;
+  z-index: $z-index-fixed;
+  @include transition(all, 0.3s, ease);
+  overflow-y: auto;
+  @include custom-scrollbar(6px, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+  
+  &-brand {
+    background-color: $bg-light;
+    height: $header-height;
+    @include flex-center;
+    border-bottom: 1px solid $border-color;
+    @include transition(height);
+    
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      @include transition(all);
+    }
+  }
+  
+  .links {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 1rem 0;
+    
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 10px;
+      padding: 0 1rem;
+    }
+    
+    li {
+      @include transition(all);
+      
+      &:hover {
+        a {
+          background-color: $secondary-color;
+          color: $text-light;
+          border-radius: $radius-lg;
+          transform: translateX(5px);
+        }
+      }
+    }
+    
+    a {
+      @include flex-start;
+      gap: 1rem;
+      color: $text-light;
+      font-size: 18px;
+      padding: 0.8rem 1rem;
+      width: 100%;
+      @include transition(all);
+      border-radius: $radius-md;
+      
+      i, svg {
+        min-width: 24px;
+        font-size: 20px;
+      }
+      
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  
+  .active {
+    background-color: $secondary-color;
+    color: $text-light;
+    border-radius: $radius-lg;
+    margin: 0 1rem;
+    
+    a {
+      color: $text-light;
+      font-weight: $font-weight-semibold;
+    }
+  }
+  
+  // Collapsed State
+  &.collapsed {
+    min-width: $sidebar-collapsed-width;
+    width: $sidebar-collapsed-width;
+    
+    .bt-toolbar-brand {
+      height: $header-height;
+      
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+    
+    .links {
+      a {
+        justify-content: center;
+        padding: 0.8rem;
+        
+        span {
+          display: none;
+        }
+      }
+    }
+    
+    .active {
+      margin: 0 0.5rem;
+    }
+  }
+  
+  // Responsive Tablet
+  @include respond-to('md') {
+    transform: translateX(-100%);
+    z-index: $z-index-modal;
+    
+    &.open {
+      transform: translateX(0);
+    }
+    
+    // Overlay backdrop
+    &.open::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: $sidebar-width;
+      width: calc(100vw - #{$sidebar-width});
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+  }
+  
+  // Responsive Mobile
+  @include respond-to('sm') {
+    width: 280px;
+    min-width: 280px;
+    
+    &.open::before {
+      left: 280px;
+      width: calc(100vw - 280px);
+    }
+    
+    .bt-toolbar-brand {
+      height: 60px;
+      
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+    
+    .links {
+      ul {
+        padding: 0 0.5rem;
+      }
+      
+      a {
+        font-size: 16px;
+        padding: 0.6rem 0.8rem;
+        
+        i, svg {
+          min-width: 20px;
+          font-size: 18px;
+        }
+      }
+    }
+    
+    .active {
+      margin: 0 0.5rem;
+    }
+  }
+}
+
+// Sidebar Toggle Button (for mobile/tablet)
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: $z-index-modal + 1;
+  background-color: $primary-color;
+  color: $text-light;
+  width: 40px;
+  height: 40px;
+  @include flex-center;
+  @include radius($radius-md);
+  cursor: pointer;
+  box-shadow: $shadow-md;
+  @include transition(all);
+  
+  &:hover {
+    background-color: $primary-dark;
+    transform: scale(1.05);
+  }
+  
+  i, svg {
+    font-size: 20px;
+  }
+  
+  @include respond-to('md') {
+    display: flex;
+  }
+}

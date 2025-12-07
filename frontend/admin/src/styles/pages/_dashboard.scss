@@ -1,0 +1,612 @@
+/* ============================================
+   DASHBOARD PAGE - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.home {
+  flex: 4;
+  width: 100%;
+  min-height: 100vh;
+  padding: $spacing-lg;
+  
+  @include respond-to('md') {
+    padding: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+  }
+}
+
+.homeWidgets {
+  display: flex;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  
+  @include respond-to('md') {
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+}
+
+// ============================================
+// Featured Info Cards
+// ============================================
+.featured {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  
+  @include respond-to('lg') {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+  }
+  
+  @include respond-to('md') {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    gap: $spacing-sm;
+  }
+}
+
+.featuredItem {
+  padding: $spacing-xl;
+  border-radius: $radius-lg;
+  background-color: $bg-light;
+  cursor: pointer;
+  box-shadow: $shadow-md;
+  @include transition(all);
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+  
+  @include respond-to('lg') {
+    padding: $spacing-lg;
+  }
+  
+  @include respond-to('md') {
+    padding: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm $spacing-md;
+  }
+}
+
+.featuredTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
+  margin-bottom: $spacing-sm;
+  @include text-truncate;
+  
+  @include respond-to('md') {
+    font-size: $font-size-base;
+  }
+  
+  @include respond-to('sm') {
+    font-size: $font-size-sm;
+  }
+}
+
+.featuredMoneyContainer {
+  margin: $spacing-md 0;
+  @include flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  
+  @include respond-to('sm') {
+    margin: $spacing-sm 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.featuredMoney {
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+  word-break: break-word;
+  
+  @include respond-to('lg') {
+    font-size: $font-size-2xl;
+  }
+  
+  @include respond-to('md') {
+    font-size: $font-size-xl;
+  }
+  
+  @include respond-to('sm') {
+    font-size: $font-size-lg;
+  }
+}
+
+.featuredMoneyRate {
+  @include flex-center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $radius-full;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+  
+  @include respond-to('sm') {
+    font-size: $font-size-xs;
+    padding: 2px $spacing-xs;
+  }
+}
+
+.featuredIcon {
+  font-size: $font-size-sm;
+  color: $success-color;
+  
+  &.negative {
+    color: $danger-color;
+  }
+  
+  @include respond-to('sm') {
+    font-size: $font-size-xs;
+  }
+}
+
+.featuredSub {
+  font-size: $font-size-sm;
+  color: $text-muted;
+  margin-top: $spacing-xs;
+  @include text-truncate;
+  
+  @include respond-to('sm') {
+    font-size: $font-size-xs;
+  }
+}
+
+// ============================================
+// Chart Component
+// ============================================
+.chart {
+  margin: $spacing-lg 0;
+  padding: $spacing-xl;
+  background: linear-gradient(135deg, #d4e6f1, #a9cce3);
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  
+  &Title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-lg;
+    color: $text-primary;
+    @include text-truncate;
+    
+    @include respond-to('md') {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-md;
+    }
+    
+    @include respond-to('sm') {
+      font-size: $font-size-base;
+      margin-bottom: $spacing-sm;
+    }
+  }
+  
+  &Container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    @include custom-scrollbar(6px);
+    
+    // Ensure chart is scrollable on mobile
+    min-height: 300px;
+    
+    @include respond-to('sm') {
+      min-height: 250px;
+    }
+  }
+  
+  @include respond-to('lg') {
+    padding: $spacing-lg;
+    margin: $spacing-md 0;
+  }
+  
+  @include respond-to('md') {
+    padding: $spacing-md;
+    border-radius: $radius-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+    margin: $spacing-sm 0;
+  }
+}
+
+// ============================================
+// Widgets
+// ============================================
+.widgetSm {
+  flex: 1.5;
+  box-shadow: $shadow-md;
+  padding: $spacing-xl;
+  margin-right: $spacing-lg;
+  background: linear-gradient(135deg, #edbb99, #e59866);
+  border-radius: $radius-lg;
+  overflow: hidden;
+  
+  &Title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-lg;
+    color: $text-primary;
+    @include text-truncate;
+    
+    @include respond-to('sm') {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-md;
+    }
+  }
+  
+  &Img {
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    object-fit: cover;
+    flex-shrink: 0;
+    
+    @include respond-to('sm') {
+      width: 35px;
+      height: 35px;
+    }
+  }
+  
+  &List {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    
+    @include respond-to('sm') {
+      gap: $spacing-sm;
+    }
+  }
+  
+  &ListItem {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: $spacing-md;
+    align-items: center;
+    padding: $spacing-sm 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    @include respond-to('md') {
+      grid-template-columns: auto 1fr;
+      gap: $spacing-sm;
+      
+      .widgetSmButton {
+        grid-column: 2;
+        justify-self: end;
+      }
+    }
+    
+    @include respond-to('sm') {
+      gap: $spacing-xs;
+    }
+  }
+  
+  &User {
+    @include flex-start;
+    gap: $spacing-sm;
+    min-width: 0;
+    
+    @include respond-to('sm') {
+      gap: $spacing-xs;
+    }
+  }
+  
+  &Username {
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    @include text-truncate;
+    max-width: 150px;
+    
+    @include respond-to('lg') {
+      max-width: 120px;
+    }
+    
+    @include respond-to('sm') {
+      max-width: 100px;
+      font-size: $font-size-sm;
+    }
+  }
+  
+  &UserTitle {
+    font-weight: $font-weight-normal;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+    @include text-truncate;
+    
+    @include respond-to('sm') {
+      font-size: $font-size-xs;
+    }
+  }
+  
+  &Button {
+    @include flex-center;
+    gap: $spacing-xs;
+    border: none;
+    border-radius: $radius-md;
+    padding: $spacing-xs $spacing-sm;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: $text-primary;
+    cursor: pointer;
+    @include transition(all);
+    white-space: nowrap;
+    font-size: $font-size-sm;
+    
+    &:hover {
+      background-color: $bg-light;
+      transform: translateY(-1px);
+      box-shadow: $shadow-sm;
+    }
+    
+    @include respond-to('sm') {
+      padding: 2px $spacing-xs;
+      font-size: $font-size-xs;
+    }
+  }
+  
+  &Icon {
+    font-size: 16px !important;
+    
+    @include respond-to('sm') {
+      font-size: 14px !important;
+    }
+  }
+  
+  @include respond-to('lg') {
+    padding: $spacing-lg;
+    margin-right: $spacing-md;
+  }
+  
+  @include respond-to('md') {
+    flex: 1;
+    margin-right: 0;
+    margin-bottom: $spacing-md;
+    padding: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+  }
+}
+
+.widgetLg {
+  flex: 2;
+  box-shadow: $shadow-md;
+  padding: $spacing-xl;
+  background: linear-gradient(135deg, #b2dfdb, #80cbc4);
+  border-radius: $radius-lg;
+  overflow: hidden;
+  
+  &Title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-lg;
+    color: $text-primary;
+    @include text-truncate;
+    
+    @include respond-to('sm') {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-md;
+    }
+  }
+  
+  &Table {
+    width: 100%;
+    border-spacing: 0;
+    
+    // Responsive table wrapper
+    @include respond-to('md') {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      @include custom-scrollbar(4px);
+    }
+  }
+  
+  &Th {
+    text-align: left;
+    padding: $spacing-sm $spacing-md;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    font-size: $font-size-sm;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    
+    @include respond-to('sm') {
+      padding: $spacing-xs $spacing-sm;
+      font-size: $font-size-xs;
+    }
+  }
+  
+  &Td {
+    padding: $spacing-sm $spacing-md;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    
+    @include respond-to('sm') {
+      padding: $spacing-xs $spacing-sm;
+    }
+  }
+  
+  &User {
+    @include flex-start;
+    gap: $spacing-sm;
+    font-weight: $font-weight-semibold;
+    min-width: 0;
+    
+    @include respond-to('sm') {
+      gap: $spacing-xs;
+    }
+  }
+  
+  &Img {
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    object-fit: cover;
+    flex-shrink: 0;
+    
+    @include respond-to('sm') {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  &Name {
+    @include text-truncate;
+    max-width: 150px;
+    
+    @include respond-to('lg') {
+      max-width: 120px;
+    }
+    
+    @include respond-to('sm') {
+      max-width: 80px;
+      font-size: $font-size-sm;
+    }
+  }
+  
+  &Date,
+  &Amount {
+    font-weight: $font-weight-normal;
+    color: $text-primary;
+    font-size: $font-size-sm;
+    
+    @include respond-to('sm') {
+      font-size: $font-size-xs;
+    }
+  }
+  
+  &Button {
+    padding: $spacing-xs $spacing-sm;
+    border: none;
+    border-radius: $radius-md;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    @include transition(all);
+    white-space: nowrap;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: $shadow-sm;
+    }
+    
+    &.Placed {
+      background-color: #e5faf2;
+      color: #1c579e;
+    }
+    
+    &.Canceled {
+      background-color: #fff0f1;
+      color: #ba2963;
+    }
+    
+    &.Deliverd {
+      background-color: #ebf1fe;
+      color: #1f925a;
+    }
+    
+    &.Package {
+      background-color: #fff0f1;
+      color: #e7e13f;
+    }
+    
+    &.way {
+      background-color: #ebf1fe;
+      color: #8a2266;
+    }
+    
+    @include respond-to('sm') {
+      padding: 2px $spacing-xs;
+      font-size: 10px;
+    }
+  }
+  
+  @include respond-to('lg') {
+    padding: $spacing-lg;
+  }
+  
+  @include respond-to('md') {
+    flex: 1;
+    padding: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+  }
+}
+
+// ============================================
+// Dashboard Grid Layout
+// ============================================
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: $spacing-lg;
+  
+  &__col {
+    &--full {
+      grid-column: span 12;
+    }
+    
+    &--half {
+      grid-column: span 6;
+      
+      @include respond-to('md') {
+        grid-column: span 12;
+      }
+    }
+    
+    &--third {
+      grid-column: span 4;
+      
+      @include respond-to('lg') {
+        grid-column: span 6;
+      }
+      
+      @include respond-to('sm') {
+        grid-column: span 12;
+      }
+    }
+    
+    &--two-thirds {
+      grid-column: span 8;
+      
+      @include respond-to('lg') {
+        grid-column: span 12;
+      }
+    }
+  }
+  
+  @include respond-to('md') {
+    gap: $spacing-md;
+  }
+  
+  @include respond-to('sm') {
+    gap: $spacing-sm;
+  }
+}

@@ -1,0 +1,38 @@
+.dashboard-container {
+  padding: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.dashboard-title {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.chart-section {
+  margin: 24px 0;
+}
+
+.homeWidgets {
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+  
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+}

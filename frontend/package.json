@@ -1,0 +1,36 @@
+{
+  "name": "pasteleria-mil-sabores-frontend",
+  "version": "1.0.0",
+  "description": "Frontend unificado - Portal del Cliente y Panel de Administración",
+  "private": true,
+  "workspaces": [
+    "customer",
+    "admin"
+  ],
+  "scripts": {
+    "install:all": "npm install && npm install --prefix customer && npm install --prefix admin",
+    "dev:customer": "cd customer && npm run dev",
+    "dev:admin": "cd admin && npm start",
+    "dev": "concurrently --names \"CUSTOMER,ADMIN\" --prefix-colors \"cyan,magenta\" \"npm run dev:customer\" \"npm run dev:admin\"",
+    "build:customer": "cd customer && npm run build",
+    "build:admin": "cd admin && npm run build",
+    "build": "npm run build:customer && npm run build:admin",
+    "start:customer": "cd customer && npm start",
+    "start:admin": "cd admin && npm start",
+    "test:customer": "cd customer && npm test",
+    "test:admin": "cd admin && npm test",
+    "test": "npm run test:customer && npm run test:admin"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "pasteleria",
+    "e-commerce",
+    "next.js",
+    "react",
+    "frontend"
+  ],
+  "author": "Pastelería Mil Sabores Team",
+  "license": "MIT"
+}

@@ -1,0 +1,207 @@
+/* ============================================
+   CARDS COMPONENT - Responsive
+   ============================================ */
+
+@import '../../styles/utils/variables';
+@import '../../styles/utils/mixins';
+
+.card {
+  @include card($spacing-xl, $radius-lg, $shadow-sm);
+  @include transition(all);
+  
+  &:hover {
+    @include hover-lift;
+  }
+  
+  &__header {
+    @include flex-between;
+    padding-bottom: $spacing-md;
+    margin-bottom: $spacing-md;
+    border-bottom: 1px solid $border-light;
+    
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+      color: $text-primary;
+      margin: 0;
+    }
+    
+    &-actions {
+      @include flex-end;
+      gap: $spacing-sm;
+    }
+  }
+  
+  &__body {
+    color: $text-secondary;
+    line-height: 1.6;
+  }
+  
+  &__footer {
+    padding-top: $spacing-md;
+    margin-top: $spacing-md;
+    border-top: 1px solid $border-light;
+    @include flex-between;
+    
+    &-actions {
+      @include flex-end;
+      gap: $spacing-sm;
+    }
+  }
+  
+  // Card Variants
+  &--primary {
+    border-left: 4px solid $primary-color;
+  }
+  
+  &--success {
+    border-left: 4px solid $success-color;
+  }
+  
+  &--danger {
+    border-left: 4px solid $danger-color;
+  }
+  
+  &--warning {
+    border-left: 4px solid $warning-color;
+  }
+  
+  &--info {
+    border-left: 4px solid $info-color;
+  }
+  
+  // Responsive
+  @include respond-to('lg') {
+    padding: $spacing-lg;
+    
+    &__header h3 {
+      font-size: $font-size-lg;
+    }
+  }
+  
+  @include respond-to('md') {
+    padding: $spacing-md;
+    border-radius: $radius-md;
+    
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+      
+      h3 {
+        font-size: $font-size-base;
+      }
+      
+      &-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+    
+    &__footer {
+      flex-direction: column;
+      gap: $spacing-sm;
+      
+      &-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-sm;
+    border-radius: $radius-sm;
+    
+    &__header {
+      padding-bottom: $spacing-sm;
+      margin-bottom: $spacing-sm;
+    }
+    
+    &__footer {
+      padding-top: $spacing-sm;
+      margin-top: $spacing-sm;
+    }
+  }
+}
+
+// Stats Card
+.stats-card {
+  @include card($spacing-xl, $radius-lg, $shadow-md);
+  @include flex-between;
+  align-items: center;
+  
+  &__content {
+    h4 {
+      font-size: $font-size-2xl;
+      font-weight: $font-weight-bold;
+      color: $text-primary;
+      margin: 0 0 $spacing-xs 0;
+    }
+    
+    p {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+      margin: 0;
+    }
+  }
+  
+  &__icon {
+    width: 60px;
+    height: 60px;
+    @include flex-center;
+    border-radius: $radius-lg;
+    font-size: $font-size-3xl;
+    color: $text-light;
+    
+    &--primary {
+      background: linear-gradient(135deg, $primary-color, $primary-light);
+    }
+    
+    &--success {
+      background: linear-gradient(135deg, $success-color, lighten($success-color, 10%));
+    }
+    
+    &--danger {
+      background: linear-gradient(135deg, $danger-color, lighten($danger-color, 10%));
+    }
+    
+    &--warning {
+      background: linear-gradient(135deg, $warning-color, lighten($warning-color, 10%));
+    }
+  }
+  
+  @include respond-to('md') {
+    padding: $spacing-lg;
+    
+    &__content h4 {
+      font-size: $font-size-xl;
+    }
+    
+    &__icon {
+      width: 50px;
+      height: 50px;
+      font-size: $font-size-2xl;
+    }
+  }
+  
+  @include respond-to('sm') {
+    padding: $spacing-md;
+    
+    &__content {
+      h4 {
+        font-size: $font-size-lg;
+      }
+      
+      p {
+        font-size: $font-size-xs;
+      }
+    }
+    
+    &__icon {
+      width: 45px;
+      height: 45px;
+      font-size: $font-size-xl;
+    }
+  }
+}

@@ -1,0 +1,578 @@
+[
+  {
+    "name": "Torta Cuadrada de Chocolate",
+    "oldPrice": "50000",
+    "price": "45000",
+    "id": "TC001",
+    "isSale": false,
+    "isNew": true,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Tortas Cuadradas",
+    "filterItems": ["Tortas Cuadradas", "cakes"],
+    "isStocked": true,
+    "productNumber": "TC001",
+    "imageGallery": [
+      "/assets/img/products/TC001.jpg",
+      "/assets/img/products/TC001_1.jpg",
+      "/assets/img/products/TC001_2.jpg",
+      "/assets/img/products/TC001_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Deliciosa torta de chocolate con capas de ganache y un toque de avellanas. Personalizable con mensajes especiales.",
+    "description": "Deliciosa torta de chocolate con capas de ganache y un toque de avellanas. Personalizable con mensajes especiales.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Torta Cuadrada de Frutas",
+    "oldPrice": "55000",
+    "price": "50000",
+    "id": "TC002",
+    "isSale": true,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Tortas Cuadradas",
+    "filterItems": ["Tortas Cuadradas", "cakes"],
+    "isStocked": true,
+    "productNumber": "TC002",
+    "imageGallery": [
+      "/assets/img/products/TC002.jpg",
+      "/assets/img/products/TC002_1.jpg",
+      "/assets/img/products/TC002_2.jpg",
+      "/assets/img/products/TC002_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Una mezcla de frutas frescas y crema chantilly sobre un suave bizcocho de vainilla, ideal para celebraciones.",
+    "description": "Una mezcla de frutas frescas y crema chantilly sobre un suave bizcocho de vainilla, ideal para celebraciones.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Torta Circular de Vainilla",
+    "oldPrice": "40000",
+    "price": "40000",
+    "id": "TT001",
+    "isSale": false,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Tortas Circulares",
+    "filterItems": ["Tortas Circulares", "cakes"],
+    "isStocked": true,
+    "productNumber": "TT001",
+    "imageGallery": [
+      "/assets/img/products/TT001.jpg",
+      "/assets/img/products/TT001_1.jpg",
+      "/assets/img/products/TT001_2.jpg",
+      "/assets/img/products/TT001_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Bizcocho de vainilla clásico relleno con crema pastelera y cubierto con un glaseado dulce, perfecto para cualquier ocasión.",
+    "description": "Bizcocho de vainilla clásico relleno con crema pastelera y cubierto con un glaseado dulce, perfecto para cualquier ocasión.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Torta Circular de Manjar",
+    "oldPrice": "42000",
+    "price": "42000",
+    "id": "TT002",
+    "isSale": false,
+    "isNew": true,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Tortas Circulares",
+    "filterItems": ["Tortas Circulares", "cakes"],
+    "isStocked": true,
+    "productNumber": "TT002",
+    "imageGallery": [
+      "/assets/img/products/TT002.jpg",
+      "/assets/img/products/TT002_1.jpg",
+      "/assets/img/products/TT002_2.jpg",
+      "/assets/img/products/TT002_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Torta tradicional chilena con manjar y nueces, un deleite para los amantes de los sabores dulces y clásicos.",
+    "description": "Torta tradicional chilena con manjar y nueces, un deleite para los amantes de los sabores dulces y clásicos.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Mousse de Chocolate",
+    "oldPrice": "10000",
+    "price": "5000",
+    "id": "PI001",
+    "isSale": true,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Postres Individuales",
+    "filterItems": ["Postres Individuales", "cakes"],
+    "isStocked": true,
+    "productNumber": "PI001",
+    "imageGallery": [
+      "/assets/img/products/PI001.jpg",
+      "/assets/img/products/PI001_1.jpg",
+      "/assets/img/products/PI001_2.jpg",
+      "/assets/img/products/PI001_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Postre individual cremoso y suave, hecho con chocolate de alta calidad, ideal para los amantes del chocolate.",
+    "description": "Postre individual cremoso y suave, hecho con chocolate de alta calidad, ideal para los amantes del chocolate.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Tiramisú Clásico",
+    "oldPrice": "5500",
+    "price": "5500",
+    "id": "PI002",
+    "isSale": false,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Postres Individuales",
+    "filterItems": ["Postres Individuales", "cakes"],
+    "isStocked": true,
+    "productNumber": "PI002",
+    "imageGallery": [
+      "/assets/img/products/PI002.jpg",
+      "/assets/img/products/PI002_1.jpg",
+      "/assets/img/products/PI002_2.jpg",
+      "/assets/img/products/PI002_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Un postre italiano individual con capas de café, mascarpone y cacao, perfecto para finalizar cualquier comida.",
+    "description": "Un postre italiano individual con capas de café, mascarpone y cacao, perfecto para finalizar cualquier comida.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Torta Sin Azúcar de Naranja",
+    "oldPrice": "48000",
+    "price": "48000",
+    "id": "PSA001",
+    "isSale": false,
+    "isNew": true,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Productos Sin Azúcar",
+    "filterItems": ["Productos Sin Azúcar", "cakes"],
+    "isStocked": true,
+    "productNumber": "PSA001",
+    "imageGallery": [
+      "/assets/img/products/PSA001.jpg",
+      "/assets/img/products/PSA001_1.jpg",
+      "/assets/img/products/PSA001_2.jpg",
+      "/assets/img/products/PSA001_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Torta ligera y deliciosa, endulzada naturalmente, ideal para quienes buscan opciones más saludables.",
+    "description": "Torta ligera y deliciosa, endulzada naturalmente, ideal para quienes buscan opciones más saludables.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Cheesecake Sin Azúcar",
+    "oldPrice": "52000",
+    "price": "47000",
+    "id": "PSA002",
+    "isSale": true,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Productos Sin Azúcar",
+    "filterItems": ["Productos Sin Azúcar", "cakes"],
+    "isStocked": true,
+    "productNumber": "PSA002",
+    "imageGallery": [
+      "/assets/img/products/PSA002.jpg",
+      "/assets/img/products/PSA002_1.jpg",
+      "/assets/img/products/PSA002_2.jpg",
+      "/assets/img/products/PSA002_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Suave y cremoso, este cheesecake es una opción perfecta para disfrutar sin culpa.",
+    "description": "Suave y cremoso, este cheesecake es una opción perfecta para disfrutar sin culpa.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Empanada de Manzana",
+    "oldPrice": "3000",
+    "price": "3000",
+    "id": "PT001",
+    "isSale": false,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Pastelería Tradicional",
+    "filterItems": ["Pastelería Tradicional", "cakes"],
+    "isStocked": true,
+    "productNumber": "PT001",
+    "imageGallery": [
+      "/assets/img/products/PT001.jpg",
+      "/assets/img/products/PT001_1.jpg",
+      "/assets/img/products/PT001_2.jpg",
+      "/assets/img/products/PT001_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Pastelería tradicional rellena de manzanas especiadas, perfecta para un dulce desayuno o merienda.",
+    "description": "Pastelería tradicional rellena de manzanas especiadas, perfecta para un dulce desayuno o merienda.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Tarta de Santiago",
+    "oldPrice": "6000",
+    "price": "6000",
+    "id": "PT002",
+    "isSale": false,
+    "isNew": true,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Pastelería Tradicional",
+    "filterItems": ["Pastelería Tradicional", "cakes"],
+    "isStocked": true,
+    "productNumber": "PT002",
+    "imageGallery": [
+      "/assets/img/products/PT002.jpg",
+      "/assets/img/products/PT002_1.jpg",
+      "/assets/img/products/PT002_2.jpg",
+      "/assets/img/products/PT002_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Tradicional tarta española hecha con almendras, azúcar, y huevos, una delicia para los amantes de los postres clásicos.",
+    "description": "Tradicional tarta española hecha con almendras, azúcar, y huevos, una delicia para los amantes de los postres clásicos.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Brownie Sin Gluten",
+    "oldPrice": "9000",
+    "price": "4000",
+    "id": "PG001",
+    "isSale": true,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Productos Sin Gluten",
+    "filterItems": ["Productos Sin Gluten", "cakes"],
+    "isStocked": true,
+    "productNumber": "PG001",
+    "imageGallery": [
+      "/assets/img/products/PG001.jpg",
+      "/assets/img/products/PG001_1.jpg",
+      "/assets/img/products/PG001_2.jpg",
+      "/assets/img/products/PG001_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Rico y denso, este brownie es perfecto para quienes necesitan evitar el gluten sin sacrificar el sabor.",
+    "description": "Rico y denso, este brownie es perfecto para quienes necesitan evitar el gluten sin sacrificar el sabor.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Pan Sin Gluten",
+    "oldPrice": "3500",
+    "price": "3500",
+    "id": "PG002",
+    "isSale": false,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Productos Sin Gluten",
+    "filterItems": ["Productos Sin Gluten", "cakes"],
+    "isStocked": true,
+    "productNumber": "PG002",
+    "imageGallery": [
+      "/assets/img/products/PG002.jpg",
+      "/assets/img/products/PG002_1.jpg",
+      "/assets/img/products/PG002_2.jpg",
+      "/assets/img/products/PG002_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Suave y esponjoso, ideal para sándwiches o para acompañar cualquier comida.",
+    "description": "Suave y esponjoso, ideal para sándwiches o para acompañar cualquier comida.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Torta Vegana de Chocolate",
+    "oldPrice": "50000",
+    "price": "50000",
+    "id": "PV001",
+    "isSale": false,
+    "isNew": true,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Productos Vegana",
+    "filterItems": ["Productos Vegana", "cakes"],
+    "isStocked": true,
+    "productNumber": "PV001",
+    "imageGallery": [
+      "/assets/img/products/PV001.jpg",
+      "/assets/img/products/PV001_1.jpg",
+      "/assets/img/products/PV001_2.jpg",
+      "/assets/img/products/PV001_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Torta de chocolate húmeda y deliciosa, hecha sin productos de origen animal, perfecta para veganos.",
+    "description": "Torta de chocolate húmeda y deliciosa, hecha sin productos de origen animal, perfecta para veganos.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Galletas Veganas de Avena",
+    "oldPrice": "9500",
+    "price": "4500",
+    "id": "PV002",
+    "isSale": true,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Productos Vegana",
+    "filterItems": ["Productos Vegana", "cakes"],
+    "isStocked": true,
+    "productNumber": "PV002",
+    "imageGallery": [
+      "/assets/img/products/PV002.jpg",
+      "/assets/img/products/PV002_1.jpg",
+      "/assets/img/products/PV002_2.jpg",
+      "/assets/img/products/PV002_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Crujientes y sabrosas, estas galletas son una excelente opción para un snack saludable y vegano.",
+    "description": "Crujientes y sabrosas, estas galletas son una excelente opción para un snack saludable y vegano.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Torta Especial de Cumpleaños",
+    "oldPrice": "55000",
+    "price": "55000",
+    "id": "TE001",
+    "isSale": false,
+    "isNew": false,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Tortas Especiales",
+    "filterItems": ["Tortas Especiales", "cakes"],
+    "isStocked": true,
+    "productNumber": "TE001",
+    "imageGallery": [
+      "/assets/img/products/TE001.jpg",
+      "/assets/img/products/TE001_1.jpg",
+      "/assets/img/products/TE001_2.jpg",
+      "/assets/img/products/TE001_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Diseñada especialmente para celebraciones, personalizable con decoraciones y mensajes únicos.",
+    "description": "Diseñada especialmente para celebraciones, personalizable con decoraciones y mensajes únicos.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  },
+  {
+    "name": "Torta Especial de Boda",
+    "oldPrice": "60000",
+    "price": "60000",
+    "id": "TE002",
+    "isSale": false,
+    "isNew": true,
+    "image": "/assets/img/products/product_141.jpg",
+    "category": "Tortas Especiales",
+    "filterItems": ["Tortas Especiales", "cakes"],
+    "isStocked": true,
+    "productNumber": "TE002",
+    "imageGallery": [
+      "/assets/img/products/TE002.jpg",
+      "/assets/img/products/TE002_1.jpg",
+      "/assets/img/products/TE002_2.jpg",
+      "/assets/img/products/TE002_3.jpg"
+    ],
+    "colors": ["#FCEDEA", "#FEE1DB", "#FFD9D1", "#FDC5B9"],
+    "content": "Elegante y deliciosa, esta torta está diseñada para ser el centro de atención en cualquier boda.",
+    "description": "Elegante y deliciosa, esta torta está diseñada para ser el centro de atención en cualquier boda.",
+    "reviews": [
+      {
+        "author": { "image": "/assets/img/comment-author1.jpg", "name": "Rehman Aslem" },
+        "reviewDate": "July 11, 2022",
+        "rating": 4,
+        "content": "The cake was really delicious and exactly as described. "
+      },
+      {
+        "author": { "image": "/assets/img/comment-author3.jpg", "name": "Zainb Sultan" },
+        "reviewDate": "Dec 9, 2021",
+        "rating": 5,
+        "content": "Ordered a cake from there place and it was hands down the best cake I have ever had. It was creamy and tasty in all the right ways. "
+      }
+    ]
+  }
+]

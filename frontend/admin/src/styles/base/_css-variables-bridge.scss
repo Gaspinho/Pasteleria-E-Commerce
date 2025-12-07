@@ -1,0 +1,84 @@
+/* ============================================
+   CSS VARIABLES BRIDGE
+   Connects existing CSS variables with SASS
+   ============================================ */
+
+@import '../utils/variables';
+
+/* This file ensures compatibility between:
+   1. Existing CSS variables (from index.css)
+   2. New SASS variables
+   
+   Use this when you need to access CSS variables in SASS
+   or when gradually migrating from CSS to SASS
+*/
+
+:root {
+  // Map SASS variables to CSS custom properties
+  // This allows using both systems simultaneously
+  
+  // Colors from SASS
+  --sass-primary-color: #{$primary-color};
+  --sass-secondary-color: #{$secondary-color};
+  --sass-success-color: #{$success-color};
+  --sass-danger-color: #{$danger-color};
+  --sass-warning-color: #{$warning-color};
+  --sass-info-color: #{$info-color};
+  
+  // Backgrounds
+  --sass-bg-light: #{$bg-light};
+  --sass-bg-primary: #{$bg-primary};
+  --sass-bg-secondary: #{$bg-secondary};
+  --sass-bg-dark: #{$bg-dark};
+  --sass-bg-sidebar: #{$bg-sidebar};
+  --sass-bg-hover: #{$bg-hover};
+  --sass-base-bg: #{$base-bg};
+  
+  // Text colors
+  --sass-text-primary: #{$text-primary};
+  --sass-text-secondary: #{$text-secondary};
+  --sass-text-light: #{$text-light};
+  
+  // Spacing (converted to px)
+  --sass-spacing-xs: #{$spacing-xs};
+  --sass-spacing-sm: #{$spacing-sm};
+  --sass-spacing-md: #{$spacing-md};
+  --sass-spacing-lg: #{$spacing-lg};
+  --sass-spacing-xl: #{$spacing-xl};
+  
+  // Border radius
+  --sass-radius-sm: #{$radius-sm};
+  --sass-radius-md: #{$radius-md};
+  --sass-radius-lg: #{$radius-lg};
+  
+  // Layout
+  --sass-sidebar-width: #{$sidebar-width};
+  --sass-header-height: #{$header-height};
+}
+
+/* ============================================
+   USAGE EXAMPLES
+   ============================================
+   
+   In SCSS files:
+   --------------
+   .component {
+     color: $primary-color;              // SASS variable
+     background: var(--color-primery);   // CSS variable
+   }
+   
+   In CSS files:
+   ------------
+   .component {
+     color: var(--sass-primary-color);   // SASS → CSS
+     background: var(--color-primery);   // Original CSS
+   }
+   
+   In inline styles (JSX):
+   ----------------------
+   style={{
+     color: 'var(--color-primery)',
+     padding: 'var(--sass-spacing-md)'
+   }}
+   
+   ============================================ */
