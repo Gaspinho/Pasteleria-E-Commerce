@@ -27,10 +27,10 @@ class ImageGallery(BaseModel):
 class ProductCreate(BaseModel):
     product_name: str = Field(min_length=1, max_length=100)
     product_sku: Optional[str] = Field(None, max_length=50)
-    product_description: Optional[str] = None
+    product_description: Optional[str] = " "
     product_price: float = Field(gt=0)
     product_stock: int = Field(ge=0)
-    product_is_sale: str = "Yes"
+    product_is_sale: bool = True
     category_name: str
     image_gallery: Optional[ImageGallery] = None
 
@@ -79,7 +79,7 @@ router = APIRouter()
 # ============================================
 # CATEGORY ENDPOINTS
 # ============================================
-
+        
 @router.get("/categories", response_model=List[dict])
 async def get_categories():
     """Obtener todas las categorías"""
@@ -146,10 +146,22 @@ async def get_product(product_id: int):
         print(f"Supabase error: {e}")
         raise HTTPException(status_code=500, detail="Error fetching product")
 
-@router.post("/products", response_model=dict)
-async def create_product(product: ProductCreate, token: str = Depends(get_access_token)):
+@router.post("/create", response_model=dict)
+async def create_product(product: ProductCreate, token: str = Depends(get_access_token)): #
     """Crear un nuevo producto (Admin only)"""
+    image_gallery_id = None
+    product_id = None
     try:
+        # Verify Admin Status
+        auth_response = supabase.auth.get_user(token)
+        user_id = auth_response.user.id
+        staff_status = supabase.table("app_user").select("is_staff").eq("id", auth_response.user.id).execute()
+        is_staff = False
+        if staff_status:
+            is_staff = staff_status[0]["is_staff"]
+        if not is_staff:
+            raise HTTPException(status_code=403, detail="Access Denied: User is not staff")
+            
         # 1. Obtener category_id
         cat_response = supabase.table("category").select("id").eq("name", product.category_name).execute()
         
@@ -159,7 +171,6 @@ async def create_product(product: ProductCreate, token: str = Depends(get_access
         category_id = cat_response.data[0]["id"]
         
         # 2. Crear image_gallery si se proporcionan imágenes
-        image_gallery_id = None
         if product.image_gallery:
             img_response = supabase.table("image_gallery").insert({
                 "image1": product.image_gallery.image1,
@@ -168,8 +179,10 @@ async def create_product(product: ProductCreate, token: str = Depends(get_access
                 "image4": product.image_gallery.image4
             }).execute()
             
-            if img_response.data:
-                image_gallery_id = img_response.data[0]["id"]
+            if not img_response.data:
+                raise HTTPException(status_code=500, detail="Failed to create image gallery")
+                
+            image_gallery_id = img_response.data[0]["id"]
         
         # 3. Crear producto (usando nombres correctos de columnas)
         product_data = {
@@ -178,22 +191,44 @@ async def create_product(product: ProductCreate, token: str = Depends(get_access
             "descripcion": product.product_description,
             "precio": product.product_price,
             "stock": product.product_stock,
-            "is_sale": product.product_is_sale,
+            "is_sale": "Yes" if product.product_is_sale else "No",
             "category_id": category_id,
             "image_gallery_id": image_gallery_id
         }
         
         response = supabase.table("productos").insert(product_data).execute()
+
+        if not response.data:
+            raise HTTPException(status_code=400, detail="Error creating product")
+        product_id = response.data[0]["id"]
+        created_product = response.data[0]
         
-        if response.data:
-            # Obtener producto completo con la vista
-            full_product = supabase.table("productos_full").select("*").eq("product_id", response.data[0]["id"]).execute()
-            return full_product.data[0] if full_product.data else response.data[0]
-        
-        raise HTTPException(status_code=400, detail="Error creating product")
+        try:
+            full_product = supabase.table("productos_full").select("*").eq("product_id", product_id).single().execute()
+            if full_product.data:
+                return full_product.data
+        except Exception as view_error:
+            print(f"Warning: Could not fetch from productos_full view: {view_error}")
+            
+        return {
+            **created_product,
+            "category_name": product.category_name,
+            "message": "Product created successfully"
+        }
     except HTTPException:
         raise
     except Exception as e:
+        try:
+            if product_id:
+                print(f"Rolling back: Deleting product {product_id}")
+                supabase.table("productos").delete().eq("id", product_id).execute()
+            
+            if image_gallery_id:
+                print(f"Rolling back: Deleting image_gallery {image_gallery_id}")
+                supabase.table("image_gallery").delete().eq("id", image_gallery_id).execute()
+        except Exception as rollback_error:
+            print(f"Rollback failed: {rollback_error}")
+        
         print(f"Supabase error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
