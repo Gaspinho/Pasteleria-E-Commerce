@@ -26,8 +26,8 @@ const NewStaff =() =>{
         role: selectedRole,
         phone_Number: data.get("phone_Number"),
         address :{
-          house_Number: data.get("house_Number"),
-          street_Number: data.get("street_Number"),
+          house_number: data.get("house_number"),
+          street_number: data.get("street_number"),
           city: data.get("city"),
           area: data.get("area")
         }   
@@ -130,13 +130,13 @@ const NewStaff =() =>{
         </div>
         <div className="newUserItem">
           <lable>Número de Casa</lable>
-          <input type="text" placeholder="Ingrese el Número de Casa" name="house_Number"/>
-          {server_error.house_Number ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.house_Number[0]}</lable> : ""}
+          <input type="text" placeholder="Ingrese el Número de Casa" name="house_number"/>
+          {server_error.house_number ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.house_number[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
           <lable>Número de Calle</lable>
-          <input type="text" placeholder="Ingrese el Número de Calle" name="street_Number" />
-          {server_error.street_Number ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.street_Number[0]}</lable> : ""}
+          <input type="text" placeholder="Ingrese el Número de Calle" name="street_number" />
+          {server_error.street_number ? <lable style={{ fontSize: 16, color: 'red', paddingLeft: 10 }}>{server_error.street_number[0]}</lable> : ""}
         </div>
         <div className="newUserItem">
           <lable>Área</lable>

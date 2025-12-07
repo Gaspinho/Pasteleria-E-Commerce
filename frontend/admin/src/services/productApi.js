@@ -1,38 +1,23 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import API_CONFIG from '../config/apiConfig'
-
-// Define a service using a base URL and expected endpoints
+import { createApi } from '@reduxjs/toolkit/query/react'
+import baseQueryWithAuth from './baseQuery'
 
 export const productApi = createApi({
   reducerPath: 'productApi',
-  baseQuery: fetchBaseQuery({ 
-    baseUrl: API_CONFIG.baseURL,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem('access_token');
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithAuth,
+  tagTypes: ['Product'],
   endpoints: (builder) => ({
     postProduct: builder.mutation({
-      query: (formData) => {
+      query: (productData) => {
         return {
-          url: 'product/add',
+          url: 'api/products/create',
           method: 'POST',
-          body: formData,
+          body: productData,
+          headers: {
+            'Content-type': 'application/json',
+          }
         }
-      }
-    }),
-    addImages: builder.mutation({
-      query: (formData) => {
-        return {
-          url: 'product/image/add',
-          method: 'POST',
-          body: formData,
-        }
-      }
+      },
+      invalidatesTags: ['Product']
     }),
     getAllProduct: builder.query({
       query: () => {
@@ -43,34 +28,51 @@ export const productApi = createApi({
             'Content-type': 'application/json',
           }
         }
-      }
+      },
+      providesTags: ['Product']
     }),
     updateProduct: builder.mutation({
-      query:({ formData, id }) => {
+      query:({ productData, id }) => {
         return {
-          url: `product/update/${id}`,
+          url: `api/products/products/${id}`,
           method: 'PUT',
-          body: formData,
+          body: productData,
+          headers: {
+            'Content-type': 'application/json',
+          }
         }
-      }
+      },
+      invalidatesTags: ['Product']
     }),
     detailedProduct: builder.query({
       query: (id) => {
-        console.log( 'api',id);
         return {
           url: `product/getDetailedProduct/${id}`,
           method: 'GET',
           headers: {
             'Content-type': 'application/json',
           }
-        }}
+        }
+      },
+      providesTags: (result, error, id) => [{ type: 'Product', id }]
     }),
     deleteProduct: builder.mutation({
-      query:(product) => {
+      query:(productId) => {
         return {
-          url: `product/delete/${product}`,
+          url: `product/delete/${productId}`,
           method: 'DELETE',
-          body:product,
+          headers: {
+            'Content-type': 'application/json',
+          }
+        }
+      },
+      invalidatesTags: ['Product']
+    }),
+    getCategories: builder.query({
+      query: () => {
+        return {
+          url: 'api/products/categories',
+          method: 'GET',
           headers: {
             'Content-type': 'application/json',
           }
@@ -80,5 +82,5 @@ export const productApi = createApi({
   }),
 })
 
-export const { useAddImagesMutation ,usePostProductMutation,useGetAllProductQuery, useUpdateProductMutation ,useDeleteProductMutation,
-  useDetailedProductQuery} = productApi
+export const { usePostProductMutation, useGetAllProductQuery, useUpdateProductMutation, 
+  useDeleteProductMutation, useDetailedProductQuery, useGetCategoriesQuery } = productApi

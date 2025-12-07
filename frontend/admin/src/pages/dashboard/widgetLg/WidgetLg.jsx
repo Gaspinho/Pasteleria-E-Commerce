@@ -24,8 +24,14 @@ export default function WidgetLg() {
     );
   }
 
-  if (isSuccess) {
-    arr = data.slice(-5).reverse();
+  if (isSuccess && data) {
+    // Mapear los datos del backend al formato esperado
+    arr = data.slice(-5).reverse().map(order => ({
+      order_Id: order.id,
+      order_Status: order.order_Status,
+      total_Amount: order.total_Amount,
+      order_Placment_Date: order.placed_at,
+    }));
   }
 
   const getStatusConfig = (status) => {

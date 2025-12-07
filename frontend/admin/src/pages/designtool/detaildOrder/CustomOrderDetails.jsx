@@ -102,9 +102,9 @@ const CustomOrderDetails = () => {
                 </p>
                 <br />
                 <p className="customOrder_span">
-                  H: {res.data.address.house_Number} , St:{" "}
-                  {res.data.address.street_Number} , Area:{" "}
-                  {res.data.address.area} , City: {res.data.address.city}
+                  Casa: {res.data.address.house_Number} , Calle:{" "}
+                  {res.data.address.street_Number} , Área:{" "}
+                  {res.data.address.area} , Ciudad: {res.data.address.city}
                 </p>
                 <br />
                 <p className="customOrder_span">

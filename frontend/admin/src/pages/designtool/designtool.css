@@ -34,7 +34,7 @@
 
 .customOrdergrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 24px;
   margin-top: 24px;
 }
@@ -81,21 +81,43 @@
 .order-details {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 16px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.order-details::-webkit-scrollbar {
+  width: 6px;
+}
+
+.order-details::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.order-details::-webkit-scrollbar-thumb {
+  background: #DA627D;
+  border-radius: 3px;
+}
+
+.order-details::-webkit-scrollbar-thumb:hover {
+  background: #A53860;
 }
 
 .customOrderdataGrid {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: 150px 1fr;
   gap: 8px;
   align-items: start;
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 6px 0;
+  border-bottom: 1px solid #f5f5f5;
 }
 
 .customOrderdataGrid:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .order-actions {

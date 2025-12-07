@@ -1,19 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import API_CONFIG from '../config/apiConfig'
+import { createApi } from '@reduxjs/toolkit/query/react'
+import baseQueryWithAuth from './baseQuery'
 
 // Define a service using a base URL and expected endpoints
 export const orderApi = createApi({
   reducerPath: 'orderApi',
-  baseQuery: fetchBaseQuery({ 
-    baseUrl: API_CONFIG.baseURL,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem('access_token');
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithAuth,
   endpoints: (builder) => ({
     getAllOrder: builder.query({
       query: () => {
@@ -44,12 +35,18 @@ export const orderApi = createApi({
     detaildOrder: builder.query({
       query: (id) => {
         return {
-          url: `order/getDetaildOrder/${id}`,
+          url: `user/getAllorder`,
           method: 'GET',
           headers: {
             'Content-type': 'application/json',
           }
-        }}
+        }
+      },
+      transformResponse: (response, meta, arg) => {
+        // Filtrar para obtener solo la orden específica
+        const order = response.find(o => o.id === arg);
+        return order || null;
+      }
     }),
     orderedProducts: builder.query({
       query: (id) => {

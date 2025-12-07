@@ -2,13 +2,15 @@ import React from "react";
 import "./dashboard.css";
 import Chart from "./chart/Chart";
 import FeaturedInfo from "./featuredInfo/FeaturedInfo";
-import { userData } from "../../dummyData";
 import WidgetSm from "./widgetSm/WidgetSm";
 import WidgetLg from "./widgetLg/WidgetLg";
-import { Box, Grid, Typography, Card, CardContent, Chip } from '@mui/material';
+import { Box, Grid, Typography, Card, CardContent, Chip, CircularProgress } from '@mui/material';
 import { Dashboard as DashboardIcon, TrendingUp, Assessment } from '@mui/icons-material';
+import { useGetSalesChartQuery } from "../../services/dashboardApi";
 
 function AdminDashboard() {
+  const { data: chartData, isLoading: chartLoading } = useGetSalesChartQuery();
+
   return (
     <Box className="dashboard-container">
       <Box className="dashboard-header">
@@ -37,10 +39,16 @@ function AdminDashboard() {
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               <Assessment sx={{ mr: 1, color: '#5550bd' }} />
               <Typography variant="h6" fontWeight={600}>
-                Análisis de Ventas
+                Análisis de Ventas (Últimos 12 Meses)
               </Typography>
             </Box>
-            <Chart data={userData} title="" grid dataKey="Active User"/>
+            {chartLoading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <Chart data={chartData || []} title="" grid dataKey="ventas"/>
+            )}
           </CardContent>
         </Card>
       </Box>

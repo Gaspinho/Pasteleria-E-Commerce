@@ -38,7 +38,25 @@ function Orders() {
     </Alert>
   );
 
-  const arr = (response.data).slice().reverse();
+  // Mapear datos del backend al formato esperado por el frontend
+  const arr = (response.data || []).map(order => ({
+    order_Id: order.id,
+    order_Status: order.order_Status,
+    total_Amount: order.total_Amount,
+    delivery_Charges: order.delivery_Charges,
+    placed_at: order.placed_at,
+    order_Placment_Date: order.placed_at ? new Date(order.placed_at).toLocaleDateString() : 'N/A',
+    order_Placment_Time: order.placed_at ? new Date(order.placed_at).toLocaleTimeString() : 'N/A',
+    order_Delivery_Date: order.delivery_at,
+    order_Delivery_Time: order.delivery_time_window,
+    note: order.note,
+    customer: order.customer_name || order.customer_id,
+    customer_id: order.customer_id,
+    customer_email: order.customer_email,
+    customer_phone: order.customer_phone,
+    address: order.address || {},
+    payment: order.payment || {}
+  })).slice().reverse();
 
   const handleCancel = (props) => {
     const updateData = {
@@ -96,7 +114,7 @@ function Orders() {
     const city = order?.address?.city || '';
     const matchesSearch = searchTerm === '' || 
       orderId.includes(searchTerm) ||
-      customerId.includes(searchTerm) ||
+      customerId.toLowerCase().includes(searchTerm.toLowerCase()) ||
       city.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesStatus && matchesSearch;
   });
@@ -305,7 +323,7 @@ function Orders() {
                       Dirección:
                     </Typography>
                     <Typography variant="body2" fontWeight="500">
-                      H: {data?.address?.house_Number || 'N/A'}, St: {data?.address?.street_Number || 'N/A'}, {data?.address?.area || 'N/A'}, {data?.address?.city || 'N/A'}
+                      Casa: {data?.address?.house_number || 'N/A'}, Calle: {data?.address?.street_number || 'N/A'}, Área: {data?.address?.area || 'N/A'}, Ciudad: {data?.address?.city || 'N/A'}
                     </Typography>
                   </Box>
                 </Box>

@@ -78,7 +78,7 @@ function Products() {
               </div>
               <div className="dataProduct ">
                 <h3>En Venta:</h3>
-                <span> {data.product_isSale} </span>
+                <span> {data.product_Is_Sale === 'Yes' || data.product_Is_Sale === 'true' || data.product_Is_Sale === true ? 'Sí' : 'No'} </span>
               </div>
               <div className="dataProduct ">
                 <h3> Precio:</h3>

@@ -26,7 +26,7 @@ function Question() {
   if (response.isLoading) return <div className="loading-state">Cargando mensajes...</div>;
   if (response.isError) return <h1>An error occured {response.error.error}</h1>;
   
-  const arr = response.data.slice().reverse();
+  const arr = (response.data || []).slice().reverse();
 
   const handleDelete = (questionId, userName) => {
     confirmAlert({
@@ -53,10 +53,14 @@ function Question() {
 
   // Filtrar mensajes
   const filteredQuestions = arr.filter(question => {
+    const userName = question.user_Name || question.userName || '';
+    const email = question.email || '';
+    const message = question.message || '';
+    
     const matchesSearch = searchTerm === '' || 
-      question.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      question.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      question.message.toLowerCase().includes(searchTerm.toLowerCase());
+      userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      message.toLowerCase().includes(searchTerm.toLowerCase());
     
     return matchesSearch;
   });
@@ -64,12 +68,13 @@ function Question() {
   // Calcular estadísticas
   const totalMessages = arr.length;
   const recentMessages = arr.filter(q => {
-    const messageDate = new Date(q.messageDate);
+    const messageDate = new Date(q.message_Date || q.messageDate);
     const daysDiff = (new Date() - messageDate) / (1000 * 60 * 60 * 24);
     return daysDiff <= 7;
   }).length;
 
   const formatDate = (dateStr) => {
+    if (!dateStr) return 'Fecha no disponible';
     const date = new Date(dateStr);
     const now = new Date();
     const diffTime = Math.abs(now - date);
@@ -165,19 +170,24 @@ function Question() {
             </Typography>
           </Card>
         ) : (
-          filteredQuestions.map((qdata, index) => (
+          filteredQuestions.map((qdata, index) => {
+            const userName = qdata.user_Name || qdata.userName || 'Usuario';
+            const questionId = qdata.question_Id || qdata.id;
+            const messageDate = qdata.message_Date || qdata.messageDate;
+            
+            return (
             <Card key={index} className="message-card modern-review-card">
               <CardContent>
                 <Box className="message-header">
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <Avatar 
                       src={afatar} 
-                      alt={qdata.userName}
+                      alt={userName}
                       sx={{ width: 56, height: 56 }}
                     />
                     <Box sx={{ flex: 1 }}>
                       <Typography variant="h6" fontWeight="bold">
-                        {qdata.userName}
+                        {userName}
                       </Typography>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}>
                         <Email fontSize="small" color="action" />
@@ -188,7 +198,7 @@ function Question() {
                     </Box>
                   </Box>
                   <IconButton
-                    onClick={() => handleDelete(qdata.id, qdata.userName)}
+                    onClick={() => handleDelete(questionId, userName)}
                     color="error"
                     size="small"
                   >
@@ -209,7 +219,7 @@ function Question() {
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
                     <Chip 
                       icon={<CalendarToday />}
-                      label={formatDate(qdata.messageDate)}
+                      label={formatDate(messageDate)}
                       size="small"
                       variant="outlined"
                     />
@@ -225,7 +235,7 @@ function Question() {
                 </Box>
               </CardContent>
             </Card>
-          ))
+          )})
         )}
       </Box>
     </Box>

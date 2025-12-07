@@ -20,12 +20,12 @@ function Feedbacks() {
   if (response.isLoading) return <div className="loading-state">Cargando reseñas...</div>;
   if (response.isError) return <h1>An error occured {response.error.error}</h1>;
   
-  const arr = response.data.slice().reverse();
+  const arr = (response.data || []).slice().reverse();
 
   const handleDelete = (reviewId, productName) => {
     confirmAlert({
       title: 'Confirmar Eliminación',
-      message: `¿Está seguro de eliminar esta reseña del producto "${productName}"?`,
+      message: `¿Está seguro de eliminar esta reseña${productName ? ` del producto "${productName}"` : ''}?`,
       buttons: [
         {
           label: 'Sí, Eliminar',
@@ -48,11 +48,17 @@ function Feedbacks() {
   // Filtrar reseñas
   const filteredReviews = arr.filter(review => {
     const matchesRating = filterRating === 'all' || review.rating === parseInt(filterRating);
+    
+    const customerFirstName = review.customer?.first_Name || review.author_name?.split(' ')[0] || '';
+    const customerLastName = review.customer?.last_Name || review.author_name?.split(' ').slice(1).join(' ') || '';
+    const productName = review.product_Name || '';
+    const content = review.content || '';
+    
     const matchesSearch = searchTerm === '' || 
-      review.customer.first_Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      review.customer.last_Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      review.productReviewed.product_Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      review.content.toLowerCase().includes(searchTerm.toLowerCase());
+      customerFirstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      customerLastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      content.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesRating && matchesSearch;
   });
 
@@ -193,19 +199,26 @@ function Feedbacks() {
             </Typography>
           </Card>
         ) : (
-          filteredReviews.map((data, index) => (
+          filteredReviews.map((data, index) => {
+            const customerFirstName = data.customer?.first_Name || data.author_name?.split(' ')[0] || 'Usuario';
+            const customerLastName = data.customer?.last_Name || data.author_name?.split(' ').slice(1).join(' ') || '';
+            const productName = data.product_Name || 'Producto sin nombre';
+            const reviewDate = data.review_Date || data.reviewDate || data.created_at;
+            const reviewId = data.review_Id || data.id;
+            
+            return (
             <Card key={index} className="review-card modern-review-card">
               <CardContent>
                 <Box className="review-header">
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <Avatar 
                       src={afatar} 
-                      alt={`${data.customer.first_Name} ${data.customer.last_Name}`}
+                      alt={`${customerFirstName} ${customerLastName}`}
                       sx={{ width: 56, height: 56 }}
                     />
                     <Box>
                       <Typography variant="h6" fontWeight="bold">
-                        {data.customer.first_Name} {data.customer.last_Name}
+                        {customerFirstName} {customerLastName}
                       </Typography>
                       <Rating 
                         value={getRatingValue(data.rating)} 
@@ -216,7 +229,7 @@ function Feedbacks() {
                     </Box>
                   </Box>
                   <IconButton
-                    onClick={() => handleDelete(data.id, data.productReviewed.product_Name)}
+                    onClick={() => handleDelete(reviewId, productName)}
                     color="error"
                     size="small"
                   >
@@ -226,18 +239,18 @@ function Feedbacks() {
 
                 <Box className="review-content" sx={{ mt: 2 }}>
                   <Typography variant="body1" sx={{ mb: 2, fontStyle: 'italic' }}>
-                    "{data.content}"
+                    "{data.content || 'Sin comentario'}"
                   </Typography>
 
                   <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 1 }}>
                     <Chip 
-                      label={data.productReviewed.product_Name}
+                      label={productName}
                       size="small"
                       color="primary"
                       variant="outlined"
                     />
                     <Chip 
-                      label={new Date(data.reviewDate).toLocaleDateString()}
+                      label={reviewDate ? new Date(reviewDate).toLocaleDateString() : 'Fecha no disponible'}
                       size="small"
                       variant="outlined"
                     />
@@ -245,7 +258,7 @@ function Feedbacks() {
                 </Box>
               </CardContent>
             </Card>
-          ))
+          )})
         )}
       </Box>
     </Box>

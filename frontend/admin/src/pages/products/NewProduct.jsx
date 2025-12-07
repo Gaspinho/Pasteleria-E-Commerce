@@ -19,7 +19,7 @@ function NewProduct() {
 
   const [data, setData] = useState({
       product_Name: '',
-      product_isSale: 'Yes',
+      product_Is_Sale: 'Yes',
       product_Price: '',
       product_Stock: '',
       product_Description: '',
@@ -47,28 +47,33 @@ function NewProduct() {
 
   const handleSubmit = async(e) => {
     e.preventDefault()
-    let formData = new FormData();
-    formData.append('image1', imge.image1);
-    formData.append('image2', imge.image2);
-    formData.append('image3', imge.image3 );
-    formData.append('image4', imge.image4 );
-    formData.append('product_Name', data.product_Name);
-    formData.append('product_isSale', data.product_isSale);
-    formData.append('product_Price', data.product_Price);
-    formData.append('product_Stock',  data.product_Stock);
-    formData.append(' product_Description', data.product_Description);
-    formData.append('category_Name', data.category_Name);
+    
+    // Convertir las imágenes a base64 o URLs (el backend actual espera URLs de string)
+    const productData = {
+      product_name: data.product_Name,
+      product_description: data.product_Description,
+      product_price: parseFloat(data.product_Price),
+      product_stock: parseInt(data.product_Stock),
+      product_is_sale: data.product_Is_Sale === 'Yes' || data.product_Is_Sale === 'true' || data.product_Is_Sale === true ? 'Yes' : 'No',
+      category_name: data.category_Name,
+      image_gallery: {
+        image1: data.image1 || null,
+        image2: data.image2 || null,
+        image3: data.image3 || null,
+        image4: data.image4 || null,
+      }
+    };
         
-    const res = await postProduct(formData)
+    const res = await postProduct(productData)
     
     if (res.error) {
-      if (typeof (res.error.data.errors) === 'undefined') {
+      if (typeof (res.error.data?.errors) === 'undefined') {
         alert('A server/network error occurred. ' +'Looks like CORS might be the problem. ' +
         'Sorry about this - we will get it fixed shortly.');
       }
-      console.log(typeof (res.error.data.errors))   
-      console.log(res.error.data.errors)
-      setServerError(res.error.data.errors)
+      console.log(typeof (res.error.data?.errors))   
+      console.log(res.error.data?.errors)
+      setServerError(res.error.data?.errors || {})
     } 
     
     if (res.data) {
@@ -76,7 +81,6 @@ function NewProduct() {
       console.log(res.data)
       setSuccess(true)
       setTimeout(function(){ navigate('/admin/products')} , 3000);
-      //navigate('/admin/products')
     }
   }
   return (
@@ -95,7 +99,7 @@ function NewProduct() {
           </div>
         </div>
         <div className="dataContainer"><div className="info_data"><div className="name"><h1> Nombre: {''} {data.product_Name}</h1></div>
-            <div className="productInfo "><h3>Estado de Venta:</h3><span> {data.product_isSale}</span></div>
+            <div className="productInfo "><h3>Estado de Venta:</h3><span> {data.product_Is_Sale === 'Yes' || data.product_Is_Sale === 'true' || data.product_Is_Sale === true ? 'Sí' : 'No'}</span></div>
             <div className="productInfo "><h3> Precio del Producto:</h3><span> Rs. {' '}{data.product_Price}</span></div>
             <div className="productInfo"><h3>Stock del Producto:</h3><span> {data.product_Stock} </span></div>
             <div className="productInfo "><h3>Categoría del Producto:</h3><span> {data.category_Name} {''} Cake </span></div>
@@ -145,8 +149,8 @@ function NewProduct() {
           </div>
           <div className="newproductItem">
             <label>Estado de Venta del Producto</label>
-            <select className="newProductSelect" name="product_isSale" id="product_isSale" 
-            value={data.product_isSale || " "}
+            <select className="newProductSelect" name="product_Is_Sale" id="product_Is_Sale" 
+            value={data.product_Is_Sale || "Yes"}
             onChange={handleChange} >
               <option value="Yes" >Yes</option>
               <option value= "No">No</option>

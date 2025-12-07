@@ -34,3 +34,24 @@
     grid-column-gap:2rem ;
     padding-top: 1rem;
 }
+
+/* New styles for Material-UI version */
+.product-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.image-section img {
+  border: 1px solid #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .image-section img {
+    width: 80px !important;
+    height: 80px !important;
+  }
+}

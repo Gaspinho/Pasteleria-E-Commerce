@@ -81,13 +81,27 @@ function Designtool() {
     const orderStatus = order?.order_Status || '';
     const matchesStatus = filterStatus === 'all' || orderStatus.toLowerCase() === filterStatus.toLowerCase();
     
-    // Validar que los campos existen antes de buscar
-    const cakeShape = order?.Cake_Shape_layers?.cake_shape || '';
-    const flavorName = order?.sponge_Flavor?.flavor_name || '';
+    // Búsqueda más completa incluyendo más campos
+    const cakeShape = order?.custom_cake?.shape_layer?.shape_name || '';
+    const flavorName = order?.custom_cake?.sponge_flavor?.name || '';
+    const icingName = order?.custom_cake?.icing?.name || '';
+    const msgOnCake = order?.custom_cake?.msg_on_cake || '';
+    const specialInstruction = order?.custom_cake?.special_instruction || '';
+    const paymentType = order?.payment?.payment_type || '';
+    const paymentStatus = order?.payment?.payment_status || '';
+    const city = order?.address?.city || '';
+    
     const matchesSearch = searchTerm === '' || 
       cakeShape.toLowerCase().includes(searchTerm.toLowerCase()) ||
       flavorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      orderStatus.toLowerCase().includes(searchTerm.toLowerCase());
+      icingName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      msgOnCake.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      specialInstruction.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      orderStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      paymentType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      paymentStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      city.toLowerCase().includes(searchTerm.toLowerCase());
+      
     return matchesStatus && matchesSearch;
   });
 
@@ -189,7 +203,7 @@ function Designtool() {
       <Card sx={{ mb: 3, p: 2 }}>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
           <TextField
-            placeholder="Buscar por forma, sabor o estado..."
+            placeholder="Buscar por forma, sabor, glaseado, mensaje, ciudad, pago..."
             variant="outlined"
             size="small"
             value={searchTerm}
@@ -234,9 +248,9 @@ function Designtool() {
           filteredOrders.map((data, index) => (
             <Card key={index} className="customOrdercard modern-order-card">
               <Box className="order-image-container">
-                {data?.finalProduct?.finalProductImg ? (
+                {data?.custom_cake?.final_product_img?.image ? (
                   <img 
-                    src={`http://127.0.0.1:8000${data.finalProduct.finalProductImg}`} 
+                    src={`http://127.0.0.1:8000${data.custom_cake.final_product_img.image}`} 
                     alt="Pastel Personalizado" 
                     className="customOrderimage" 
                   />
@@ -260,31 +274,58 @@ function Designtool() {
               </Box>
               <CardContent className="customOrderdata">
                 <Box className="order-details">
+                  {/* ID del Pedido */}
                   <Box className='customOrderdataGrid'>
                     <Typography variant="subtitle2" color="textSecondary">
-                      Forma del Pastel:
+                      ID Pedido:
                     </Typography>
-                    <Typography variant="body2" fontWeight="500">
-                      {data?.Cake_Shape_layers?.cake_shape || 'N/A'}
+                    <Typography variant="body2" fontWeight="500" sx={{ fontSize: '0.75rem' }}>
+                      {data?.id?.substring(0, 8)}...
                     </Typography>
                   </Box>
+
+                  {/* Información del Pastel */}
                   <Box className='customOrderdataGrid'>
                     <Typography variant="subtitle2" color="textSecondary">
-                      Sabor:
+                      Forma y Capas:
                     </Typography>
                     <Typography variant="body2" fontWeight="500">
-                      {data?.sponge_Flavor?.flavor_name || 'N/A'}
+                      {data?.custom_cake?.shape_layer?.shape_name || 'N/A'} 
+                      {data?.custom_cake?.shape_layer?.layer_description && 
+                        ` (${data.custom_cake.shape_layer.layer_description})`}
                     </Typography>
                   </Box>
+                  
                   <Box className='customOrderdataGrid'>
                     <Typography variant="subtitle2" color="textSecondary">
-                      Glaseado:
+                      Sabor Bizcocho:
                     </Typography>
                     <Typography variant="body2" fontWeight="500">
-                      {data?.Icing?.decoration_name || 'N/A'}
+                      {data?.custom_cake?.sponge_flavor?.name || 'N/A'}
                     </Typography>
                   </Box>
-                  {data?.msg_on_cake && (
+                  
+                  <Box className='customOrderdataGrid'>
+                    <Typography variant="subtitle2" color="textSecondary">
+                      Glaseado/Relleno:
+                    </Typography>
+                    <Typography variant="body2" fontWeight="500">
+                      {data?.custom_cake?.icing?.name || 'N/A'}
+                    </Typography>
+                  </Box>
+
+                  {data?.custom_cake?.top_img_decoration && (
+                    <Box className='customOrderdataGrid'>
+                      <Typography variant="subtitle2" color="textSecondary">
+                        Decoración Superior:
+                      </Typography>
+                      <Typography variant="body2" fontWeight="500">
+                        {data.custom_cake.top_img_decoration.name || 'N/A'}
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {data?.custom_cake?.msg_on_cake && (
                     <Box className='customOrderdataGrid'>
                       <Typography variant="subtitle2" color="textSecondary">
                         Mensaje:
@@ -292,20 +333,126 @@ function Designtool() {
                       <Typography 
                         variant="body2" 
                         fontWeight="500"
-                        sx={{ color: data?.msg_color?.color_Code || '#000', fontStyle: 'italic' }}
+                        sx={{ 
+                          color: data?.custom_cake?.msg_color?.color_code || '#000', 
+                          fontStyle: 'italic',
+                          backgroundColor: 'rgba(0,0,0,0.05)',
+                          padding: '4px 8px',
+                          borderRadius: '4px'
+                        }}
                       >
-                        "{data.msg_on_cake}"
+                        "{data.custom_cake.msg_on_cake}"
                       </Typography>
                     </Box>
                   )}
+
+                  {data?.custom_cake?.special_instruction && (
+                    <Box className='customOrderdataGrid' sx={{ gridColumn: '1 / -1' }}>
+                      <Typography variant="subtitle2" color="textSecondary">
+                        Instrucciones Especiales:
+                      </Typography>
+                      <Typography variant="body2" fontWeight="500" sx={{ fontStyle: 'italic' }}>
+                        {data.custom_cake.special_instruction}
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {/* Información de Entrega */}
+                  {(data?.delivery_at || data?.delivery_time_window) && (
+                    <>
+                      <Box className='customOrderdataGrid'>
+                        <Typography variant="subtitle2" color="textSecondary">
+                          Fecha de Entrega:
+                        </Typography>
+                        <Typography variant="body2" fontWeight="500">
+                          {data?.delivery_at ? new Date(data.delivery_at).toLocaleDateString('es-ES') : 'N/A'}
+                        </Typography>
+                      </Box>
+                      {data?.delivery_time_window && (
+                        <Box className='customOrderdataGrid'>
+                          <Typography variant="subtitle2" color="textSecondary">
+                            Hora de Entrega:
+                          </Typography>
+                          <Typography variant="body2" fontWeight="500">
+                            {data.delivery_time_window}
+                          </Typography>
+                        </Box>
+                      )}
+                    </>
+                  )}
+
+                  {/* Dirección de Entrega */}
+                  {data?.address && (
+                    <Box className='customOrderdataGrid' sx={{ gridColumn: '1 / -1' }}>
+                      <Typography variant="subtitle2" color="textSecondary">
+                        Dirección de Entrega:
+                      </Typography>
+                      <Typography variant="body2" fontWeight="500">
+                        Casa: {data.address.house_number || 'N/A'}, Calle: {data.address.street_number || 'N/A'}, Área: {data.address.area || 'N/A'}, Ciudad: {data.address.city || 'N/A'}
+                      </Typography>
+                    </Box>
+                  )}
+
+                  {/* Información de Pago */}
                   <Box className='customOrderdataGrid'>
                     <Typography variant="subtitle2" color="textSecondary">
-                      Monto Total:
+                      Método de Pago:
                     </Typography>
-                    <Typography variant="h6" fontWeight="bold" color="primary">
-                      ${data?.amount || 0}
+                    <Typography variant="body2" fontWeight="500">
+                      {data?.payment?.payment_type || 'N/A'}
                     </Typography>
                   </Box>
+
+                  <Box className='customOrderdataGrid'>
+                    <Typography variant="subtitle2" color="textSecondary">
+                      Estado de Pago:
+                    </Typography>
+                    <Chip 
+                      label={data?.payment?.payment_status || 'Pendiente'}
+                      size="small"
+                      color={data?.payment?.payment_status === 'Paid' ? 'success' : 'warning'}
+                    />
+                  </Box>
+
+                  {data?.delivery_charges && (
+                    <Box className='customOrderdataGrid'>
+                      <Typography variant="subtitle2" color="textSecondary">
+                        Cargo de Envío:
+                      </Typography>
+                      <Typography variant="body2" fontWeight="500">
+                        ${data.delivery_charges}
+                      </Typography>
+                    </Box>
+                  )}
+
+                  <Box className='customOrderdataGrid'>
+                    <Typography variant="subtitle2" color="textSecondary">
+                      Monto del Pastel:
+                    </Typography>
+                    <Typography variant="body2" fontWeight="bold" color="primary">
+                      ${data?.custom_cake?.amount || 0}
+                    </Typography>
+                  </Box>
+
+                  <Box className='customOrderdataGrid'>
+                    <Typography variant="subtitle2" color="textSecondary">
+                      Total Final:
+                    </Typography>
+                    <Typography variant="h6" fontWeight="bold" color="primary">
+                      ${(parseFloat(data?.custom_cake?.amount || 0) + parseFloat(data?.delivery_charges || 0)).toFixed(2)}
+                    </Typography>
+                  </Box>
+
+                  {data?.placed_at && (
+                    <Box className='customOrderdataGrid' sx={{ gridColumn: '1 / -1' }}>
+                      <Typography variant="subtitle2" color="textSecondary">
+                        Fecha del Pedido:
+                      </Typography>
+                      <Typography variant="body2" fontWeight="500">
+                        {new Date(data.placed_at).toLocaleString('es-ES')}
+                      </Typography>
+                    </Box>
+                  )}
                 </Box>
 
                 <Box className="order-actions" sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>

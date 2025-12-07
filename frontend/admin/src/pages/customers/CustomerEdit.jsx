@@ -23,16 +23,16 @@ function CustomerEdit() {
     if (responseData.isSuccess) {
     setData ({
         id: responseData.data.id,
-        first_Name: responseData.data.first_Name,
-        last_Name: responseData.data.last_Name,
-        phone_Number: responseData.data.phone_Number,
-        data_Joind:responseData.data.data_Joind,
-        email:responseData.data.email,
-        last_login:responseData.data.last_login,
-        house_Number: responseData.data.address.house_Number,
-        street_Number:responseData.data.address.street_Number,
-        city: responseData.data.address.city,
-        area: responseData.data.address.area,
+        first_Name: responseData.data.first_Name || '',
+        last_Name: responseData.data.last_Name || '',
+        phone_Number: responseData.data.phone_Number || '',
+        data_Joind: responseData.data.data_Joind || '',
+        email: responseData.data.email || '',
+        last_login: responseData.data.last_login || '',
+        house_number: responseData.data.address?.house_Number || '',
+        street_number: responseData.data.address?.street_Number || '',
+        city: responseData.data.address?.city || '',
+        area: responseData.data.address?.area || '',
 
       })
     }
@@ -53,10 +53,10 @@ function CustomerEdit() {
       first_Name: data.first_Name,
       last_Name: data.last_Name,
       phone_Number: data.phone_Number,
-      address_Id: responseData.data.address.address_Id,
+      address_Id: responseData.data.address?.address_Id,
       address:{
-        house_Number: data.house_Number,
-        street_Number: data.street_Number,
+        house_number: data.house_number,
+        street_number: data.street_number,
         city: data.city,
         area: data.area,
       }   
@@ -171,7 +171,7 @@ function CustomerEdit() {
               <span> Número de Casa: </span>
               </div>
               <div >
-                <span> {data.house_Number}</span>
+                <span> {data.house_number}</span>
               </div>
             </div>
             <div className="userShowInfo">
@@ -180,7 +180,7 @@ function CustomerEdit() {
               <span> Número de Calle: </span>
               </div>
               <div >
-                <span> {data.street_Number}</span>
+                <span> {data.street_number}</span>
               </div>
             </div>
             <div className="userShowInfo">
@@ -275,20 +275,20 @@ function CustomerEdit() {
                   <label>Número de Casa</label>
                   <input
                     type="text"
-                    value={data.house_Number || ""}
+                    value={data.house_number || ""}
                     onChange={handleChange}
                     className="userUpdateInput"
-                    name="house_Number"
+                    name="house_number"
                   />
                 </span>
                 <span className="userUpdateItem">
                   <label>Número de Calle</label>
                   <input
                     type="text"
-                    value={data.street_Number || ""}
+                    value={data.street_number || ""}
                     onChange={handleChange}
                     className="userUpdateInput"
-                    name="street_Number"
+                    name="street_number"
                   />
                 </span>
                 <span className="userUpdateItem">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Navigate,Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {UserLogin,Logout, Question, CustomerEdit,AppLayout,AdminDashboard, Orders,OrderDetails,Customers,
-  Designtool,CustomOrderDetails ,Sales,Notifications,Feedbacks,Staff,NewStaff, Products,ProductEdit
+  Designtool,CustomOrderDetails ,Sales,Notifications,Feedbacks,Staff,NewStaff,StaffProfile, Products,ProductEdit
   ,NewProduct ,Profile, RolesPermissions } from "./adminExportFiles";
 import ErrorBoundary from './components/ErrorBoundary';
 
@@ -86,7 +86,7 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="sales" element={<Sales />} />
               <Route path="staff" element={<Staff/>} />
-              <Route path="staff/edit/:id" element={<CustomerEdit />} />
+              <Route path="staff/edit/:id" element={<StaffProfile />} />
               <Route path="newstaff" element={<NewStaff/>} />
               <Route path="roles" element={<RolesPermissions/>} />
             </Route>

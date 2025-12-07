@@ -25,16 +25,18 @@ function Profile() {
     if (responseData.isSuccess) {
     setData ({
         id: responseData.data.id,
-        first_Name: responseData.data.first_Name,
-        last_Name: responseData.data.last_Name,
-        phone_Number: responseData.data.phone_Number,
-        data_Joind:responseData.data.data_Joind,
-        email:responseData.data.email,
-        last_login:responseData.data.last_login,
-        house_Number: responseData.data.address.house_Number,
-        street_Number:responseData.data.address.street_Number,
-        city: responseData.data.address.city,
-        area: responseData.data.address.area,
+        first_Name: responseData.data.first_name || '',
+        last_Name: responseData.data.last_name || '',
+        phone_Number: responseData.data.phone_number || '',
+        data_Joind: responseData.data.created_at || '',
+        email: responseData.data.email || '',
+        last_login: responseData.data.last_login_at || '',
+        type: responseData.data.type || '',
+        is_staff: responseData.data.is_staff || false,
+        house_number: responseData.data.address?.house_number || '',
+        street_number: responseData.data.address?.street_number || '',
+        city: responseData.data.address?.city || '',
+        area: responseData.data.address?.area || '',
 
       })
     }
@@ -55,10 +57,10 @@ function Profile() {
       first_Name: data.first_Name,
       last_Name: data.last_Name,
       phone_Number: data.phone_Number,
-      address_Id: responseData.data.address.address_Id,
+      address_Id: responseData.data.address?.address_Id,
       address:{
-        house_Number: data.house_Number,
-        street_Number: data.street_Number,
+        house_number: data.house_number,
+        street_number: data.street_number,
         city: data.city,
         area: data.area,
       }   
@@ -84,16 +86,18 @@ function Profile() {
     // Restaurar datos originales
     setData({
       id: responseData.data.id,
-      first_Name: responseData.data.first_Name,
-      last_Name: responseData.data.last_Name,
-      phone_Number: responseData.data.phone_Number,
-      data_Joind:responseData.data.data_Joind,
-      email:responseData.data.email,
-      last_login:responseData.data.last_login,
-      house_Number: responseData.data.address.house_Number,
-      street_Number:responseData.data.address.street_Number,
-      city: responseData.data.address.city,
-      area: responseData.data.address.area,
+      first_Name: responseData.data.first_name || '',
+      last_Name: responseData.data.last_name || '',
+      phone_Number: responseData.data.phone_number || '',
+      data_Joind: responseData.data.created_at || '',
+      email: responseData.data.email || '',
+      last_login: responseData.data.last_login_at || '',
+      type: responseData.data.type || '',
+      is_staff: responseData.data.is_staff || false,
+      house_number: responseData.data.address?.house_number || '',
+      street_number: responseData.data.address?.street_number || '',
+      city: responseData.data.address?.city || '',
+      area: responseData.data.address?.area || '',
     });
     setEditMode(false);
     setServerError({});
@@ -207,7 +211,7 @@ function Profile() {
                   <House sx={{color: '#DA627D'}} />
                   <Box>
                     <Typography variant="caption" color="textSecondary">Número de Casa</Typography>
-                    <Typography variant="body2" fontWeight="500">{data.house_Number}</Typography>
+                    <Typography variant="body2" fontWeight="500">{data.house_number}</Typography>
                   </Box>
                 </div>
 
@@ -215,7 +219,7 @@ function Profile() {
                   <Signpost sx={{color: '#DA627D'}} />
                   <Box>
                     <Typography variant="caption" color="textSecondary">Número de Calle</Typography>
-                    <Typography variant="body2" fontWeight="500">{data.street_Number}</Typography>
+                    <Typography variant="body2" fontWeight="500">{data.street_number}</Typography>
                   </Box>
                 </div>
 
@@ -293,8 +297,8 @@ function Profile() {
                   <TextField
                     fullWidth
                     label="Número de Casa"
-                    name="house_Number"
-                    value={data.house_Number || ""}
+                    name="house_number"
+                    value={data.house_number || ""}
                     onChange={handleChange}
                     variant="outlined"
                     sx={{ backgroundColor: 'white', borderRadius: 1 }}
@@ -303,8 +307,8 @@ function Profile() {
                   <TextField
                     fullWidth
                     label="Número de Calle"
-                    name="street_Number"
-                    value={data.street_Number || ""}
+                    name="street_number"
+                    value={data.street_number || ""}
                     onChange={handleChange}
                     variant="outlined"
                     sx={{ backgroundColor: 'white', borderRadius: 1 }}
