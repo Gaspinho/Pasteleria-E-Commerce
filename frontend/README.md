@@ -6,39 +6,11 @@ Este directorio contiene ambos frontends de la plataforma:
 
 ```
 frontend/
-├── customer/          # Portal del Cliente (Next.js) - Puerto 3000
-├── admin/            # Panel de Administración (React) - Puerto 3001
+├── customer/          # Portal del Cliente (Next.js)
+├── admin/            # Panel de Administración (React)
 ├── package.json      # Configuración raíz
 └── README.md         # Este archivo
 ```
-
-## ⚙️ Configuración de Puertos (IMPORTANTE)
-
-**Para evitar conflictos de puerto, cada frontend usa un puerto específico:**
-
-| Aplicación | Puerto | URL | Framework |
-|------------|--------|-----|-----------|
-| **Frontend Cliente** | 3000 | http://localhost:3000 | Next.js |
-| **Panel Admin** | 3001 | http://localhost:3001 | React |
-| **Backend API** | 8000 | http://localhost:8000 | FastAPI |
-
-### Archivos de Configuración Requeridos
-
-Cada frontend debe tener su archivo `.env`:
-
-**`frontend/admin/.env`**:
-```env
-PORT=3001
-BROWSER=none
-REACT_APP_API_URL=http://127.0.0.1:8000/
-```
-
-**`frontend/customer/.env`**:
-```env
-PORT=3000
-```
-
-> ⚠️ **Nota para el equipo**: Si obtienes el error "Port already in use", verifica que estos archivos `.env` existan y tengan los puertos correctos.
 
 ## 🚀 Inicio Rápido
 
