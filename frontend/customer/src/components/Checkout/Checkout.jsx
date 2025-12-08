@@ -1,9 +1,8 @@
-import { useState  ,useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { CheckoutOrders } from "./CheckoutOrder/CheckoutOrders";
 import { CheckoutStep1 } from "./CheckoutSteps/CheckoutStep1";
 import { CheckoutStep2 } from "./CheckoutSteps/CheckoutStep2";
 import { CheckoutStep3 } from "./CheckoutSteps/CheckoutStep3";
-import {useReactToPrint} from 'react-to-print';
 
 const detailBlocks = [
   {
@@ -26,11 +25,17 @@ const detailBlocks = [
 export const Checkout = () => {
   const [activeStep, setActiveStep] = useState(1);
   const componentRef = useRef();
+  const [isClient, setIsClient] = useState(false);
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-    documentTitle: "Order_Invoice",
-  });
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const handlePrint = () => {
+    if (typeof window !== 'undefined') {
+      window.print();
+    }
+  };
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -98,7 +103,7 @@ export const Checkout = () => {
               <CheckoutOrders />
             </div>
           </div>
-          {activeStep === 3 && (
+          {isClient && activeStep === 3 && (
             <div className="checkout-print-button">
               <button onClick={handlePrint} className="btn btn-icon btn-print">
                 <i className="icon-printer"></i> Imprimir Detalles del Pedido 
@@ -150,6 +155,15 @@ export const Checkout = () => {
           .btn-print {
             width: 100%;
             justify-content: center;
+          }
+        }
+
+        @media print {
+          .checkout-print-button,
+          .header,
+          .detail-block__items,
+          img.promo-video__decor {
+            display: none !important;
           }
         }
       `}</style>
