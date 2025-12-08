@@ -1,9 +1,8 @@
-import { useState  ,useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { CustomOrderCheckoutOrders } from "./CustomOrderCheckoutOrders";
 import { CustomOrderCheckoutStep1 } from "./CustomOrderCheckoutSteps/CustomOrderCheckoutStep1";
 import { CustomOrderCheckoutStep2 } from "./CustomOrderCheckoutSteps/CustomOrderCheckoutStep2";
 import { CustomOrderCheckoutStep3 } from "./CustomOrderCheckoutSteps/CustomOrderCheckoutStep3";
-import {useReactToPrint} from 'react-to-print';
 
 const getCustomOrder_Id = () => {
   if (typeof window !== "undefined") {
@@ -34,17 +33,22 @@ const detailBlocks = [
 export const CustomOrderCheckout = () => {
   const [activeStep, setActiveStep] = useState(1);
   const componentRef = useRef();
+  const [isClient, setIsClient] = useState(false);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-    documentTitle: "Order_Invoice",
-  });
+  const handlePrint = () => {
+    if (typeof window !== 'undefined') {
+      window.print();
+    }
+  };
 
-  let CustomOrder_Id =getCustomOrder_Id()
-  console.log('CustomOrder_Id' ,CustomOrder_Id)
+  let CustomOrder_Id = getCustomOrder_Id()
+  console.log('CustomOrder_Id', CustomOrder_Id)
   
-  if(CustomOrder_Id== 0) return <h1>No hay datos de pedido en el almacenamiento de sesión</h1>;
+  if(CustomOrder_Id == 0) return <h1>No hay datos de pedido en el almacenamiento de sesión</h1>;
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
