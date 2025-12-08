@@ -216,6 +216,9 @@ export const Cart = () => {
           background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
           color: #4a1942;
           font-weight: 700;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           text-transform: uppercase;
           letter-spacing: 1px;
           transition: all 0.3s ease;

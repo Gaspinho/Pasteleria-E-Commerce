@@ -34,16 +34,7 @@ export const SingleProduct = ({
                 className={`addList ${addedInCart ? "added" : ""}`}
                 onClick={access_token ? () => onAddToCart(id) : () => console.log("log in please")  }
               >
-                <i style={{ marginBottom: "10px" }} className="icon-cart"></i>
-                <span
-                  style={{
-                    color: "#fff",
-                    fontSize: "18px",
-                    paddingTop: "10px",
-                  }}
-                >
-                  Agregar al carrito
-                </span>
+                <i className="icon-cart"></i>
               </button>
             </div>
           </div>
