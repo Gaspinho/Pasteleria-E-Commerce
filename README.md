@@ -11,6 +11,16 @@
 
 **Pastelería Mil Sabores** es una plataforma integral de comercio electrónico full-stack diseñada específicamente para pastelerías. Esta moderna aplicación web permite a los clientes navegar, personalizar y ordenar pasteles en línea, mientras proporciona a los propietarios de tiendas un potente panel de administración para la gestión completa del negocio.
 
+> 🚀 **¿Primera vez? Lee la [Guía de Inicio Rápido](./INICIO_RAPIDO.md)**
+
+### ⚙️ Configuración de Puertos
+
+| Aplicación | Puerto | URL |
+|------------|--------|-----|
+| Backend API | 8000 | http://localhost:8000 |
+| Frontend Cliente | 3000 | http://localhost:3000 |
+| Panel Admin | 3001 | http://localhost:3001 |
+
 ### ✨ Características Principales
 
 #### 🛒 **Funciones para Clientes**
@@ -67,6 +77,23 @@
 
 ## 🚀 Inicio Rápido
 
+> 🎯 **Para el equipo**: Lee primero [INICIO_RAPIDO.md](./INICIO_RAPIDO.md) o [INSTRUCCIONES_EQUIPO.md](./INSTRUCCIONES_EQUIPO.md)
+
+### ✅ Verificar Configuración de Puertos
+
+**Antes de empezar**, ejecuta este comando para verificar que los puertos estén configurados correctamente:
+
+**Windows**:
+```bash
+.\verificar-puertos.ps1
+```
+
+**Linux/Mac**:
+```bash
+chmod +x verificar-puertos.sh
+./verificar-puertos.sh
+```
+
 ### Prerequisitos
 
 Asegúrate de tener lo siguiente instalado:
@@ -101,19 +128,23 @@ Asegúrate de tener lo siguiente instalado:
    # SUPABASE_KEY=tu_supabase_key
    
    # Iniciar servidor FastAPI
-   python3 server.py
+   python server.py
    ```
    
    🌐 El Backend estará ejecutándose en: `http://localhost:8000`
    📚 Documentación API en: `http://localhost:8000/docs`
 
-3. **Configuración del Frontend del Cliente (Next.js)**
+3. **Configuración del Frontend del Cliente (Next.js) - Puerto 3000**
    ```bash
    # Abrir nueva terminal
-   cd customer-frontend
+   cd frontend/customer
    
    # Instalar dependencias
    npm install
+   
+   # Verificar que existe el archivo .env con: PORT=3000
+   # Si no existe, crear frontend/customer/.env:
+   # PORT=3000
    
    # Iniciar servidor de desarrollo
    npm run dev
@@ -121,19 +152,28 @@ Asegúrate de tener lo siguiente instalado:
    
    🌐 El portal del cliente estará ejecutándose en: `http://localhost:3000`
 
-4. **Configuración del Frontend de Administración (React)**
+4. **Configuración del Panel de Administración (React) - Puerto 3001**
    ```bash
    # Abrir nueva terminal
-   cd admin_frontend
+   cd frontend/admin
    
    # Instalar dependencias
    npm install
+   
+   # Verificar que existe el archivo .env con:
+   # PORT=3001
+   # BROWSER=none
+   # REACT_APP_API_URL=http://127.0.0.1:8000/
+   
+   # Si no existe, copiar desde .env.example
    
    # Iniciar servidor de desarrollo
    npm start
    ```
    
    🌐 El panel de administración estará ejecutándose en: `http://localhost:3001`
+
+> ⚠️ **Importante**: Ambos frontends deben ejecutarse en terminales separadas con sus puertos específicos (3000 y 3001) para evitar conflictos.
 
 ## 📋 Scripts Disponibles
 

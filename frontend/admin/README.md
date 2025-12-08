@@ -1,18 +1,47 @@
-# Getting Started with Create React App
+# Panel de Administración - Pastelería E-Commerce
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este es el panel de administración del proyecto de e-commerce de pastelería, construido con React y Create React App.
 
-## Available Scripts
+## 🚀 Inicio Rápido
 
-In the project directory, you can run:
+### Configuración de Puertos
+
+**IMPORTANTE**: Este proyecto usa puertos específicos para evitar conflictos:
+
+- **Panel Admin**: Puerto **3001** (`http://localhost:3001`)
+- **Frontend Cliente**: Puerto **3000** (`http://localhost:3000`)
+- **Backend API**: Puerto **8000** (`http://localhost:8000`)
+
+### Instalación
+
+1. Instala las dependencias:
+```bash
+npm install
+```
+
+2. Verifica que existe el archivo `.env` con la configuración de puerto:
+```env
+PORT=3001
+BROWSER=none
+```
+
+### Ejecutar el Panel de Admin
+
+```bash
+npm start
+```
+
+La aplicación se abrirá automáticamente en [http://localhost:3001](http://localhost:3001)
+
+## 📋 Scripts Disponibles
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Ejecuta la aplicación en modo desarrollo en el puerto **3001**.\
+Abre [http://localhost:3001](http://localhost:3001) para verla en tu navegador.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+La página se recargará cuando hagas cambios.\
+También verás errores de lint en la consola.
 
 ### `npm test`
 
