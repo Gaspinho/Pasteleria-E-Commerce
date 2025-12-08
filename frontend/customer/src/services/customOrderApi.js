@@ -12,6 +12,42 @@ const baseQueryWithAuth = fetchBaseQuery({
     return headers
   },
 })
+const baseQueryTransbank = fetchBaseQuery({ 
+  baseUrl: 'http://127.0.0.1:8000/webpay/',
+  prepareHeaders: (headers) => {
+    const token = sessionStorage.getItem('access_token')
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`)
+    }
+    return headers
+  },
+})
+
+export const transbankApi = createApi({
+  reducerPath: 'transbankApi',
+  baseQuery: baseQueryTransbank,
+  endpoints: (builder) => ({
+    initTransaction: builder.mutation({
+      query: (transactionData) => ({
+        url: 'init',
+        method: 'POST',
+        body: transactionData,
+        headers: {
+          'Content-type': 'application/json',
+        }
+      }),
+    }),
+    confirmTransaction: builder.mutation({
+      query: (token_ws) => ({
+        url: `return?token_ws=${token_ws}`,
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        }
+      }),
+    }),
+  }),
+});
 
 export const customOrderApi = createApi({
   reducerPath: 'customOrderApi',
@@ -94,3 +130,4 @@ export const customOrderApi = createApi({
 
 export const {useUpdateOrderMutation , useGetProfileOrderQuery, usePlaceCustomOrderMutation ,useGetDetaildCustomOrderQuery,
    useGetAllCustomOrdersQuery, useGetUserCustomOrderQuery} = customOrderApi
+export const { useInitTransactionMutation, useConfirmTransactionMutation} = transbankApi

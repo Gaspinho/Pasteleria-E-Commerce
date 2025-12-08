@@ -98,10 +98,13 @@ export const Checkout = () => {
               <CheckoutOrders />
             </div>
           </div>
-          {activeStep === 3 ?<button onClick={handlePrint} className="btn btn-icon">
-          Imprimir Detalles del Pedido 
-        </button> :("") }
-          
+          {activeStep === 3 && (
+            <div className="checkout-print-button">
+              <button onClick={handlePrint} className="btn btn-icon btn-print">
+                <i className="icon-printer"></i> Imprimir Detalles del Pedido 
+              </button>
+            </div>
+          )}
         </div>
         <img
           className="promo-video__decor js-img"
@@ -110,6 +113,46 @@ export const Checkout = () => {
         />
       </div>
       {/* <!-- CHECKOUT EOF   --> */}
+
+      <style jsx>{`
+        .checkout-print-button {
+          display: flex;
+          justify-content: center;
+          margin-top: 30px;
+          margin-bottom: 40px;
+        }
+
+        .btn-print {
+          padding: 14px 30px !important;
+          border-radius: 8px !important;
+          font-weight: 600 !important;
+          font-size: 16px !important;
+          transition: all 0.3s ease !important;
+          border: none !important;
+          background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%) !important;
+          color: white !important;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .btn-print:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4) !important;
+        }
+
+        .btn-print i {
+          font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+          .btn-print {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+      `}</style>
     </>
   );
 };

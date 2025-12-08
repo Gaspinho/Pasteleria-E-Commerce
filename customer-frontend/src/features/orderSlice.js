@@ -6,6 +6,13 @@ const initialState = {
     order_Delivery_Date: "",
     order_Delivery_Time :" ",
     total_Amount: "",
+    phone_Number: "",
+    address: {
+        street_Number: "",
+        house_Number: "",
+        city: "",
+        area: ""
+    }
 }
 
 export const orderSlice = createSlice({
@@ -18,7 +25,8 @@ export const orderSlice = createSlice({
       state.order_Delivery_Date = action.payload.order_Delivery_Date
       state.order_Delivery_Time = action.payload.order_Delivery_Time
       state.total_Amount= action.payload.total_Amount
-
+      state.phone_Number = action.payload.phone_Number || ""
+      state.address = action.payload.address || initialState.address
     },
     unsetOrder: (state, action) => {
       state.id = action.payload.id
@@ -26,6 +34,8 @@ export const orderSlice = createSlice({
       state.order_Delivery_Date = action.payload.order_Delivery_Date
       state.order_Delivery_Time = action.payload.order_Delivery_Time
       state.total_Amount= action.payload.total_Amount
+      state.phone_Number = ""
+      state.address = initialState.address
     },
   }
 })

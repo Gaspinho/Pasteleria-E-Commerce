@@ -7,7 +7,7 @@ import { productApi } from '../services/productApi'
 import {feedbackApi} from '../services/feedbackApi'
 import authReducer from '../features/authSlice'
 import userReducer from '../features/userSlice'
-import{customOrderApi} from '../services/customOrderApi'
+import{customOrderApi , transbankApi} from '../services/customOrderApi'
 import orderReducer from '../features/orderSlice'
 import customCakeReducer from '../features/customCakeSlice'
 
@@ -23,6 +23,7 @@ export const store = configureStore({
     [userCRUDApi.reducerPath]: userCRUDApi.reducer,
     [productApi.reducerPath]:  productApi.reducer,
     [feedbackApi.reducerPath]:  feedbackApi.reducer,
+    [transbankApi.reducerPath]: transbankApi.reducer,
   }, 
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware().concat(
@@ -31,7 +32,8 @@ export const store = configureStore({
     productApi.middleware,
     feedbackApi.middleware,
     customOrderApi.middleware,
-    orderApi.middleware
+    orderApi.middleware,
+    transbankApi.middleware
   ),
 })
 
