@@ -32,5 +32,8 @@
     "frontend"
   ],
   "author": "Pastelería Mil Sabores Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@next/swc-linux-x64-gnu": "^15.5.7"
+  }
 }
