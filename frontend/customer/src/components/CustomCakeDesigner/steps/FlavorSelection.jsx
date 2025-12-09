@@ -40,7 +40,7 @@ const FlavorSelection = () => {
       id: '6',
       flavor_name: 'Limón',
       description: 'Refrescante sabor cítrico',
-      icon: '🍋',
+      icon: '�',
       color: '#FFFF00'
     },
   ]);

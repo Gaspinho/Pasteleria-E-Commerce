@@ -9,7 +9,7 @@ const LayerSelection = () => {
   // Mock de opciones - en producción vendría de la BD
   const [layers] = useState([
     {
-      id: '5',
+      id: '1',
       shape_id: '1',
       layer_number: 1,
       shape_name: 'Redondo',
@@ -18,7 +18,7 @@ const LayerSelection = () => {
       image: '/data/images/customDesign/1_5_2.png'
     },
     {
-      id: '14',
+      id: '2',
       shape_id: '1',
       layer_number: 2,
       shape_name: 'Redondo',
@@ -27,7 +27,7 @@ const LayerSelection = () => {
       image: '/data/images/customDesign/1_14_2.png'
     },
     {
-      id: '16',
+      id: '3',
       shape_id: '1',
       layer_number: 3,
       shape_name: 'Redondo',
@@ -36,7 +36,7 @@ const LayerSelection = () => {
       image: '/data/images/customDesign/1_16_2.png'
     },
     {
-      id: '18',
+      id: '4',
       shape_id: '3',
       layer_number: 1,
       shape_name: 'Rectangular',
@@ -45,7 +45,7 @@ const LayerSelection = () => {
       image: '/data/images/customDesign/3_18_2.png'
     },
     {
-      id: '19',
+      id: '5',
       shape_id: '3',
       layer_number: 2,
       shape_name: 'Rectangular',
@@ -54,7 +54,7 @@ const LayerSelection = () => {
       image: '/data/images/customDesign/3_19_2.png'
     },
     {
-      id: '20',
+      id: '6',
       shape_id: '3',
       layer_number: 3,
       shape_name: 'Rectangular',

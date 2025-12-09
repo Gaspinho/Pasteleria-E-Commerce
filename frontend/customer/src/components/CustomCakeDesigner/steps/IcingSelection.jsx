@@ -12,7 +12,7 @@ const IcingSelection = () => {
       id: '0',
       decoration_name: 'Sin Cobertura',
       description: 'Solo el bizcocho',
-      icon: '🎂'
+      icon: '🚫'
     },
     {
       id: '1',

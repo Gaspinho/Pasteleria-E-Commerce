@@ -4,9 +4,10 @@ import './designtool.css';
 import { useNavigate } from 'react-router-dom'
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import logo from "../../images/logo.ico";
 import {
   Box, Card, CardContent, Typography, Button, Chip, Select, MenuItem,
-  FormControl, InputLabel, Grid, TextField, Alert
+  FormControl, InputLabel, Grid, TextField, Alert, Avatar
 } from '@mui/material';
 import {
   Cake, Visibility, Cancel, CheckCircle, HourglassEmpty,
@@ -248,17 +249,11 @@ function Designtool() {
           filteredOrders.map((data, index) => (
             <Card key={index} className="customOrdercard modern-order-card">
               <Box className="order-image-container">
-                {data?.custom_cake?.final_product_img?.image ? (
-                  <img 
-                    src={`http://127.0.0.1:8000${data.custom_cake.final_product_img.image}`} 
-                    alt="Pastel Personalizado" 
-                    className="customOrderimage" 
-                  />
-                ) : (
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                    <Cake sx={{ fontSize: 80, color: 'white', opacity: 0.5 }} />
-                  </Box>
-                )}
+                <Avatar 
+                  src={logo} 
+                  alt="Pedido Personalizado" 
+                  sx={{ width: 80, height: 80, margin: 'auto' }}
+                />
                 <Chip
                   icon={getStatusIcon(data?.order_Status)}
                   label={data?.order_Status || 'Pending'}
