@@ -6,17 +6,13 @@ import { useGetAllProductQuery } from "../../services/productApi";
 function Products() {
   const navigate = useNavigate();
   const response = useGetAllProductQuery();
- 
-  console.log("Response Information: ", response);
-  console.log("Data: ", response.data);
-  console.log("Success: ", response.isSuccess);
 
   if (response.isLoading) return <div>Loading....</div>;
   if (response.isError) return <h1>An error occured {response.error.error}</h1>;
+  
   let arr = (response.data).slice().reverse();
  
   const handleEdit = props => {
-    console.log(props)
     navigate(`/admin/product/edit/${props}`);
   };
 
@@ -24,11 +20,18 @@ function Products() {
     navigate(`/admin/product/new`);
   };
 
+
+  const getImgUrl = (img) => {
+    if (!img) return '/assets/img/placeholder.png';
+    if (img.startsWith('http')) return img;
+    return `http://127.0.0.1:8000${img}`;
+  };
+
   return (
     <div>
       <div className="titlediv">
-      <h1 style={{ marginBottom: "3rem" }}> Lista de Productos </h1>
-      <button className="newBtn" onClick={() => handleNew()}> Nuevo Producto </button>
+        <h1 style={{ marginBottom: "3rem" }}> Lista de Productos </h1>
+        <button className="newBtn" onClick={() => handleNew()}> Nuevo Producto </button>
       </div>
       <div className="productGrid">
         {arr.map((data, index) => (
@@ -37,40 +40,29 @@ function Products() {
               <div className="photo-container">
                 <div className="photo-main">
                   <img
-                    src={`http://127.0.0.1:8000${data.imageGallery.image1}`}
-                    alt="mainePhoto"
+                    src={getImgUrl(data.imageGallery?.image1)}
+                    alt="mainPhoto"
                   />
                 </div>
                 <div className="photo-album">
                   <ul>
                     <li>
-                      <img
-                        src={`http://127.0.0.1:8000${data.imageGallery.image2}`}
-                        alt="image1"
-                      />
+                      <img src={getImgUrl(data.imageGallery?.image2)} alt="img2" />
                     </li>
                     <li>
-                      <img
-                        src={`http://127.0.0.1:8000${data.imageGallery.image3}`}
-                        alt="image2"
-                      />
+                      <img src={getImgUrl(data.imageGallery?.image3)} alt="img3" />
                     </li>
                     <li>
-                      <img
-                        src={`http://127.0.0.1:8000${data.imageGallery.image4}`}
-                        alt="image3"
-                      />
+                      <img src={getImgUrl(data.imageGallery?.image4)} alt="img4" />
                     </li>
                     <li>
-                      <img
-                        src={`http://127.0.0.1:8000${data.imageGallery.image1}`}
-                        alt="image4"
-                      />
+                      <img src={getImgUrl(data.imageGallery?.image1)} alt="img1-rep" />
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
+            
             <div className="product__info">
               <div className="title">
                 <h1>{data.product_Name}</h1>
@@ -78,11 +70,11 @@ function Products() {
               </div>
               <div className="dataProduct ">
                 <h3>En Venta:</h3>
-                <span> {data.product_Is_Sale === 'Yes' || data.product_Is_Sale === 'true' || data.product_Is_Sale === true ? 'Sí' : 'No'} </span>
+                <span> {data.product_Is_Sale === 'Yes' || data.product_Is_Sale === true ? 'Sí' : 'No'} </span>
               </div>
               <div className="dataProduct ">
                 <h3> Precio:</h3>
-                <span>${data.product_Price}</span>
+                <span> {data.product_Price} CLP</span>
               </div>
               <div className="dataProduct">
                 <h3>Stock:</h3>
@@ -90,7 +82,7 @@ function Products() {
               </div>
               <div className="dataProduct ">
                 <h3> Categoría:</h3>
-                <span> {data.product_category.category_Name} </span>
+                <span> {data.product_category?.category_Name || data.category_name} </span>
               </div>
               <div className="description">
                 <h3>Descripción:</h3>

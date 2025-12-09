@@ -149,6 +149,14 @@ async def get_product(product_id: int):
 @router.post("/create", response_model=dict)
 async def create_product(product: ProductCreate, token: str = Depends(get_access_token)): #
     """Crear un nuevo producto (Admin only)"""
+
+    ### DEBUG 1: VER QUÉ LLEGA DESDE EL FRONTEND ###
+    print("\n" + "="*30)
+    print("DEBUG: INICIO DE CREACIÓN DE PRODUCTO")
+    print(f"DEBUG: Datos de imagen recibidos: {product.image_gallery}")
+    print("="*30 + "\n")
+    ###############################################
+
     image_gallery_id = None
     product_id = None
     try:
@@ -173,12 +181,19 @@ async def create_product(product: ProductCreate, token: str = Depends(get_access
         
         # 2. Crear image_gallery si se proporcionan imágenes
         if product.image_gallery:
+            ### DEBUG 2: CONFIRMAR QUE ENTRAMOS AL IF ###
+            print("DEBUG: Entrando al bloque de inserción de imágenes...")
+            #############################################
             img_response = supabase.table("image_gallery").insert({
                 "image1": product.image_gallery.image1,
                 "image2": product.image_gallery.image2,
                 "image3": product.image_gallery.image3,
                 "image4": product.image_gallery.image4
             }).execute()
+
+            ### DEBUG 3: VER QUÉ RESPONDIÓ SUPABASE ###
+            print(f"DEBUG: Respuesta Supabase Imágenes: {img_response.data}")
+            ###########################################
             
             if not img_response.data:
                 raise HTTPException(status_code=500, detail="Failed to create image gallery")
@@ -196,6 +211,10 @@ async def create_product(product: ProductCreate, token: str = Depends(get_access
             "category_id": category_id,
             "image_gallery_id": image_gallery_id
         }
+        
+        ### DEBUG 4: VER DATOS FINALES DEL PRODUCTO ###
+        print(f"DEBUG: Insertando producto con datos: {product_data}")
+        ###############################################
         
         response = supabase.table("productos").insert(product_data).execute()
 

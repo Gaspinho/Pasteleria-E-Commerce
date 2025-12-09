@@ -49,7 +49,10 @@ function NewProduct() {
         image4: data.image4 || null,
       }
     };
-        
+    console.log("=== DATOS QUE SE ENVIARÁN ===");
+    console.log(productData.image_gallery);
+    console.log("=============================");
+    
     const res = await postProduct(productData);
     
     if (res.error) {

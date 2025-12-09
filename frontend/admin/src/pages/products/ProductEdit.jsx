@@ -25,6 +25,13 @@ function ProductEdit() {
  
   useEffect(() => {
     if (productRes.isSuccess && productRes.data) {
+      
+      // Función auxiliar interna
+      const checkUrl = (url) => {
+          if (!url) return '';
+          return url.startsWith('http') ? url : `http://127.0.0.1:8000${url}`;
+      };
+
       setData ({
         product_Name: productRes.data.product_Name || '',
         product_Id: productRes.data.product_Id || '',
@@ -33,10 +40,13 @@ function ProductEdit() {
         product_Stock: productRes.data.product_Stock || 0,
         product_Description: productRes.data.product_Description || '',
         imageGallery_Id: productRes.data.imageGallery?.id || '',
-        image1: productRes.data.imageGallery?.image1 ? `http://127.0.0.1:8000${productRes.data.imageGallery.image1}` : '',
-        image2: productRes.data.imageGallery?.image2 ? `http://127.0.0.1:8000${productRes.data.imageGallery.image2}` : '',
-        image3: productRes.data.imageGallery?.image3 ? `http://127.0.0.1:8000${productRes.data.imageGallery.image3}` : '',
-        image4: productRes.data.imageGallery?.image4 ? `http://127.0.0.1:8000${productRes.data.imageGallery.image4}` : '',
+        
+        // APLICAMOS LA CORRECCIÓN AQUÍ:
+        image1: checkUrl(productRes.data.imageGallery?.image1),
+        image2: checkUrl(productRes.data.imageGallery?.image2),
+        image3: checkUrl(productRes.data.imageGallery?.image3),
+        image4: checkUrl(productRes.data.imageGallery?.image4),
+        
         category_Name: productRes.data.category_Name || productRes.data.product_category?.category_Name || 'Chocolate',
       })
     }
