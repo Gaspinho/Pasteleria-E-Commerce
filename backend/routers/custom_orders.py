@@ -237,7 +237,20 @@ async def create_custom_cake(
 async def get_all_custom_orders():
     """Obtener todas las órdenes personalizadas"""
     try:
-        response = supabase.table('custom_cake_order').select('*, custom_cake(*), address(*), payment(*)').execute()
+        response = supabase.table('custom_cake_order').select('''
+            *,
+            custom_cake(
+                *,
+                sponge_flavor:sponge_flavor_id(*),
+                shape_layer:shape_layer_id(*),
+                icing:icing_id(*),
+                top_img_decoration:top_img_decoration_id(*),
+                msg_color:msg_color_id(*),
+                final_product_img:final_product_img_id(*)
+            ),
+            address(*),
+            payment(*)
+        ''').execute()
         # Devolver el array directamente, no dentro de un objeto "orders"
         return response.data if response.data else []
     except Exception as e:
@@ -332,7 +345,20 @@ async def get_user_custom_order_by_id(custom_cake_id: str):
 async def get_custom_order_detail(order_id: str):
     """Obtener detalles de una orden personalizada específica"""
     try:
-        response = supabase.table('custom_cake_order').select('*, custom_cake(*), address(*), payment(*)').eq('id', order_id).single().execute()
+        response = supabase.table('custom_cake_order').select('''
+            *,
+            custom_cake(
+                *,
+                sponge_flavor:sponge_flavor_id(*),
+                shape_layer:shape_layer_id(*),
+                icing:icing_id(*),
+                top_img_decoration:top_img_decoration_id(*),
+                msg_color:msg_color_id(*),
+                final_product_img:final_product_img_id(*)
+            ),
+            address(*),
+            payment(*)
+        ''').eq('id', order_id).single().execute()
         return response.data
     except Exception as e:
         print(f"Supabase error: {e}")

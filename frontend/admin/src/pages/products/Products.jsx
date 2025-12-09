@@ -3,6 +3,7 @@ import "./products.css";
 import { useNavigate } from "react-router-dom";
 import { useGetAllProductQuery } from "../../services/productApi";
 
+
 function Products() {
   const navigate = useNavigate();
   const response = useGetAllProductQuery();
