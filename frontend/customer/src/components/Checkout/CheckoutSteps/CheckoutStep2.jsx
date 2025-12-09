@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useInitTransactionMutation } from "../../../services/customOrderApi";
-import { useSelector } from "react-redux";
+import { CartContext } from "pages/_app";
 
 export const CheckoutStep2 = ({ onNext, onPrev }) => {
   const [payment, setPayment] = useState("cash");
@@ -9,9 +9,12 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
   const inputRef = useRef(null);
   const [initTransaction] = useInitTransactionMutation();
   
-  // Obtener el total del carrito
-  const cartItems = useSelector((state) => state.cart?.items || []);
-  const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  // Obtener el carrito del contexto
+  const { cart } = useContext(CartContext);
+  const totalAmount = cart.reduce(
+    (total, item) => total + Number(item.price) * Number(item.quantity),
+    0
+  );
 
   // Quitar todo lo que no sea número
   const onlyDigits = (s) => s.replace(/\D/g, "");
@@ -48,24 +51,34 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
         
         // Crear datos de la transacción
         const transactionData = {
-          amount: Math.round(totalAmount), // Monto en pesos chilenos
-          session_id: `session_${Date.now()}`, // ID único de sesión
-          buy_order: `order_${Date.now()}`, // Número de orden único
+          amount: Math.round(totalAmount),
+          session_id: `session_${Date.now()}`,
+          buy_order: `order_${Date.now()}`,
         };
 
         // Iniciar transacción con Transbank
         const response = await initTransaction(transactionData).unwrap();
         
-        // Abrir el HTML de redirección en una nueva ventana o en la misma
+        // Abrir el HTML de redirección en una nueva ventana
         const newWindow = window.open('', '_blank');
         if (newWindow) {
           newWindow.document.write(response);
           newWindow.document.close();
         }
         
+        onNext();
+        
       } catch (error) {
         console.error("Error al iniciar transacción:", error);
-        alert("Error al procesar el pago. Por favor intente nuevamente.");
+        
+        // Preguntar si quiere continuar de todos modos
+        const continuar = confirm(
+          "No se pudo conectar con el sistema de pagos Transbank. ¿Desea continuar con el pedido como 'Pendiente de pago'?"
+        );
+        
+        if (continuar) {
+          onNext();
+        }
       } finally {
         setIsProcessing(false);
       }
