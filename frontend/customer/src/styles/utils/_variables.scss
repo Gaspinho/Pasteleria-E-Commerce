@@ -7,7 +7,9 @@ $base-line-height: 18px;
 $base-font-family: 'Lato', sans-serif; 
 $custom-font-family: 'Lato', sans-serif; 
 $link-color: #D05278;
-$transition: all 0.3s linear;
+$transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+$box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+$gradient-primary: linear-gradient(135deg, #A53860 0%, #D05278 100%);
 
 /* main variables */
 

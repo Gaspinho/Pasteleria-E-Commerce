@@ -1,5 +1,17 @@
 //main styles
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .main-wrapper {
   padding: 0 0 0 0;
   min-width: $min-width;
@@ -144,7 +156,7 @@ h6,
   line-height: 59px;
   outline: none;
   border: none;
-  background: #A53860;
+  background: $gradient-primary;
   padding: 0 50px;
   font-weight: bold;
   font-size: 14px;
@@ -153,9 +165,12 @@ h6,
   display: inline-block;
   transition: $transition;
   font-family: "Lato";
+  border-radius: 30px;
 
   &:hover {
-    background: #545454;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(208, 82, 120, 0.4);
+    filter: brightness(1.1);
   }
 
   &-icon {
@@ -223,7 +238,7 @@ h6,
 .main-block {
   padding-top: 340px;
   padding-bottom: 237px;
-  background-image: url(/assets/img/main-bg.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url(/assets/img/main-bg.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -245,10 +260,14 @@ h6,
   .saint-text {
     font-size: 60px;
     padding-left: 9px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
   }
 
   .main-text {
     line-height: normal;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.4s;
   }
 
   p {
@@ -257,6 +276,8 @@ h6,
     line-height: 150%;
     font-family: "Tenor Sans";
     padding-left: 10px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.6s;
   }
 
   .btn {
@@ -349,6 +370,7 @@ h6,
     padding: 0 115px;
     margin-left: -22px;
     margin-right: -22px;
+
     & .slick-arrow.slick-prev {
       top: 51%;
     }
@@ -632,9 +654,19 @@ h6,
   }
 
   &-item {
-    margin: 0 45px;
-    width: calc(33.3% - 90px);
+    margin: 0 20px;
+    width: calc(33.3% - 40px);
     text-align: center;
+    background: #fff;
+    padding: 35px 20px;
+    border-radius: 20px;
+    box-shadow: $box-shadow;
+    transition: $transition;
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
 
     &__icon {
       margin-bottom: 55px;
@@ -1262,12 +1294,19 @@ h6,
   &__item {
     margin: 0 15px;
     width: calc(33.3% - 30px);
-    background: #faf9ff;
-    border: 1px solid #eeeeee;
+    background: #ffffff;
+    box-shadow: $box-shadow;
+    border-radius: 15px;
     padding: 26px 56px 26px 42px;
     display: flex;
     align-items: center;
     text-align: left;
+    transition: $transition;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
 
     &-icon {
       width: 80px;
@@ -1456,6 +1495,7 @@ h6,
     .slick-arrow {
       left: -135px;
     }
+
     .slick-arrow.slick-next {
       right: -135px;
       left: auto;
@@ -1806,6 +1846,7 @@ h6,
     }
 
     &.active {
+
       // margin-top: 50px;
       // margin-bottom: 34px;
       .faq-item__head-num {
@@ -2622,6 +2663,7 @@ blockquote,
 }
 
 .box-field__search {
+
   input[type="search"]::-webkit-search-decoration,
   input[type="search"]::-webkit-search-cancel-button,
   input[type="search"]::-webkit-search-results-button,
@@ -2721,12 +2763,12 @@ blockquote,
   margin-right: 10px;
 }
 
-.checkbox-box:hover input ~ .checkmark {
+.checkbox-box:hover input~.checkmark {
   background-color: #fff;
   transition: $transition;
 }
 
-.checkbox-box input:checked ~ .checkmark {
+.checkbox-box input:checked~.checkmark {
   background-color: #d05278;
 }
 
@@ -2736,7 +2778,7 @@ blockquote,
   display: none;
 }
 
-.checkbox-box input:checked ~ .checkmark:after {
+.checkbox-box input:checked~.checkmark:after {
   display: block;
 }
 
@@ -3757,6 +3799,7 @@ blockquote,
       }
 
       &-info {
+
         h6,
         .title6 {
           margin-bottom: 10px;
@@ -3969,7 +4012,7 @@ blockquote,
   display: none;
 }
 
-.radio-box input:checked ~ .checkmark:after {
+.radio-box input:checked~.checkmark:after {
   display: block;
 }
 
@@ -4757,6 +4800,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 @media screen and (max-width: 1279px) {
+
   .trending,
   .discount {
     padding-top: 110px;
@@ -5237,6 +5281,7 @@ input[type="search"]::-webkit-search-results-decoration {
     margin-right: -6px;
     margin-bottom: -35px;
   }
+
   .promo-video {
     padding-top: 110px;
     margin-bottom: 110px;
@@ -5595,6 +5640,7 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 
   .scroll-off {
+
     // overflow: hidden;
     body {
       overflow: hidden;
@@ -5687,13 +5733,15 @@ input[type="search"]::-webkit-search-results-decoration {
   /* Center the hover options (search icon + add-to-cart) and style the add button */
   .products-item__hover-options {
     position: absolute;
-    inset: 0; /* top:0; right:0; bottom:0; left:0; */
+    inset: 0;
+    /* top:0; right:0; bottom:0; left:0; */
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     z-index: 12;
-    pointer-events: none; /* let children enable pointer events individually */
+    pointer-events: none;
+    /* let children enable pointer events individually */
   }
 
   .products-item__hover-options button.addList {
@@ -5708,13 +5756,13 @@ input[type="search"]::-webkit-search-results-decoration {
     justify-content: center;
     gap: 8px;
     font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     transition: transform 0.12s ease, box-shadow 0.12s ease;
   }
 
   .products-item__hover-options button.addList:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.16);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16);
   }
 
   .products-item__name {

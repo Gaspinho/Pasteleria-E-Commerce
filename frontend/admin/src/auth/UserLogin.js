@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Toolbar, Grid, Card, Typography, Box,TextField, Button,Alert, CircularProgress } from '@mui/material';
+import { AppBar, Toolbar, Grid, Card, Typography, Box, TextField, Button, Alert, CircularProgress } from '@mui/material';
 import logo from '../images/logo.ico';
 import backImg from '../images/login-form__bg.png';
 import { useEffect, useState } from 'react';
@@ -38,17 +38,17 @@ const UserLogin = () => {
     }
     if (res.data) {
       console.log('Login response:', res.data)
-      
+
       // Verificar si el usuario es staff/admin
       if (!res.data.is_staff) {
         setServerError({ non_field_errors: ['Acceso denegado. Solo usuarios staff pueden acceder al panel de administración.'] })
         return
       }
-      
+
       // Guardar tokens en localStorage
       localStorage.setItem('access_token', res.data.access_token)
       localStorage.setItem('refresh_token', res.data.refresh_token)
-      
+
       // Guardar información del usuario
       const userData = {
         access_token: res.data.access_token,
@@ -60,40 +60,40 @@ const UserLogin = () => {
         is_staff: res.data.is_staff,
         user_type: res.data.user_type
       }
-      
+
       dispatch(setUserToken(userData))
-      
+
       // Disparar evento para actualizar el estado de autenticación
       window.dispatchEvent(new Event('authChange'))
-      
+
       // Redirigir al dashboard de admin
       navigate('/admin/dashboard')
     }
   }
 
   return (
-    <div>  
-    <Box sx={{ flexGrow: 1 ,}} >
-      <AppBar position="static" color="primary" >
-        <Toolbar >
-        <Box
-            component="img"
-            sx={{
-            height: 100,
-            margin: 2,
-            }}
-            alt="logo"
-            src={logo}
-        />
-          <Typography variant='h5' component="div" sx={{ flexGrow: 1 }}>  Bake and Take - Panel de Administración </Typography>
-        </Toolbar>
-      </AppBar>
-    </Box >
-      <Grid container sx={{ display: "flex", justifyContent: "center" , margin:'30px' }} >
+    <div>
+      <Box sx={{ flexGrow: 1, }} >
+        <AppBar position="static" color="primary" >
+          <Toolbar >
+            <Box
+              component="img"
+              sx={{
+                height: 100,
+                margin: 2,
+              }}
+              alt="logo"
+              src={logo}
+            />
+            <Typography variant='h5' component="div" sx={{ flexGrow: 1 }}>  Pastelería Mil Sabores - Panel de Administración </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box >
+      <Grid container sx={{ display: "flex", justifyContent: "center", margin: '30px' }} >
         <Grid item lg={5} sm={7} xs={12}>
-          <Card sx={{ width: "100%", height: "100%",marginTop:'30px' ,backgroundImage:`url(${backImg})`}}>
+          <Card sx={{ width: "100%", height: "100%", marginTop: '30px', backgroundImage: `url(${backImg})` }}>
             <Box sx={{ mx: 3, height: 300 }}>
-              <h3 style={{color:"#A53860", fontSize: 33, textAlign:"center" ,marginTop:'30px'}}> Inicio de Sesión Admin</h3>
+              <h3 style={{ color: "#A53860", fontSize: 33, textAlign: "center", marginTop: '30px' }}> Inicio de Sesión Admin</h3>
               {server_error ? console.log(server_error) : ""}
               <Box
                 component="form"
