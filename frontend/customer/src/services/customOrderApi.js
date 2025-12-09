@@ -28,14 +28,23 @@ export const transbankApi = createApi({
   baseQuery: baseQueryTransbank,
   endpoints: (builder) => ({
     initTransaction: builder.mutation({
-      query: (transactionData) => ({
-        url: 'init',
-        method: 'POST',
-        body: transactionData,
-        headers: {
-          'Content-type': 'application/json',
-        }
-      }),
+      query: (transactionData) => {
+        // Crear FormData
+        const formData = new URLSearchParams();
+        formData.append('amount', transactionData.amount);
+        formData.append('session_id', transactionData.session_id);
+        formData.append('buy_order', transactionData.buy_order);
+        
+        return {
+          url: 'init',
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded',
+          },
+          responseHandler: (response) => response.text(), // Aceptar HTML
+        };
+      },
     }),
     confirmTransaction: builder.mutation({
       query: (token_ws) => ({
