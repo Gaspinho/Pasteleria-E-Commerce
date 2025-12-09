@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Depends, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from transbank.webpay.webpay_plus.transaction import Transaction, WebpayOptions
 from transbank.common.integration_type import IntegrationType
@@ -16,8 +16,17 @@ class InitTransactionRequest(BaseModel):
     buy_order: str
 
 @router.post("/init")
-async def init_transaction(request: InitTransactionRequest):
+async def init_transaction(
+    amount: int = Form(),
+    session_id: str = Form(),
+    buy_order: str = Form()
+):
     try:
+        request = InitTransactionRequest(
+            amount=amount, 
+            session_id=session_id, 
+            buy_order=buy_order
+        )
         return_url = "http://127.0.0.1:8000/webpay/return"  # URL de retorno
         response = transaction.create(request.buy_order, request.session_id, request.amount, return_url)
         html_content = f"""
