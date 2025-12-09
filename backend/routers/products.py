@@ -42,6 +42,7 @@ class ProductUpdate(BaseModel):
     product_stock: Optional[int] = Field(None, ge=0)
     product_is_sale: Optional[str] = None
     category_name: Optional[str] = None
+    image_gallery: Optional[ImageGallery] = None
 
 class ProductResponse(BaseModel):
     product_id: int
@@ -57,8 +58,9 @@ class ProductResponse(BaseModel):
     image2: Optional[str]
     image3: Optional[str]
     image4: Optional[str]
-    review_count: int
-    avg_rating: float
+    image_path: Optional[str] = None
+    review_count: Optional[int] = 0
+    avg_rating: Optional[float] = 0.0
     created_at: datetime
     updated_at: datetime
 
@@ -231,43 +233,73 @@ async def create_product(product: ProductCreate, token: str = Depends(get_access
 
 @router.put("/products/{product_id}", response_model=dict)
 async def update_product(product_id: int, product: ProductUpdate, token: str = Depends(get_access_token)):
-    """Actualizar un producto existente (Admin only)"""
+    """Actualizar producto, su galería y mantener compatibilidad legacy"""
     try:
-        # Verificar que el producto existe
+        # 1. Verificar existencia
         existing = supabase.table("productos").select("*").eq("id", product_id).execute()
         if not existing.data:
             raise HTTPException(status_code=404, detail="Product not found")
         
+        current_product = existing.data[0]
+        image_gallery_id = current_product.get("image_gallery_id")
+        
         update_data = {}
         
-        # Solo actualizar campos proporcionados
-        if product.product_name:
-            update_data["nombre"] = product.product_name
-        if product.product_sku:
-            update_data["sku"] = product.product_sku
-        if product.product_description is not None:
-            update_data["descripcion"] = product.product_description
-        if product.product_price:
-            update_data["precio"] = product.product_price
-        if product.product_stock is not None:
-            update_data["stock"] = product.product_stock
-        if product.product_is_sale:
-            update_data["is_sale"] = product.product_is_sale
+        # Mapeo de campos básicos
+        if product.product_name: update_data["nombre"] = product.product_name
+        if product.product_sku: update_data["sku"] = product.product_sku
+        if product.product_description is not None: update_data["descripcion"] = product.product_description
+        if product.product_price: update_data["precio"] = product.product_price
+        if product.product_stock is not None: update_data["stock"] = product.product_stock
+        if product.product_is_sale: update_data["is_sale"] = product.product_is_sale
         
-        # Actualizar category_id si se proporciona category_name
+        # Actualizar categoría
         if product.category_name:
             cat_response = supabase.table("category").select("id").eq("name", product.category_name).execute()
             if cat_response.data:
                 update_data["category_id"] = cat_response.data[0]["id"]
         
-        if update_data:
-            response = supabase.table("productos").update(update_data).eq("id", product_id).execute()
-            
-            # Obtener producto actualizado completo
-            full_product = supabase.table("productos_full").select("*").eq("product_id", product_id).execute()
-            return full_product.data[0] if full_product.data else response.data[0]
+        # --- LÓGICA DE IMÁGENES ---
+        new_main_image = None
         
-        raise HTTPException(status_code=400, detail="No data to update")
+        # A. Si ya existe galería, la actualizamos
+        if image_gallery_id and product.image_gallery:
+            img_update = {}
+            if product.image_gallery.image1 is not None: 
+                img_update["image1"] = product.image_gallery.image1
+                new_main_image = product.image_gallery.image1 # Capturamos la nueva imagen principal
+            if product.image_gallery.image2 is not None: img_update["image2"] = product.image_gallery.image2
+            if product.image_gallery.image3 is not None: img_update["image3"] = product.image_gallery.image3
+            if product.image_gallery.image4 is not None: img_update["image4"] = product.image_gallery.image4
+            
+            if img_update:
+                supabase.table("image_gallery").update(img_update).eq("id", image_gallery_id).execute()
+
+        # B. Si NO existe galería pero enviaron fotos, creamos una nueva
+        elif not image_gallery_id and product.image_gallery:
+            img_insert = {
+                "image1": product.image_gallery.image1,
+                "image2": product.image_gallery.image2,
+                "image3": product.image_gallery.image3,
+                "image4": product.image_gallery.image4
+            }
+            new_gallery = supabase.table("image_gallery").insert(img_insert).execute()
+            if new_gallery.data:
+                update_data["image_gallery_id"] = new_gallery.data[0]["id"]
+                new_main_image = product.image_gallery.image1
+        
+        # --- COMPATIBILIDAD LEGACY ---
+        # Si se actualizó la imagen 1, actualizamos también image_path
+        if new_main_image:
+            update_data["image_path"] = new_main_image
+        # -----------------------------
+
+        if update_data:
+            supabase.table("productos").update(update_data).eq("id", product_id).execute()
+            
+        full_product = supabase.table("productos_full").select("*").eq("product_id", product_id).execute()
+        return full_product.data[0] if full_product.data else {}
+        
     except HTTPException:
         raise
     except Exception as e:

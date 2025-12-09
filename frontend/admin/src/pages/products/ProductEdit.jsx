@@ -1,206 +1,201 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useParams ,useNavigate  } from "react-router-dom";
-import {useUpdateProductMutation , useDetailedProductQuery} from "../../services/productApi";
-import { CircularProgress} from "@mui/material";
-import { DriveFolderUpload} from "@mui/icons-material";
-import { Alert } from '@mui/material';
-import "./productEdit.css";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useUpdateProductMutation, useDetailedProductQuery, useGetCategoriesQuery } from "../../services/productApi";
+import { CircularProgress, Alert } from "@mui/material";
+import "./productEdit.css"; 
+// Nota: Reutilizamos productEdit.css, pero asegúrate de que los estilos de 'url-input-group' 
+// que usaste en NewProduct existan. Si no, puedes copiarlos a productEdit.css
 
 function ProductEdit() {
-  const {id} = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [server_error, setServerError] = useState({});
-  const [data, setData] = useState("");
-  const [success , setSuccess] = useState(false)
-  const [updateProduct, { isLoading }] = useUpdateProductMutation();
-  
-  const [imge, setImge] = useState({
-    image1: '', image2: '', image3: '', image4: '',
+  const [success, setSuccess] = useState(false);
+
+  // Queries y Mutations
+  const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
+  const productRes = useDetailedProductQuery(id);
+  const { data: categoriesData } = useGetCategoriesQuery();
+
+  // Estado inicial
+  const [data, setData] = useState({
+    product_Name: '',
+    product_Description: '',
+    product_Price: '',
+    product_Stock: '',
+    product_Is_Sale: 'Yes',
+    category_Name: '',
+    image1: '',
+    image2: '',
+    image3: '',
+    image4: ''
   });
 
-  const productRes = useDetailedProductQuery(id);
-  console.log("Data: ", productRes.data);
-  console.log("Success: ", productRes.isSuccess);
- 
+  // Cargar datos cuando llegan del servidor
   useEffect(() => {
     if (productRes.isSuccess && productRes.data) {
-      
-      // Función auxiliar interna
-      const checkUrl = (url) => {
-          if (!url) return '';
-          return url.startsWith('http') ? url : `http://127.0.0.1:8000${url}`;
-      };
+      const p = productRes.data;
+      const gallery = p.imageGallery || {};
 
-      setData ({
-        product_Name: productRes.data.product_Name || '',
-        product_Id: productRes.data.product_Id || '',
-        product_Is_Sale: productRes.data.product_Is_Sale || 'Yes',
-        product_Price: productRes.data.product_Price || 0,
-        product_Stock: productRes.data.product_Stock || 0,
-        product_Description: productRes.data.product_Description || '',
-        imageGallery_Id: productRes.data.imageGallery?.id || '',
+      // Lógica para recuperar la imagen principal (Galería o Legacy)
+      let mainImg = gallery.image1;
+      if (!mainImg && p.image_path) {
+          mainImg = p.image_path; // Si no hay galería, usar la imagen legacy
+      }
+
+      setData({
+        product_Name: p.product_Name || '',
+        product_Description: p.product_Description || '',
+        product_Price: p.product_Price || 0,
+        product_Stock: p.product_Stock || 0,
+        product_Is_Sale: p.product_Is_Sale || 'Yes',
+        category_Name: p.category_Name || p.product_category?.category_Name || 'Chocolate',
         
-        // APLICAMOS LA CORRECCIÓN AQUÍ:
-        image1: checkUrl(productRes.data.imageGallery?.image1),
-        image2: checkUrl(productRes.data.imageGallery?.image2),
-        image3: checkUrl(productRes.data.imageGallery?.image3),
-        image4: checkUrl(productRes.data.imageGallery?.image4),
-        
-        category_Name: productRes.data.category_Name || productRes.data.product_category?.category_Name || 'Chocolate',
-      })
+        // Asignar URLs
+        image1: mainImg || '',
+        image2: gallery.image2 || '',
+        image3: gallery.image3 || '',
+        image4: gallery.image4 || ''
+      });
     }
-  }, [productRes])
-
-  console.log('data after assign', data)
-  if (productRes.isLoading) return <div> Loading....</div>;
-  if (productRes.isError) return <h1>An error occured {productRes.error.error}</h1>;
+  }, [productRes.isSuccess, productRes.data]);
 
   const handleChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData(values => ({ ...values, [name]: value }));
+    const { name, value } = event.target;
+    setData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleImage = event => {
-    console.log(event.target.files);
-    const name = event.target.name;
-    const value = event.target.files[0];
-    setImge(values => ({ ...values, [name]: value}));
-    const objectUrl = URL.createObjectURL(value)
-    setData(values => ({ ...values, [name]: objectUrl}));
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = async(e) => {
-    e.preventDefault()
-    
     const productData = {
       product_name: data.product_Name,
       product_description: data.product_Description,
       product_price: parseFloat(data.product_Price),
       product_stock: parseInt(data.product_Stock),
-      product_is_sale: data.product_Is_Sale === 'Yes' || data.product_Is_Sale === 'true' || data.product_Is_Sale === true ? 'Yes' : 'No',
+      product_is_sale: data.product_Is_Sale === 'Yes' || data.product_Is_Sale === true || data.product_Is_Sale === "true" ? 'Yes' : 'No',
       category_name: data.category_Name,
-    };
-        
-    const res = await updateProduct({ productData, id })
-    
-    if (res.error) {
-      if (typeof (res.error.data?.errors) === 'undefined') {
-        alert('A server/network error occurred. ' +'Looks like CORS might be the problem. ' +
-        'Sorry about this - we will get it fixed shortly.');
+      // Enviamos las URLs como texto dentro de image_gallery
+      image_gallery: {
+        image1: data.image1 || null,
+        image2: data.image2 || null,
+        image3: data.image3 || null,
+        image4: data.image4 || null,
       }
-      console.log(typeof (res.error.data?.errors))   
-      console.log(res.error.data?.errors)
-      setServerError(res.error.data?.errors || {})
-    } 
-    
+    };
+
+    const res = await updateProduct({ productData, id });
+
+    if (res.error) {
+      setServerError(res.error.data?.errors || {});
+      if (!res.error.data) alert("Error de conexión con el servidor.");
+    }
+
     if (res.data) {
-      console.log(typeof (res.data))
-      console.log(res.data)
-      setSuccess(true)
-      setTimeout(function(){ navigate('/admin/products')} , 3000);
+      setSuccess(true);
+      setTimeout(() => { navigate('/admin/products') }, 2000);
     }
   }
 
+  // Helper para renderizar input de imagen (Igual que en NewProduct)
+  const renderImageInput = (num) => {
+    const key = `image${num}`;
+    return (
+      <div className="url-input-group" style={{ marginBottom: '15px' }}>
+        <label style={{display: 'block', fontWeight: 'bold', fontSize: '14px', marginBottom: '5px'}}>
+           URL Imagen {num}
+        </label>
+        <input 
+          type="text" 
+          name={key} 
+          placeholder={`https://...`}
+          value={data[key]} 
+          onChange={handleChange} 
+          style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+        />
+        {data[key] && (
+          <div style={{ marginTop: '5px', border: '1px dashed #ccc', padding: '5px', width: 'fit-content' }}>
+            <img 
+              src={data[key]} 
+              alt={`Vista previa ${num}`} 
+              style={{ width: '100px', height: '100px', objectFit: 'cover', display: 'block' }}
+              onError={(e) => {e.target.style.display='none'}}
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  if (productRes.isLoading) return <div style={{padding:'2rem'}}>Cargando producto...</div>;
+  if (productRes.isError) return <div style={{padding:'2rem'}}>Error al cargar el producto</div>;
+
   return (
     <div className="container1">
-        <div className="photoContainer">
-          <div className="photoGrid">
-            <div className="productPhoto"> <img src={data.image1} alt="1" /> 
-            <div className="uploadContainer"><DriveFolderUpload sx={{ fontSize: "40px" }}  /> <input type="file" name="image1" onChange={handleImage}/> </div></div>
-            <div className="productPhoto"><img src={data.image2} alt="2" />
-            <div className="uploadContainer"><DriveFolderUpload sx={{ fontSize: "40px" }}  /> <input type="file" name="image2" onChange={handleImage}/> </div></div>
-            <div className="productPhoto"><img src={data.image3} alt="3" /> 
-            <div className="uploadContainer"><DriveFolderUpload sx={{ fontSize: "40px" }}  /> <input type="file" name="image3" onChange={handleImage}/> </div></div>
-            <div className="productPhoto"><img src={data.image4} alt="4" />
-            <div className="uploadContainer"><DriveFolderUpload sx={{ fontSize: "40px" }}  /> <input type="file" name="image4" onChange={handleImage}/> </div></div>
-            
-          </div>
+      {/* SECCIÓN IZQUIERDA: IMÁGENES (URLs) */}
+      <div className="photoContainer" style={{display:'flex', flexDirection:'column'}}>
+        <h3 style={{ marginBottom: '1rem', borderBottom: '2px solid #DA627D', paddingBottom: '0.5rem' }}>
+            Editar Imágenes
+        </h3>
+        {renderImageInput(1)}
+        {renderImageInput(2)}
+        {renderImageInput(3)}
+        {renderImageInput(4)}
+      </div>
+
+      {/* SECCIÓN DERECHA: DATOS */}
+      <div className="dataContainer">
+        <div className="info_data">
+          <div className="name"><h1>Editar: {data.product_Name}</h1></div>
+          <span style={{color: '#666'}}>ID: {id}</span>
         </div>
-        <div className="dataContainer"><div className="info_data"><div className="name"><h1> Nombre: {' '} {data.product_Name}</h1></div>
-        <div className="productInfo "><h3>ID de Producto:</h3><span> {data.product_Id}</span></div>
-            <div className="productInfo "><h3>Estado de Venta:</h3><span> {data.product_Is_Sale === 'Yes' || data.product_Is_Sale === 'true' || data.product_Is_Sale === true ? 'Sí' : 'No'}</span></div>
-            <div className="productInfo "><h3> Precio del Producto:</h3><span> Rs. {' '}{data.product_Price}</span></div>
-            <div className="productInfo"><h3>Stock del Producto:</h3><span> {data.product_Stock} </span></div>
-            <div className="productInfo "><h3>Categoría del Producto:</h3><span> {data.category_Name} {''} Cake</span></div>
-            <div className="descript"><h3> Descripción del Producto:</h3><p>{data.product_Description}</p></div>
-          </div>
+        
         <form className="editProductForm" onSubmit={handleSubmit}>
+          
           <div className="newproductItem">
-            <label>Nombre del Producto</label>
-            <input
-              type="text"
-              name="product_Name"
-              value={data.product_Name || ""}
-              onChange={handleChange}
-            />
-            {server_error.product_Name ? (
-              <lable style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-                {server_error.product_Name[0]} </lable>) : ("")}
+            <label>Nombre</label>
+            <input type="text" name="product_Name" value={data.product_Name} onChange={handleChange} />
           </div>
+
           <div className="newproductItem">
-            <label>Descripción del Producto</label>
-            <input type="text" name="product_Description" 
-            value={data.product_Description || ""}
-            onChange={handleChange}
-             />
-            {server_error.product_Name ? (
-              <lable style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-                {server_error.product_Name[0]} </lable>) : ("")}
+             <label>Descripción</label>
+             <input type="text" name="product_Description" value={data.product_Description} onChange={handleChange} />
           </div>
+
           <div className="newproductItem">
-            <label>Precio del Producto</label>
-            <input type="text"  name="product_Price"
-             value={data.product_Price || ""}
-            onChange={handleChange}
-            />
-            {server_error.product_Price ? (
-              <lable style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-                {server_error.product_Price[0]}
-              </lable>) : ("")}
+             <label>Precio</label>
+             <input type="number" name="product_Price" value={data.product_Price} onChange={handleChange} />
           </div>
+
           <div className="newproductItem">
-            <label>Stock del Producto</label>
-            <input type="text" name="product_Stock" value={data.product_Stock || ""}
-              onChange={handleChange} />
-            {server_error.product_Stock ? (
-              <lable style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-              {server_error.product_Stock[0]}</lable>) : ("")}
+             <label>Stock</label>
+             <input type="number" name="product_Stock" value={data.product_Stock} onChange={handleChange} />
           </div>
+
           <div className="newproductItem">
-            <label>Estado de Venta del Producto</label>
-            <select className="newProductSelect" name="product_Is_Sale" id="product_Is_Sale" 
-            value={data.product_Is_Sale || "Yes"}
-            onChange={handleChange} >
-              <option value="Yes" >Yes</option>
-              <option value= "No">No</option>
+            <label>En Oferta</label>
+            <select className="newProductSelect" name="product_Is_Sale" value={data.product_Is_Sale} onChange={handleChange}>
+              <option value="Yes">Sí</option>
+              <option value="No">No</option>
             </select>
           </div>
+
+          <div className="newproductItem">
+            <label>Categoría</label>
+            <select className="newProductSelect" name="category_Name" value={data.category_Name} onChange={handleChange}>
+              {categoriesData?.map((cat) => (
+                  <option key={cat.id} value={cat.name}>{cat.name}</option>
+              ))}
+              {!categoriesData && <option value="Chocolate">Cargando categorías...</option>}
+            </select>
+          </div>
+
           <div className="btn_con">
-          <div className="newproductItem">
-            <label>Actualizar Categoría</label>
-            <select className="newProductSelect" name="category_Name" id="category_Name"
-            value={data.category_Name || ""}
-            onChange={handleChange} required>
-             
-              <option value="Chocolate">Chocolate Cake</option>
-              <option value="Cupcakes">Cup Cake</option>
-              <option value="Aniversary">Aniversary Cake</option>
-              <option value="Birthday">Birthday Cake</option>
-            </select>
-          </div>
-          {isLoading ? (<CircularProgress /> ) : (
-            <button type="submit" className="btn1">
-             Actualizar Producto</button>
-          )}
+            {isUpdating ? <CircularProgress /> : <button type="submit" className="btn1">Actualizar Producto</button>}
           </div>       
         </form>
-        {server_error.image1 ? <Alert severity='error'>{ `image1: ${server_error.image1[0]}`}</Alert> : ''} 
-        {server_error.image2 ? <Alert severity='error'>{ `image2: ${server_error.image2[0]}`}</Alert> : ''} 
-        {server_error.image3 ? <Alert severity='error'>{ `image3: ${server_error.image3[0]}`}</Alert> : ''} 
-        {server_error.image4 ? <Alert severity='error'>{ `image4: ${server_error.image4[0]}`}</Alert> : ''} 
-        {success? <Alert severity='success'> Producto Actualizado Exitosamente </Alert> : ''}      
+
+        {success && <Alert severity='success' sx={{marginTop: 2}}>Producto actualizado correctamente</Alert>}      
       </div>
     </div>
   );
