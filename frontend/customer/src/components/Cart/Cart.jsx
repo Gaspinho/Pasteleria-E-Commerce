@@ -10,7 +10,7 @@ export const Cart = () => {
 
   // ***** CORRECCIÓN DE BUG *****
   // El costo de envío se calcula FUERA del reduce, de lo contrario se suma por cada item.
-  const shippingCost = 50.00;
+  const shippingCost = 5000.00; // ⬅️ CORREGIDO: Era 50.00, ahora es 5000.00
   const subtotal = cart.reduce(
     (total, item) => total + Number(item.price) * Number(item.quantity),
     0

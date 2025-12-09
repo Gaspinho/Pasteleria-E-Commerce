@@ -11,10 +11,18 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
   
   // Obtener el carrito del contexto
   const { cart } = useContext(CartContext);
-  const totalAmount = cart.reduce(
+  
+  // Calcular solo el valor de los productos
+  const productsAmount = cart.reduce(
     (total, item) => total + Number(item.price) * Number(item.quantity),
     0
   );
+  
+  // Costo de entrega fijo
+  const deliveryCost = 5000;
+  
+  // Total con entrega (para ambos métodos de pago)
+  const totalWithDelivery = productsAmount + deliveryCost;
 
   // Quitar todo lo que no sea número
   const onlyDigits = (s) => s.replace(/\D/g, "");
@@ -49,12 +57,14 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
       try {
         setIsProcessing(true);
         
-        // Crear datos de la transacción
+        // Crear datos de la transacción con el monto total (productos + entrega)
         const transactionData = {
-          amount: Math.round(totalAmount),
+          amount: Math.round(totalWithDelivery), // Monto completo con entrega
           session_id: `session_${Date.now()}`,
           buy_order: `order_${Date.now()}`,
         };
+
+        console.log(`💳 Pago con tarjeta - Total: $${totalWithDelivery.toLocaleString('es-CL')} CLP (Productos: $${productsAmount.toLocaleString('es-CL')} + Entrega: $${deliveryCost.toLocaleString('es-CL')})`);
 
         // Iniciar transacción con Transbank
         const response = await initTransaction(transactionData).unwrap();
@@ -83,7 +93,8 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
         setIsProcessing(false);
       }
     } else {
-      // Si es efectivo, continuar normalmente
+      // Si es efectivo, continuar normalmente (también incluye entrega)
+      console.log(`💵 Pago en efectivo - Total: $${totalWithDelivery.toLocaleString('es-CL')} CLP (Productos: $${productsAmount.toLocaleString('es-CL')} + Entrega: $${deliveryCost.toLocaleString('es-CL')})`);
       onNext();
     }
   };
@@ -121,9 +132,20 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
           
           {payment === "credit-card" && (
             <div className="payment-details">
-              <div className="amount-display">
-                <span className="amount-label">Total a pagar:</span>
-                <span className="amount-value">${totalAmount.toLocaleString('es-CL')} CLP</span>
+              <div className="amount-breakdown">
+                <div className="breakdown-item">
+                  <span>Productos:</span>
+                  <span>${productsAmount.toLocaleString('es-CL')} CLP</span>
+                </div>
+                <div className="breakdown-item">
+                  <span>Entrega:</span>
+                  <span>${deliveryCost.toLocaleString('es-CL')} CLP</span>
+                </div>
+                <div className="breakdown-divider"></div>
+                <div className="breakdown-item total">
+                  <span>Total a pagar:</span>
+                  <span className="amount-value">${totalWithDelivery.toLocaleString('es-CL')} CLP</span>
+                </div>
               </div>
               <p className="payment-info">
                 Serás redirigido al portal seguro de Transbank para completar tu pago.
@@ -160,9 +182,20 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
           
           {payment === "cash" && (
             <div className="payment-details">
-              <div className="amount-display">
-                <span className="amount-label">Total a pagar:</span>
-                <span className="amount-value">${totalAmount.toLocaleString('es-CL')} CLP</span>
+              <div className="amount-breakdown">
+                <div className="breakdown-item">
+                  <span>Productos:</span>
+                  <span>${productsAmount.toLocaleString('es-CL')} CLP</span>
+                </div>
+                <div className="breakdown-item">
+                  <span>Entrega:</span>
+                  <span>${deliveryCost.toLocaleString('es-CL')} CLP</span>
+                </div>
+                <div className="breakdown-divider"></div>
+                <div className="breakdown-item total">
+                  <span>Total a pagar:</span>
+                  <span className="amount-value">${totalWithDelivery.toLocaleString('es-CL')} CLP</span>
+                </div>
               </div>
               <p className="payment-info">
                 Pagarás en efectivo al momento de recibir tu pedido.
@@ -361,21 +394,33 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
           }
         }
 
-        .amount-display {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+        .amount-breakdown {
           background: white;
-          padding: 16px;
+          padding: 20px;
           border-radius: 12px;
           margin-bottom: 16px;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
-        .amount-label {
-          font-size: 14px;
+        .breakdown-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 8px 0;
+          font-size: 15px;
           color: #666;
-          font-weight: 500;
+        }
+
+        .breakdown-item.total {
+          font-weight: 600;
+          font-size: 16px;
+          color: #333;
+        }
+
+        .breakdown-divider {
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #e8e8e8, transparent);
+          margin: 12px 0;
         }
 
         .amount-value {
@@ -384,11 +429,46 @@ export const CheckoutStep2 = ({ onNext, onPrev }) => {
           color: #ff6b6b;
         }
 
+        .free-badge {
+          background: linear-gradient(135deg, #4caf50, #66bb6a);
+          color: white;
+          padding: 4px 12px;
+          border-radius: 20px;
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .delivery-free span:first-child {
+          text-decoration: line-through;
+          color: #999;
+        }
+
         .payment-info {
           font-size: 14px;
           color: #666;
           line-height: 1.6;
           margin: 0 0 16px 0;
+        }
+
+        .cash-benefit {
+          background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+          border: 1px solid #66bb6a;
+          border-radius: 8px;
+          padding: 12px 16px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: 16px;
+        }
+
+        .benefit-icon {
+          font-size: 20px;
+        }
+
+        .benefit-text {
+          color: #2e7d32;
+          font-size: 14px;
+          font-weight: 600;
         }
 
         .webpay-badge {
