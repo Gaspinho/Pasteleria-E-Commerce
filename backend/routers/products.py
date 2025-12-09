@@ -147,60 +147,51 @@ async def get_product(product_id: int):
         raise HTTPException(status_code=500, detail="Error fetching product")
 
 @router.post("/create", response_model=dict)
-async def create_product(product: ProductCreate, token: str = Depends(get_access_token)): #
-    """Crear un nuevo producto (Admin only)"""
-
-    ### DEBUG 1: VER QUÉ LLEGA DESDE EL FRONTEND ###
-    print("\n" + "="*30)
-    print("DEBUG: INICIO DE CREACIÓN DE PRODUCTO")
-    print(f"DEBUG: Datos de imagen recibidos: {product.image_gallery}")
-    print("="*30 + "\n")
-    ###############################################
+async def create_product(product: ProductCreate, token: str = Depends(get_access_token)): 
+    """Crear un nuevo producto guardando la imagen principal como Legacy (image_path)"""
 
     image_gallery_id = None
     product_id = None
+    
     try:
-        # Verify Admin Status
+        # 1. Verificación de permisos (Staff)
         auth_response = supabase.auth.get_user(token)
         user_id = auth_response.user.id
         staff_response = supabase.table("app_user").select("is_staff").eq("id", user_id).execute()
+        
         is_staff = False
-        # Verificamos si hay datos dentro de .data
         if staff_response.data and len(staff_response.data) > 0:
-            is_staff = staff_response.data[0]["is_staff"] # Usamos .data[0]
+            is_staff = staff_response.data[0]["is_staff"]
+        
         if not is_staff:
             raise HTTPException(status_code=403, detail="Access Denied: User is not staff")
             
-        # 1. Obtener category_id
+        # 2. Obtener category_id
         cat_response = supabase.table("category").select("id").eq("name", product.category_name).execute()
-        
         if not cat_response.data:
             raise HTTPException(status_code=404, detail=f"Category '{product.category_name}' not found")
-        
         category_id = cat_response.data[0]["id"]
         
-        # 2. Crear image_gallery si se proporcionan imágenes
+        # 3. Crear image_gallery (Seguimos haciendo esto para no perder las fotos 2, 3 y 4)
         if product.image_gallery:
-            ### DEBUG 2: CONFIRMAR QUE ENTRAMOS AL IF ###
-            print("DEBUG: Entrando al bloque de inserción de imágenes...")
-            #############################################
             img_response = supabase.table("image_gallery").insert({
                 "image1": product.image_gallery.image1,
                 "image2": product.image_gallery.image2,
                 "image3": product.image_gallery.image3,
                 "image4": product.image_gallery.image4
             }).execute()
-
-            ### DEBUG 3: VER QUÉ RESPONDIÓ SUPABASE ###
-            print(f"DEBUG: Respuesta Supabase Imágenes: {img_response.data}")
-            ###########################################
             
-            if not img_response.data:
-                raise HTTPException(status_code=500, detail="Failed to create image gallery")
-                
-            image_gallery_id = img_response.data[0]["id"]
+            if img_response.data:
+                image_gallery_id = img_response.data[0]["id"]
         
-        # 3. Crear producto (usando nombres correctos de columnas)
+        # --- AQUÍ ESTÁ EL TRUCO PARA QUE SE VEA EN LA VISTA ---
+        # Extraemos la imagen 1 para guardarla en la columna 'vieja' (image_path)
+        legacy_image_path = " " # Valor por defecto
+        if product.image_gallery and product.image_gallery.image1:
+            legacy_image_path = product.image_gallery.image1
+        # ------------------------------------------------------
+
+        # 4. Crear producto
         product_data = {
             "nombre": product.product_name,
             "sku": product.product_sku or f"SKU-{uuid.uuid4().hex[:8].upper()}",
@@ -209,46 +200,32 @@ async def create_product(product: ProductCreate, token: str = Depends(get_access
             "stock": product.product_stock,
             "is_sale": "Yes" if product.product_is_sale else "No",
             "category_id": category_id,
-            "image_gallery_id": image_gallery_id
+            "image_gallery_id": image_gallery_id,
+            "image_path": legacy_image_path  # <<--- GUARDAMOS LA URL AQUÍ TAMBIÉN
         }
-        
-        ### DEBUG 4: VER DATOS FINALES DEL PRODUCTO ###
-        print(f"DEBUG: Insertando producto con datos: {product_data}")
-        ###############################################
         
         response = supabase.table("productos").insert(product_data).execute()
 
         if not response.data:
             raise HTTPException(status_code=400, detail="Error creating product")
-        product_id = response.data[0]["id"]
+            
         created_product = response.data[0]
         
-        try:
-            full_product = supabase.table("productos_full").select("*").eq("product_id", product_id).single().execute()
-            if full_product.data:
-                return full_product.data
-        except Exception as view_error:
-            print(f"Warning: Could not fetch from productos_full view: {view_error}")
-            
         return {
             **created_product,
             "category_name": product.category_name,
             "message": "Product created successfully"
         }
+
     except HTTPException:
         raise
     except Exception as e:
+        # Rollback básico en caso de error
         try:
-            if product_id:
-                print(f"Rolling back: Deleting product {product_id}")
-                supabase.table("productos").delete().eq("id", product_id).execute()
-            
-            if image_gallery_id:
-                print(f"Rolling back: Deleting image_gallery {image_gallery_id}")
+            if image_gallery_id and not product_id:
                 supabase.table("image_gallery").delete().eq("id", image_gallery_id).execute()
-        except Exception as rollback_error:
-            print(f"Rollback failed: {rollback_error}")
-        
+        except:
+            pass
         print(f"Supabase error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
