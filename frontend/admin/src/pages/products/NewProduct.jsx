@@ -1,21 +1,17 @@
 import React from "react";
-import { useState} from "react";
-import {useNavigate } from "react-router-dom";
-import {usePostProductMutation } from "../../services/productApi";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { usePostProductMutation, useGetCategoriesQuery } from "../../services/productApi"; 
 import "./newProduct.css";
-import { CircularProgress} from "@mui/material";
-import { DriveFolderUpload} from "@mui/icons-material";
+import { CircularProgress } from "@mui/material";
 import { Alert } from '@mui/material';
 
 function NewProduct() {
   const navigate = useNavigate();
   const [server_error, setServerError] = useState({});
-  const [success , setSuccess] = useState(false)
+  const [success, setSuccess] = useState(false);
   const [postProduct, { isLoading }] = usePostProductMutation();
- 
-  const [imge, setImge] = useState({
-    image1: '', image2: '', image3: '', image4: '',
-  });
+  const { data: categoriesData, isLoading: isLoadingCategories } = useGetCategoriesQuery();
 
   const [data, setData] = useState({
       product_Name: '',
@@ -23,12 +19,12 @@ function NewProduct() {
       product_Price: '',
       product_Stock: '',
       product_Description: '',
-      image1: '',
+      image1: '', // Ahora guardaremos URLs de texto aquí
       image2: '',
       image3: '',
       image4: '',
-      category_Name: 'Chocolate',
-  })
+      category_Name: 'Chocolate', //valor por defecto
+  });
   
   const handleChange = event => {
     const name = event.target.name;
@@ -36,25 +32,15 @@ function NewProduct() {
     setData(values => ({ ...values, [name]: value }));
   };
 
-  const handleImage = event => {
-    console.log(event.target.files);
-    const name = event.target.name;
-    const value = event.target.files[0];
-    setImge(values => ({ ...values, [name]: value}));
-    const objectUrl = URL.createObjectURL(value)
-    setData(values => ({ ...values, [name]: objectUrl}));
-  };
-
   const handleSubmit = async(e) => {
-    e.preventDefault()
+    e.preventDefault();
     
-    // Convertir las imágenes a base64 o URLs (el backend actual espera URLs de string)
     const productData = {
       product_name: data.product_Name,
       product_description: data.product_Description,
       product_price: parseFloat(data.product_Price),
       product_stock: parseInt(data.product_Stock),
-      product_is_sale: data.product_Is_Sale === 'Yes' || data.product_Is_Sale === 'true' || data.product_Is_Sale === true ? 'Yes' : 'No',
+      product_is_sale: data.product_Is_Sale === 'Yes' || data.product_Is_Sale === true,
       category_name: data.category_Name,
       image_gallery: {
         image1: data.image1 || null,
@@ -64,123 +50,115 @@ function NewProduct() {
       }
     };
         
-    const res = await postProduct(productData)
+    const res = await postProduct(productData);
     
     if (res.error) {
       if (typeof (res.error.data?.errors) === 'undefined') {
-        alert('A server/network error occurred. ' +'Looks like CORS might be the problem. ' +
-        'Sorry about this - we will get it fixed shortly.');
+        // Este mensaje sale si falla CORS o el servidor se cae
+        alert('Error de conexión. Revisa que el puerto de tu frontend esté en server.py');
       }
-      console.log(typeof (res.error.data?.errors))   
-      console.log(res.error.data?.errors)
-      setServerError(res.error.data?.errors || {})
+      setServerError(res.error.data?.errors || {});
     } 
     
     if (res.data) {
-      console.log(typeof (res.data))
-      console.log(res.data)
-      setSuccess(true)
+      setSuccess(true);
       setTimeout(function(){ navigate('/admin/products')} , 3000);
     }
   }
+
   return (
       <div className="container1">
-        <div className="photoContainer">
-          <div className="photoGrid">
-            <div className="productPhoto"> <img src={data.image1} alt="1" /> 
-            <div className="uploadContainer"><DriveFolderUpload sx={{ fontSize: "40px" }}  /> <input type="file" name="image1" onChange={handleImage}/> </div></div>
-            <div className="productPhoto"><img src={data.image2} alt="2" />
-            <div className="uploadContainer"><DriveFolderUpload sx={{ fontSize: "40px" }}  /> <input type="file" name="image2" onChange={handleImage}/> </div></div>
-            <div className="productPhoto"><img src={data.image3} alt="3" /> 
-            <div className="uploadContainer"><DriveFolderUpload sx={{ fontSize: "40px" }}  /> <input type="file" name="image3" onChange={handleImage}/> </div></div>
-            <div className="productPhoto"><img src={data.image4} alt="4" />
-            <div className="uploadContainer"><DriveFolderUpload sx={{ fontSize: "40px" }}  /> <input type="file" name="image4" onChange={handleImage}/> </div></div>
+        {/* === SECCIÓN DE FOTOS (Simplificada) === */}
+        <div className="photoContainer" style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+            <h3 style={{marginBottom: '10px'}}>Imágenes (URLs)</h3>
             
-          </div>
+            {/* Input 1 */}
+            <div className="url-input-group">
+                <input type="text" name="image1" placeholder="Pegar URL Imagen Principal" 
+                       value={data.image1} onChange={handleChange} style={{width: '100%', padding: '5px'}}/>
+                {data.image1 && <img src={data.image1} alt="Prev" style={{width: '100px', height: '100px', objectFit: 'cover', marginTop: '5px'}}/>}
+            </div>
+
+            {/* Input 2 */}
+            <div className="url-input-group">
+                <input type="text" name="image2" placeholder="URL Imagen 2" 
+                       value={data.image2} onChange={handleChange} style={{width: '100%', padding: '5px'}}/>
+                {data.image2 && <img src={data.image2} alt="Prev" style={{width: '60px', height: '60px', objectFit: 'cover', marginTop: '5px'}}/>}
+            </div>
+
+             {/* Input 3 */}
+             <div className="url-input-group">
+                <input type="text" name="image3" placeholder="URL Imagen 3" 
+                       value={data.image3} onChange={handleChange} style={{width: '100%', padding: '5px'}}/>
+                {data.image3 && <img src={data.image3} alt="Prev" style={{width: '60px', height: '60px', objectFit: 'cover', marginTop: '5px'}}/>}
+            </div>
+
+             {/* Input 4 */}
+             <div className="url-input-group">
+                <input type="text" name="image4" placeholder="URL Imagen 4" 
+                       value={data.image4} onChange={handleChange} style={{width: '100%', padding: '5px'}}/>
+                {data.image4 && <img src={data.image4} alt="Prev" style={{width: '60px', height: '60px', objectFit: 'cover', marginTop: '5px'}}/>}
+            </div>
         </div>
-        <div className="dataContainer"><div className="info_data"><div className="name"><h1> Nombre: {''} {data.product_Name}</h1></div>
-            <div className="productInfo "><h3>Estado de Venta:</h3><span> {data.product_Is_Sale === 'Yes' || data.product_Is_Sale === 'true' || data.product_Is_Sale === true ? 'Sí' : 'No'}</span></div>
-            <div className="productInfo "><h3> Precio del Producto:</h3><span> Rs. {' '}{data.product_Price}</span></div>
-            <div className="productInfo"><h3>Stock del Producto:</h3><span> {data.product_Stock} </span></div>
-            <div className="productInfo "><h3>Categoría del Producto:</h3><span> {data.category_Name} {''} Cake </span></div>
-            <div className="descript"><h3> Descripción del Producto:</h3><p>{data.product_Description}</p></div>
-          </div>
-        <form className="editProductForm" onSubmit={handleSubmit}>
-          <div className="newproductItem">
-            <label>Nombre del Producto</label>
-            <input
-              type="text"
-              name="product_Name"
-              value={data.product_Name || ""}
-              onChange={handleChange}
-            />
-            {server_error.product_Name ? (
-              <lable style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-                {server_error.product_Name[0]} </lable>) : ("")}
-          </div>
-          <div className="newproductItem">
-            <label>Descripción del Producto</label>
-            <input type="text" name="product_Description" 
-            value={data.product_Description || ""}
-            onChange={handleChange}
-             />
-            {server_error.product_Name ? (
-              <lable style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-                {server_error.product_Name[0]} </lable>) : ("")}
-          </div>
-          <div className="newproductItem">
-            <label>Precio del Producto</label>
-            <input type="text"  name="product_Price"
-             value={data.product_Price || ""}
-            onChange={handleChange}
-            />
-            {server_error.product_Price ? (
-              <lable style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-                {server_error.product_Price[0]}
-              </lable>) : ("")}
-          </div>
-          <div className="newproductItem">
-            <label>Stock del Producto</label>
-            <input type="text" name="product_Stock" value={data.product_Stock || ""}
-              onChange={handleChange} />
-            {server_error.product_Stock ? (
-              <lable style={{ fontSize: 16, color: "red", paddingLeft: 10 }}>
-              {server_error.product_Stock[0]}</lable>) : ("")}
-          </div>
-          <div className="newproductItem">
-            <label>Estado de Venta del Producto</label>
-            <select className="newProductSelect" name="product_Is_Sale" id="product_Is_Sale" 
-            value={data.product_Is_Sale || "Yes"}
-            onChange={handleChange} >
-              <option value="Yes" >Yes</option>
-              <option value= "No">No</option>
-            </select>
-          </div>
-          <div className="btn_con">
-          <div className="newproductItem">
-            <label>Actualizar Categoría</label>
-            <select className="newProductSelect" name="category_Name" id="category_Name"
-            value={data.category_Name || ""}
-            onChange={handleChange} required>
-              <option value="Chocolate">Chocolate Cake</option>
-              <option value="Cupcakes">Cup Cake</option>
-              <option value="Aniversary">Aniversary Cake</option>
-              <option value="Birthday">Birthday Cake</option>
-            </select>
-          </div>
-          {isLoading ? (<CircularProgress /> ) : (
-            <button type="submit" className="btn1">
-              Agregar Producto</button>
-          )}
-          </div>       
-        </form>
-        {server_error.image1 ? <Alert severity='error'>{ `image1: ${server_error.image1[0]}`}</Alert> : ''} 
-        {server_error.image2 ? <Alert severity='error'>{ `image2: ${server_error.image2[0]}`}</Alert> : ''} 
-        {server_error.image3 ? <Alert severity='error'>{ `image3: ${server_error.image3[0]}`}</Alert> : ''} 
-        {server_error.image4 ? <Alert severity='error'>{ `image4: ${server_error.image4[0]}`}</Alert> : ''} 
-        {success? <Alert severity='success'> Producto agregado exitosamente </Alert> : ''} 
         
-      </div>
+        {/* === SECCIÓN DE DATOS === */}
+        <div className="dataContainer">
+          <div className="info_data">
+             <div className="name"><h1> Nuevo Producto </h1></div>
+          </div>
+          
+          <form className="editProductForm" onSubmit={handleSubmit}>
+            
+            <div className="newproductItem">
+              <label>Nombre del Producto</label>
+              <input type="text" name="product_Name" value={data.product_Name || ""} onChange={handleChange} />
+              {server_error.product_name && <p style={{color:'red'}}>{server_error.product_name}</p>}
+            </div>
+
+            <div className="newproductItem">
+              <label>Descripción</label>
+              <input type="text" name="product_Description" value={data.product_Description || ""} onChange={handleChange} />
+            </div>
+
+            <div className="newproductItem">
+              <label>Precio</label>
+              <input type="number" name="product_Price" value={data.product_Price || ""} onChange={handleChange} />
+            </div>
+
+            <div className="newproductItem">
+              <label>Stock</label>
+              <input type="number" name="product_Stock" value={data.product_Stock || ""} onChange={handleChange} />
+            </div>
+
+            <div className="newproductItem">
+              <label>¿En Oferta?</label>
+              <select className="newProductSelect" name="product_Is_Sale" value={data.product_Is_Sale} onChange={handleChange}>
+                <option value="Yes">Sí</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div className="newproductItem">
+              <label>Categoría</label>
+              <select className="newProductSelect" name="category_Name" value={data.category_Name} onChange={handleChange} required>
+                 <option value="" disabled>Selecciona una categoría</option>
+                 {/* Si usaste el hook de categorías úsalo aquí, si no, deja tus options manuales */}
+                 {categoriesData?.map((cat) => (
+                    <option key={cat.id} value={cat.name}>{cat.name}</option>
+                 ))}
+                 {!categoriesData && <option value="Chocolate">Cargando...</option>}
+              </select>
+            </div>
+
+            <div className="btn_con">
+              {isLoading ? (<CircularProgress /> ) : (
+                <button type="submit" className="btn1">Guardar Producto</button>
+              )}
+            </div>       
+          </form>
+
+          {success && <Alert severity='success'> Producto agregado exitosamente </Alert>} 
+        </div>
       </div>
   );
 }

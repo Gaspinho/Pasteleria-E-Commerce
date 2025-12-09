@@ -155,10 +155,11 @@ async def create_product(product: ProductCreate, token: str = Depends(get_access
         # Verify Admin Status
         auth_response = supabase.auth.get_user(token)
         user_id = auth_response.user.id
-        staff_status = supabase.table("app_user").select("is_staff").eq("id", auth_response.user.id).execute()
+        staff_response = supabase.table("app_user").select("is_staff").eq("id", user_id).execute()
         is_staff = False
-        if staff_status:
-            is_staff = staff_status[0]["is_staff"]
+        # Verificamos si hay datos dentro de .data
+        if staff_response.data and len(staff_response.data) > 0:
+            is_staff = staff_response.data[0]["is_staff"] # Usamos .data[0]
         if not is_staff:
             raise HTTPException(status_code=403, detail="Access Denied: User is not staff")
             

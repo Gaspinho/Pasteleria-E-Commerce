@@ -82,7 +82,7 @@ function Products() {
               </div>
               <div className="dataProduct ">
                 <h3> Precio:</h3>
-                <span> {data.product_Price} PKR</span>
+                <span>${data.product_Price}</span>
               </div>
               <div className="dataProduct">
                 <h3>Stock:</h3>
